@@ -275,6 +275,7 @@ public class ChatGUi extends javax.swing.JFrame {
 
     private void messageTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_messageTextFocusGained
         if(messageText.getText().length() > 0){
+            System.out.println("PRova");
             sendButton.setText("Invia");
         }
     }//GEN-LAST:event_messageTextFocusGained
