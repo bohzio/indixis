@@ -205,10 +205,8 @@ public class Ricezione extends Thread{
     }
 
     private synchronized void aggiornaListaUtentiAdd(ArrayList mexInput) {
-        System.out.println("Nuovo utente --> "+ mexInput);
-        if (friendsList.contains(mexInput));
-            friendsList.add(mexInput.get(1));
-            graphics.setFriendsListArray(friendsList);
+        System.out.println("Connessione --> "+ mexInput);
+        listaUtenti.add(mexInput.get(1));
     }
     
     private synchronized void aggiornaListaUtentiRemove(ArrayList mexInput) {
