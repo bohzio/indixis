@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
@@ -62,6 +63,7 @@ public class ChatGUi extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         messageText = new javax.swing.JTextPane();
         sendButton = new javax.swing.JButton();
+        sendFile = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,7 +94,7 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(titleLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(notifyImage)
@@ -170,6 +172,13 @@ public class ChatGUi extends javax.swing.JFrame {
             }
         });
 
+        sendFile.setText("Invia File");
+        sendFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,8 +193,10 @@ public class ChatGUi extends javax.swing.JFrame {
                             .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sendFile)
+                                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -204,15 +215,17 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 6, Short.MAX_VALUE))))
+                            .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sendFile)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 428, Short.MAX_VALUE)))
+                    .addGap(0, 430, Short.MAX_VALUE)))
         );
 
         pack();
@@ -251,6 +264,7 @@ public class ChatGUi extends javax.swing.JFrame {
 
         Message message = new Message(localUser, text, destinatario, hour, day, TypeMessage.MESSAGGIO,false);
         listaMessaggi.add(message);
+        connection.inviaMessaggio(text,destinatario);
     }//GEN-LAST:event_sendButtonActionPerformed
 
     private void provaMessaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provaMessaggioActionPerformed
@@ -264,6 +278,16 @@ public class ChatGUi extends javax.swing.JFrame {
         listaMessaggi.add(prova1);
         listaMessaggi.add(prova2);
     }//GEN-LAST:event_provaMessaggioActionPerformed
+
+    private void sendFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendFileActionPerformed
+        JFileChooser filechooser = new JFileChooser();
+        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
+        if (returnValue == filechooser.APPROVE_OPTION) {
+            System.out.println(filechooser.getSelectedFile().getAbsolutePath());
+            System.out.println("Invio file in corso");
+            Connection.inviaFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0));
+        }
+    }//GEN-LAST:event_sendFileActionPerformed
 
     /**
      * setta il nome dell'utente nella barra titolo
@@ -297,6 +321,7 @@ public class ChatGUi extends javax.swing.JFrame {
         k.setText(text);
     }
 
+    
     private boolean registrazione(String username, String password) {
         MessageDigest md;
 
@@ -379,8 +404,8 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println(listaMessaggi.get(i).getMessage());
             String userLocal = user.getText();
             if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
-                if (listaMessaggi.get(i).getDestinatario().equals(destinatario)) {  // il messaggio è rivolot all'utente che esgue il prg
-                    
+                if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario) ) {  // il messaggio è rivolot all'utente che esgue il prg
+                    System.out.println("entrato##########");
 
                          try{
                     if (listaMessaggi.get(i).isForeign() == true) {
@@ -445,6 +470,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JLabel notifyImage;
     private javax.swing.JButton provaMessaggio;
     private javax.swing.JButton sendButton;
+    private javax.swing.JButton sendFile;
     private javax.swing.JTabbedPane tab;
     private javax.swing.JPanel title;
     public javax.swing.JLabel user;

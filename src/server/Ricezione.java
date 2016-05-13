@@ -5,7 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import static java.time.Instant.now;
+import static java.time.LocalDate.now;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * 
@@ -24,11 +27,13 @@ public class Ricezione extends Thread{
     private static boolean ricezioneListaUtenti = false;
     private boolean registrato = false;
     private final ChatGUi graphics;
+    private String username;
 
 
-    public Ricezione(Socket socket,ChatGUi graphics) {
+    public Ricezione(Socket socket,ChatGUi graphics,String username) {
         this.socket = socket;
         this.graphics = graphics;
+        this.username = username;
     }
     
     /**
@@ -172,6 +177,15 @@ public class Ricezione extends Thread{
         String mex =  (String)(mexInput.get(2));
         String user =  (String)(mexInput.get(1));
         System.out.println("user: "+user+" mex: "+mex);
+        graphics.addNotify(user);
+        
+        Calendar now = Calendar.getInstance();
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        
+        Message message = new Message(user,mex,username,hour,day,TypeMessage.MESSAGGIO,true);
+        graphics.addMessage(message);
+        
     }
     
     /**

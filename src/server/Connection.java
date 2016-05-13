@@ -61,7 +61,7 @@ public class Connection {
             socket = new Socket(ipServer, portServer);
             os = new ObjectOutputStream(socket.getOutputStream());
             esitoConnessione = true;
-            ricezione = new Ricezione(socket,graphics);
+            ricezione = new Ricezione(socket,graphics,username);
             if (regOrLog.equals("login")){
                 (this).autenticazione(username, password);
                 if (ricezione.autenticazione()) {

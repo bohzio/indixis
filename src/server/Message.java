@@ -14,7 +14,7 @@ public class Message {
     private int ora;
     private int day;
     private TypeMessage type;
-    private boolean foreign;
+    private boolean foreign; // false inviato true ricevuto
 
     public Message(String user, String message, String destinatario, int ora, int day, TypeMessage type) {
         this.user = user;
