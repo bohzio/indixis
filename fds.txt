@@ -1,0 +1,9 @@
+ private void sendFileActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        JFileChooser filechooser = new JFileChooser();
+        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
+        if (returnValue == filechooser.APPROVE_OPTION) {
+            System.out.println(filechooser.getSelectedFile().getAbsolutePath());
+            System.out.println("Invio file in corso");
+            Connection.inviaFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0));
+        }
+    } 
