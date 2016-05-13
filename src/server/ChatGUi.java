@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
@@ -54,15 +54,14 @@ public class ChatGUi extends javax.swing.JFrame {
         user = new javax.swing.JLabel();
         notifyImage = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        eliminareDebug = new javax.swing.JButton();
         menu = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         friend = new javax.swing.JPanel();
+        provaMessaggio = new javax.swing.JButton();
         tab = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         messageText = new javax.swing.JTextPane();
         sendButton = new javax.swing.JButton();
-        sendFile = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,13 +85,6 @@ public class ChatGUi extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        eliminareDebug.setText("jButton1");
-        eliminareDebug.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminareDebugActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
         titleLayout.setHorizontalGroup(
@@ -100,9 +92,7 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(titleLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(eliminareDebug)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(notifyImage)
@@ -115,13 +105,8 @@ public class ChatGUi extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(titleLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(notifyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(titleLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(eliminareDebug)))
+                .addGap(19, 19, 19)
+                .addComponent(notifyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -143,15 +128,28 @@ public class ChatGUi extends javax.swing.JFrame {
 
         friend.setBackground(new java.awt.Color(255, 102, 51));
 
+        provaMessaggio.setText("jButton1");
+        provaMessaggio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                provaMessaggioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout friendLayout = new javax.swing.GroupLayout(friend);
         friend.setLayout(friendLayout);
         friendLayout.setHorizontalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
+            .addGroup(friendLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(provaMessaggio)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         friendLayout.setVerticalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(provaMessaggio)
+                .addGap(179, 179, 179))
         );
 
         tab.setBackground(new java.awt.Color(255, 255, 255));
@@ -161,26 +159,14 @@ public class ChatGUi extends javax.swing.JFrame {
         tab.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
         tab.setInheritsPopupMenu(true);
 
-        messageText.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                messageTextFocusGained(evt);
-            }
-        });
         jScrollPane2.setViewportView(messageText);
 
-        sendButton.setText("Registra");
+        sendButton.setText("Invia");
         sendButton.setMaximumSize(new java.awt.Dimension(205, 137));
         sendButton.setMinimumSize(new java.awt.Dimension(205, 137));
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendButtonActionPerformed(evt);
-            }
-        });
-
-        sendFile.setText("Invia File");
-        sendFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendFileActionPerformed(evt);
             }
         });
 
@@ -191,21 +177,20 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tab)
+                            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(sendFile, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -219,13 +204,10 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sendFile)))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 6, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -237,68 +219,84 @@ public class ChatGUi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        if((messageText.getText()).equals("")){
-            System.out.println("PRova");
-        }
-        else{
-            String text = messageText.getText();
-            JLabel label = new JLabel(text);
-            messageText.setText("");
-            sendButton.setText("Registra");
-            panelMessage.add(label);
-            panelMessage.revalidate();
-            panelMessage.repaint();
 
-            //aggiungo il messaggio all'array
-            String user = "QQQ";
-            String destinatario = tab.getTitleAt(0);
-            Message message = new Message(user, text, destinatario);
-            listaMessaggi.add(message);
-        }
+        String text = messageText.getText();
+        //JLabel label = new JLabel(text);
+        messageText.setText("");
+
+        //-----------------
+        JPanel boxMessage = new JPanel();
+
+        //aggiugnere i bordi rotondi
+        //boxMessage.setMaximumSize(new Dimension(400, 30));
+        boxMessage.setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
+        JLabel textofMessage = new JLabel(text);
+
+        boxMessage.add(textofMessage);
+        // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+        panelMessage.add(boxMessage);
+
+        //-----
+        //panelMessage.add(label);
+        panelMessage.revalidate();
+        panelMessage.repaint();
+
+        //aggiungo il messaggio all'array
+        String localUser = user.getText();
+        String destinatario = tab.getTitleAt(0);
+
+        Calendar now = Calendar.getInstance();
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+
+        Message message = new Message(localUser, text, destinatario, hour, day, TypeMessage.MESSAGGIO,false);
+        listaMessaggi.add(message);
     }//GEN-LAST:event_sendButtonActionPerformed
 
-    /**
-     * eliminare
-     * in prova
-     * @param evt 
-     */
-    private void eliminareDebugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminareDebugActionPerformed
-
-        System.out.println( notifiche.get("adriana"));
-        JLabel k = new JLabel();
-        int i = Integer.valueOf((String) notifiche.get("adriana"));
-        
-        k =  (JLabel)(counterNotifiche.get(i));
-       k.setText("4");
-        
-    }//GEN-LAST:event_eliminareDebugActionPerformed
-
-    private void messageTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_messageTextFocusGained
-        if(messageText.getText().length() > 0){
-            System.out.println("PRova");
-            sendButton.setText("Invia");
-        }
-    }//GEN-LAST:event_messageTextFocusGained
-
-    private void sendFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendFileActionPerformed
-        JFileChooser filechooser = new JFileChooser();
-        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
-        if (returnValue == filechooser.APPROVE_OPTION) {
-            System.out.println(filechooser.getSelectedFile().getAbsolutePath());
-            System.out.println("Invio file in corso");
-            Connection.inviaFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0));
-        }
-    }//GEN-LAST:event_sendFileActionPerformed
+    private void provaMessaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provaMessaggioActionPerformed
+        Calendar now = Calendar.getInstance();
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        TypeMessage type = TypeMessage.valueOf("MESSAGGIO");
+        String userLocal = user.getText();
+        Message prova1 = new Message(userLocal, "sono nella chat adriana", "adriana", hour, day, TypeMessage.MESSAGGIO,true);
+        Message prova2 = new Message(userLocal, "sono nella chat mattia", "mattia", hour, day, TypeMessage.MESSAGGIO,true);
+        listaMessaggi.add(prova1);
+        listaMessaggi.add(prova2);
+    }//GEN-LAST:event_provaMessaggioActionPerformed
 
     /**
-     * setta il nome dell'utente
-     * @param userName 
+     * setta il nome dell'utente nella barra titolo
+     *
+     * @param userName
      */
-    public void setUser(String userName){
+    public void setUser(String userName) {
         user.setText("Bentornato, " + userName);
     }
-    
-    
+
+    /**
+     * aggiunge un messaggio al array
+     *
+     * @param messaggio
+     */
+    public void addMessage(Message messaggio) {
+        listaMessaggi.add(messaggio);
+    }
+
+    /**
+     * modifica il label di notifica di un utente
+     *
+     * @param user
+     */
+    public void addNotify(String user) {
+        JLabel k = new JLabel();
+        int i = Integer.valueOf((String) notifiche.get(user));
+        k = (JLabel) (counterNotifiche.get(i));
+        String numberOfCurrentNotify = k.getText();
+        String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
+        k.setText(text);
+    }
+
     private boolean registrazione(String username, String password) {
         MessageDigest md;
 
@@ -333,19 +331,18 @@ public class ChatGUi extends javax.swing.JFrame {
         int x = 0;
         for (int i = 0; i < ar.size(); i++) {
             String text = (String) ar.get(i).toString();
-            
+
             //notifiche
-            notifiche.put(text,String.valueOf(i));
-            JLabel notify = new JLabel(String.valueOf(i));
+            notifiche.put(text, String.valueOf(i));
+            JLabel notify = new JLabel("0");
 //            notify.set
             counterNotifiche.add(notify);
-            
-            
+
             JButton button = new JButton((String) ar.get(i).toString());
 
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
-
+                    notify.setText("0");
                     panelMessage.setBackground(Color.white);
                     arrayTab.add(tab);
                     if (x == 0) {
@@ -361,7 +358,7 @@ public class ChatGUi extends javax.swing.JFrame {
             });
             JPanel p = new JPanel();
             p.setBackground(Color.red);
-            p.setMaximumSize(new Dimension(200,30));
+            p.setMaximumSize(new Dimension(200, 30));
             p.add(button);
             p.add(notify);
             friend.add(p);
@@ -379,24 +376,52 @@ public class ChatGUi extends javax.swing.JFrame {
         panelMessage.revalidate();
         panelMessage.repaint();
         for (int i = 0; i < listaMessaggi.size(); i++) {
-            if (listaMessaggi.get(i).getDestinatario().equals(destinatario)) {
-                //JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                JPanel boxMessage = new JPanel();
-                boxMessage.setBackground(Color.red);
-                //aggiugnere i bordi rotondi
-                boxMessage.setMaximumSize(new Dimension(400, 30));
-                boxMessage.setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
-                JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
+            System.out.println(listaMessaggi.get(i).getMessage());
+            String userLocal = user.getText();
+            if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
+                if (listaMessaggi.get(i).getDestinatario().equals(destinatario)) {  // il messaggio è rivolot all'utente che esgue il prg
+                    
 
-                boxMessage.add(message);
-                // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-                panelMessage.add(boxMessage);
-                panelMessage.revalidate();
-                panelMessage.repaint();
+                         try{
+                    if (listaMessaggi.get(i).isForeign() == true) {
+                        JPanel boxMessage = new JPanel();
+                        boxMessage.setBackground(Color.blue);
+                        //aggiugnere i bordi rotondi
+                        boxMessage.setMaximumSize(new Dimension(400, 30));
+                        boxMessage.setAlignmentX(Component.LEFT_ALIGNMENT);//0.0
+                        JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
+                        boxMessage.add(message);
+                        // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+                        panelMessage.add(boxMessage);
+                    }
+                   
+                    
+                }
+                 catch(Exception e ){
+                            System.out.println("error");
+                            }
 
+//JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                    if (listaMessaggi.get(i).isForeign() == false) {
+                    JPanel boxMessage = new JPanel();
+                    boxMessage.setBackground(Color.red);
+                    //aggiugnere i bordi rotondi
+                    boxMessage.setMaximumSize(new Dimension(400, 30));
+                    boxMessage.setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
+                    JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
+
+                    boxMessage.add(message);
+                    // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+                    panelMessage.add(boxMessage);
+                    panelMessage.revalidate();
+                    panelMessage.repaint();
+                }
+                }
             }
         }
     }
+    
+    
 
     public void inizialize() {
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
@@ -408,8 +433,8 @@ public class ChatGUi extends javax.swing.JFrame {
 
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton eliminareDebug;
     private javax.swing.JPanel friend;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -418,8 +443,8 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JPanel menu;
     private javax.swing.JTextPane messageText;
     private javax.swing.JLabel notifyImage;
+    private javax.swing.JButton provaMessaggio;
     private javax.swing.JButton sendButton;
-    private javax.swing.JButton sendFile;
     private javax.swing.JTabbedPane tab;
     private javax.swing.JPanel title;
     public javax.swing.JLabel user;
@@ -434,6 +459,6 @@ public class ChatGUi extends javax.swing.JFrame {
     int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
     JScrollPane scroll = new JScrollPane(panelMessage, v, h);
     private List<Message> listaMessaggi = new ArrayList();
-    LinkedHashMap  notifiche = new LinkedHashMap ();
-    private List <JLabel> counterNotifiche = new ArrayList();
+    LinkedHashMap notifiche = new LinkedHashMap();
+    private List<JLabel> counterNotifiche = new ArrayList();
 }
