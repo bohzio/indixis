@@ -53,12 +53,10 @@ public class ChatGUi extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         title = new javax.swing.JPanel();
         user = new javax.swing.JLabel();
-        notifyImage = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         menu = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         friend = new javax.swing.JPanel();
-        provaMessaggio = new javax.swing.JButton();
         tab = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         messageText = new javax.swing.JTextPane();
@@ -83,8 +81,6 @@ public class ChatGUi extends javax.swing.JFrame {
 
         user.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 24)); // NOI18N
 
-        notifyImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/notify.png"))); // NOI18N
-
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
@@ -94,11 +90,9 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(titleLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 278, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(notifyImage)
-                .addContainerGap())
+                .addGap(44, 44, 44))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,10 +100,6 @@ public class ChatGUi extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(titleLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(notifyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         menu.setBackground(new java.awt.Color(100, 181, 246));
@@ -130,28 +120,15 @@ public class ChatGUi extends javax.swing.JFrame {
 
         friend.setBackground(new java.awt.Color(255, 102, 51));
 
-        provaMessaggio.setText("jButton1");
-        provaMessaggio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                provaMessaggioActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout friendLayout = new javax.swing.GroupLayout(friend);
         friend.setLayout(friendLayout);
         friendLayout.setHorizontalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(provaMessaggio)
-                .addContainerGap(53, Short.MAX_VALUE))
+            .addGap(0, 173, Short.MAX_VALUE)
         );
         friendLayout.setVerticalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(provaMessaggio)
-                .addGap(179, 179, 179))
+            .addGap(0, 435, Short.MAX_VALUE)
         );
 
         tab.setBackground(new java.awt.Color(255, 255, 255));
@@ -161,14 +138,37 @@ public class ChatGUi extends javax.swing.JFrame {
         tab.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
         tab.setInheritsPopupMenu(true);
 
+        messageText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                messageTextKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(messageText);
 
-        sendButton.setText("Invia");
+        sendButton.setText("Registra");
         sendButton.setMaximumSize(new java.awt.Dimension(205, 137));
         sendButton.setMinimumSize(new java.awt.Dimension(205, 137));
+        sendButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                sendButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                sendButtonMouseReleased(evt);
+            }
+        });
         sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendButtonActionPerformed(evt);
+            }
+        });
+        sendButton.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                sendButtonPropertyChange(evt);
+            }
+        });
+        sendButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                sendButtonKeyReleased(evt);
             }
         });
 
@@ -188,20 +188,24 @@ public class ChatGUi extends javax.swing.JFrame {
                 .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 20, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(sendFile)
-                                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(391, 391, 391)
+                                .addComponent(sendFile, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -217,15 +221,16 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sendFile)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sendFile, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2))
+                        .addContainerGap())))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 430, Short.MAX_VALUE)))
+                    .addGap(0, 448, Short.MAX_VALUE)))
         );
 
         pack();
@@ -233,51 +238,48 @@ public class ChatGUi extends javax.swing.JFrame {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 
-        String text = messageText.getText();
-        //JLabel label = new JLabel(text);
-        messageText.setText("");
+        if (sendButton.getText().equals("Registra")) {
+           
+            String path =   System.getProperty("user.dir") + "\\src\\client\\file\\"
+                    + "inviati\\tracciaAudio\\" + System.currentTimeMillis() + "-traccia.au";
+            
+            AudioRecorder audioRecorder = new AudioRecorder(path);
+            Thread stopper = new Thread(() -> {
+                try {
+                    
+                    Thread.sleep(10);
+                    audioRecorder.fineRecord();
+                    System.out.println(path);
+                    Connection.inviaFile(path, tab.getTitleAt(0));
+                    
+                } catch (InterruptedException ex) {    
+                }
+            });
+            stopper.start();
+            audioRecorder.inizioRecord();
+            
+            
+            
+        } else {
+            String text = messageText.getText();
+            JLabel label = new JLabel(text);
+            messageText.setText("");
+            sendButton.setText("Registra");
+            panelMessage.add(label);
+            panelMessage.revalidate();
+            panelMessage.repaint();
 
-        //-----------------
-        JPanel boxMessage = new JPanel();
-
-        //aggiugnere i bordi rotondi
-        //boxMessage.setMaximumSize(new Dimension(400, 30));
-        boxMessage.setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
-        JLabel textofMessage = new JLabel(text);
-
-        boxMessage.add(textofMessage);
-        // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-        panelMessage.add(boxMessage);
-
-        //-----
-        //panelMessage.add(label);
-        panelMessage.revalidate();
-        panelMessage.repaint();
-
-        //aggiungo il messaggio all'array
-        String localUser = user.getText();
-        String destinatario = tab.getTitleAt(0);
-
-        Calendar now = Calendar.getInstance();
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-
-        Message message = new Message(localUser, text, destinatario, hour, day, TypeMessage.MESSAGGIO,false);
-        listaMessaggi.add(message);
-        connection.inviaMessaggio(text,destinatario);
+            //aggiungo il messaggio all'array
+            String user = "QQQ";
+            String destinatario = tab.getTitleAt(0);
+            Calendar now = Calendar.getInstance();
+            int day = now.get(Calendar.DAY_OF_MONTH);
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            Message message = new Message(user, text, destinatario,hour,day,TypeMessage.MESSAGGIO,false);
+            listaMessaggi.add(message);
+            connection.inviaMessaggio(text,destinatario);
+        }
     }//GEN-LAST:event_sendButtonActionPerformed
-
-    private void provaMessaggioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provaMessaggioActionPerformed
-        Calendar now = Calendar.getInstance();
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-        TypeMessage type = TypeMessage.valueOf("MESSAGGIO");
-        String userLocal = user.getText();
-        Message prova1 = new Message(userLocal, "sono nella chat adriana", "adriana", hour, day, TypeMessage.MESSAGGIO,true);
-        Message prova2 = new Message(userLocal, "sono nella chat mattia", "mattia", hour, day, TypeMessage.MESSAGGIO,true);
-        listaMessaggi.add(prova1);
-        listaMessaggi.add(prova2);
-    }//GEN-LAST:event_provaMessaggioActionPerformed
 
     private void sendFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendFileActionPerformed
         JFileChooser filechooser = new JFileChooser();
@@ -289,6 +291,37 @@ public class ChatGUi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sendFileActionPerformed
 
+    private void sendButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendButtonMousePressed
+         if (evt.getClickCount() == 1){
+            System.out.println(evt.getClass());
+        }
+    }//GEN-LAST:event_sendButtonMousePressed
+
+    private void sendButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendButtonMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendButtonMouseReleased
+
+    private void sendButtonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sendButtonKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendButtonKeyReleased
+
+    private void sendButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_sendButtonPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendButtonPropertyChange
+
+    private void messageTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTextKeyReleased
+       if (messageText.getText().equals("")) {
+            sendButton.setText("Registra");
+            sendButton.revalidate();
+            sendButton.repaint();
+        } else {
+            sendButton.setText("Invia");
+            sendButton.revalidate();
+            sendButton.repaint();
+        }
+    }//GEN-LAST:event_messageTextKeyReleased
+
+  
     /**
      * setta il nome dell'utente nella barra titolo
      *
@@ -467,8 +500,6 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel menu;
     private javax.swing.JTextPane messageText;
-    private javax.swing.JLabel notifyImage;
-    private javax.swing.JButton provaMessaggio;
     private javax.swing.JButton sendButton;
     private javax.swing.JButton sendFile;
     private javax.swing.JTabbedPane tab;

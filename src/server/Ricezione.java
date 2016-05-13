@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import static java.time.Instant.now;
-import static java.time.LocalDate.now;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -152,9 +150,7 @@ public class Ricezione extends Thread{
     }
     
     private synchronized ArrayList riceviListaAmici(ArrayList mexInput){
-        System.out.println("Ho ricevuto l'arrayList con gli amici");
         ArrayList ris = (ArrayList) mexInput.get(1);
-        System.out.println(ris.get(0)+"AMICOOOOOOOOOOOOOoo");
         graphics.setFriendsListArray(ris);
         System.out.println("Ho settato la lista degli amici");
         return ris;
@@ -210,7 +206,9 @@ public class Ricezione extends Thread{
 
     private synchronized void aggiornaListaUtentiAdd(ArrayList mexInput) {
         System.out.println("Nuovo utente --> "+ mexInput);
-        listaUtenti.add(mexInput.get(1));
+        if (friendsList.contains(mexInput));
+            friendsList.add(mexInput.get(1));
+            graphics.setFriendsListArray(friendsList);
     }
     
     private synchronized void aggiornaListaUtentiRemove(ArrayList mexInput) {
