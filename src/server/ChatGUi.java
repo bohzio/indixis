@@ -449,9 +449,9 @@ public class ChatGUi extends javax.swing.JFrame {
         panelMessage.revalidate();
         panelMessage.repaint();
         for (int i = 0; i < listaMessaggi.size(); i++) {
-            System.out.println(listaMessaggi.get(i).getMessage());
+            System.out.println(listaMessaggi.get(i).toString());
             String userLocal = user.getText();
-            if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
+            //if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
                 if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario) ) {  // il messaggio è rivolot all'utente che esgue il prg
                     System.out.println("entrato##########");
 
@@ -490,7 +490,7 @@ public class ChatGUi extends javax.swing.JFrame {
                     panelMessage.repaint();
                 }
                 }
-            }
+            
         }
     }
     

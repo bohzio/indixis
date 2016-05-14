@@ -98,10 +98,8 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "user='" + user + '\'' +
-                ", message='" + message + '\'' +
-                ", destinatario='" + destinatario + '\'' +
-                '}';
+        return "Message{" + "user=" + user + ", message=" + message + ", destinatario=" + destinatario + ", type=" + type + ", foreign=" + foreign + '}';
     }
+
+   
 }
