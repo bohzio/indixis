@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -20,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +43,9 @@ import server.ChatGUi;
 public class Indixis extends Application {
 
     private static int cont = 0;
+    TextField userTextField = new TextField();
+    PasswordField password = new PasswordField();
+    final Text actiontarget = new Text();
 
     @Override
     public void start(Stage primaryStage) {
@@ -69,14 +75,14 @@ public class Indixis extends Application {
 
         GridPane nomeutente = new GridPane();
         Label userName = new Label("Username");
-        TextField userTextField = new TextField();
+
         nomeutente.add(userTextField, 1, 1);
 
         nomeutente.add(userName, 1, 0);
         grid.add(nomeutente, 0, 1);
 
         GridPane passwordGrid = new GridPane();
-        PasswordField password = new PasswordField();
+
         Label pw = new Label("Password");
         passwordGrid.add(pw, 1, 0);
         passwordGrid.add(password, 1, 1);
@@ -129,13 +135,14 @@ public class Indixis extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
-        final Text actiontarget = new Text();
+
         grid.add(actiontarget, 1, 6);
         actiontarget.setId("actiontarget");
+        btn.setDefaultButton(true);
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e) {                
+            public void handle(ActionEvent e) {
                 String usernameLogin = userTextField.getText();
                 String passwordLogin = String.valueOf(password.getText());
                 System.out.println(usernameLogin + "--" + passwordLogin);
@@ -146,6 +153,7 @@ public class Indixis extends Application {
                 actiontarget.setText(" Sto loggando ...");
             }
         });
+
         primaryStage.show();
     }
 
@@ -155,4 +163,7 @@ public class Indixis extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+
+    
 }
