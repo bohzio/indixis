@@ -9,35 +9,38 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * 
- * @author dallachiaram@gmail.com && corradi.mattia
- * @version 1.5
+ * Classe che riceve i dati dal server e setta la grafica.
+ * @author dallachiaram@gmail.com && corradi.mattia@gmail.com
+ * @version 1.8
  */
+
 public class Ricezione extends Thread{
     private final Socket socket;
     private boolean continua = true;
     private ObjectInputStream is;
-    private FileOutputStream file;
-    private BufferedOutputStream fout;
     private ArrayList listaUtenti;
     private ArrayList friendsList;
     private ArrayList friendsListWithoutAnswer;
-    private static boolean ricezioneListaUtenti = false;
-    private boolean registrato = false;
     private final ChatGUi graphics;
-    private String username;
+    private final String username;
 
 
+    /**
+     * Default constructor
+     * @param socket
+     * @param graphics
+     * @param username 
+     */
     public Ricezione(Socket socket,ChatGUi graphics,String username) {
         this.socket = socket;
         this.graphics = graphics;
         this.username = username;
     }
     
-    /**
-     * 
-     * @return 
-     */
+   /**
+    * Metodo che una riceve dal server l'esito dell'autenticazione
+    * @return true se l'autenticazione va a buon fine
+    */
     public boolean autenticazione() {
         boolean autenticato;
         ArrayList rispostaServer;
@@ -55,7 +58,11 @@ public class Ricezione extends Thread{
         return autenticato;
     }
     
-      public boolean registrazione() {
+    /**
+     * Metodo che riceve l'esito della registrazione dal server
+     * @return registrazione a seconda dell'esito della registrazione
+     */
+    public boolean registrazione() {
         boolean registrazione;
         ArrayList rispostaServer;
 
@@ -136,7 +143,6 @@ public class Ricezione extends Thread{
      */
    private synchronized ArrayList riceviListaUtenti(ArrayList mexInput){
         System.out.println("Ho ricevuto l'arrayList con i nomi utente");
-        ricezioneListaUtenti = true;
         return (ArrayList) mexInput.get(1);
     }
     
@@ -214,25 +220,14 @@ public class Ricezione extends Thread{
         listaUtenti.remove(mexInput.get(1));
     }
     
-    public static boolean getEsitoListaUtenti(){
-        return ricezioneListaUtenti;
-        }
 
     private void removeFriends(ArrayList arrayList) {
         String utenteDaEliminare = (String)((ArrayList)arrayList).get(1);
         try{
             friendsList.remove(utenteDaEliminare);
-            
+            friendsListWithoutAnswer.remove(utenteDaEliminare); 
         }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        try{
-            friendsListWithoutAnswer.remove(utenteDaEliminare);
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }    
+        }   
     }
     
    
