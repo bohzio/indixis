@@ -54,6 +54,8 @@ public class ChatGUi extends javax.swing.JFrame {
         title = new javax.swing.JPanel();
         user = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        addFriend = new javax.swing.JButton();
+        removeFriends = new javax.swing.JButton();
         menu = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         friend = new javax.swing.JPanel();
@@ -83,14 +85,22 @@ public class ChatGUi extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        addFriend.setText("aggiungi amico");
+
+        removeFriends.setText("rimuovi amico");
+
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGap(104, 104, 104)
+                .addContainerGap()
+                .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -100,6 +110,12 @@ public class ChatGUi extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(titleLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addFriend)
+                    .addComponent(removeFriends))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         menu.setBackground(new java.awt.Color(100, 181, 246));
@@ -250,14 +266,13 @@ public class ChatGUi extends javax.swing.JFrame {
                     Thread.sleep(10);
                     audioRecorder.fineRecord();
                     System.out.println(path);
-                    Connection.inviaFile(path, tab.getTitleAt(0));
                     
                 } catch (InterruptedException ex) {    
                 }
             });
             stopper.start();
             audioRecorder.inizioRecord();
-            
+            //Connection.inviaFile(path, tab.getTitleAt(0));
             
             
         } else {
@@ -493,6 +508,7 @@ public class ChatGUi extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addFriend;
     private javax.swing.JPanel friend;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -500,6 +516,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel menu;
     private javax.swing.JTextPane messageText;
+    private javax.swing.JButton removeFriends;
     private javax.swing.JButton sendButton;
     private javax.swing.JButton sendFile;
     private javax.swing.JTabbedPane tab;

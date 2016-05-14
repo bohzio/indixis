@@ -125,9 +125,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="addFriend" min="-2" pref="120" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="removeFriends" min="-2" pref="109" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="user" min="-2" pref="288" max="-2" attributes="0"/>
-                  <EmptySpace pref="324" max="32767" attributes="0"/>
+                  <EmptySpace pref="161" max="32767" attributes="0"/>
                   <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               </Group>
@@ -140,6 +144,14 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Component id="user" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="addFriend" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="removeFriends" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -157,6 +169,16 @@
         <Component class="javax.swing.JSeparator" name="jSeparator1">
           <Properties>
             <Property name="orientation" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="addFriend">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="aggiungi amico"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="removeFriends">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rimuovi amico"/>
           </Properties>
         </Component>
       </SubComponents>

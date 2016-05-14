@@ -134,7 +134,7 @@ public class Ricezione extends Thread{
      * @param mexInput
      * @return 
      */
-    private synchronized ArrayList riceviListaUtenti(ArrayList mexInput){
+   private synchronized ArrayList riceviListaUtenti(ArrayList mexInput){
         System.out.println("Ho ricevuto l'arrayList con i nomi utente");
         ricezioneListaUtenti = true;
         return (ArrayList) mexInput.get(1);
