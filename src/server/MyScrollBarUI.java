@@ -16,9 +16,6 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  */
 public class MyScrollBarUI  extends BasicScrollBarUI {
 
-    
-    
-    
      @Override
     protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
        g.setColor(Color.green);

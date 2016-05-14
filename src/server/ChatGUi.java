@@ -285,12 +285,12 @@ public class ChatGUi extends javax.swing.JFrame {
             panelMessage.repaint();
 
             //aggiungo il messaggio all'array
-            String user = "QQQ";
+            String localUser = user.getText();
             String destinatario = tab.getTitleAt(0);
             Calendar now = Calendar.getInstance();
             int day = now.get(Calendar.DAY_OF_MONTH);
             int hour = now.get(Calendar.HOUR_OF_DAY);
-            Message message = new Message(user, text, destinatario,hour,day,TypeMessage.MESSAGGIO,false);
+            Message message = new Message(localUser, text, destinatario,hour,day,TypeMessage.MESSAGGIO,false);
             listaMessaggi.add(message);
             connection.inviaMessaggio(text,destinatario);
         }
@@ -449,9 +449,9 @@ public class ChatGUi extends javax.swing.JFrame {
         panelMessage.revalidate();
         panelMessage.repaint();
         for (int i = 0; i < listaMessaggi.size(); i++) {
-            System.out.println(listaMessaggi.get(i).getMessage());
+            System.out.println(listaMessaggi.get(i).toString());
             String userLocal = user.getText();
-            if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
+            //if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
                 if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario) ) {  // il messaggio è rivolot all'utente che esgue il prg
                     System.out.println("entrato##########");
 
@@ -490,7 +490,7 @@ public class ChatGUi extends javax.swing.JFrame {
                     panelMessage.repaint();
                 }
                 }
-            }
+            
         }
     }
     

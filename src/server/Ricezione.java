@@ -58,7 +58,11 @@ public class Ricezione extends Thread{
         return autenticato;
     }
     
-      public boolean registrazione() {
+    /**
+     * Metodo che riceve l'esito della registrazione dal server
+     * @return registrazione a seconda dell'esito della registrazione
+     */
+    public boolean registrazione() {
         boolean registrazione;
         ArrayList rispostaServer;
 
