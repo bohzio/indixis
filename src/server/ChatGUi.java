@@ -285,12 +285,12 @@ public class ChatGUi extends javax.swing.JFrame {
             panelMessage.repaint();
 
             //aggiungo il messaggio all'array
-            String user = "QQQ";
+            String localUser = user.getText();
             String destinatario = tab.getTitleAt(0);
             Calendar now = Calendar.getInstance();
             int day = now.get(Calendar.DAY_OF_MONTH);
             int hour = now.get(Calendar.HOUR_OF_DAY);
-            Message message = new Message(user, text, destinatario,hour,day,TypeMessage.MESSAGGIO,false);
+            Message message = new Message(localUser, text, destinatario,hour,day,TypeMessage.MESSAGGIO,false);
             listaMessaggi.add(message);
             connection.inviaMessaggio(text,destinatario);
         }
