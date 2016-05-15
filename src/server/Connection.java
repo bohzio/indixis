@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,8 +22,8 @@ public class Connection {
     private final int portServer; // 5555
     private final String ipServer; // "127.0.0.1"
     private Ricezione ricezione = null;
-    protected String username = null;
-    protected String password = null;
+    private static String username = null;
+    private static String password = null;
     private final String type;
     private final ChatGUi graphics;
     private boolean esitoConnessione;
@@ -164,13 +165,17 @@ public class Connection {
      */
     public static void inviaMessaggio(String mex, String destinatario){
         try{
-            //System.out.println("invio messaggio da Connection... ");
+            System.out.println("sono entrato");
             ArrayList mexFormattato = new ArrayList();
             mexFormattato.add("MEX-OUT");
-            mexFormattato.add(destinatario);
-            mexFormattato.add(mex);
+            Calendar now = Calendar.getInstance();
+            int day = now.get(Calendar.DAY_OF_MONTH);
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            Message message = new Message(username,mex,destinatario,hour,day,TypeMessage.MESSAGGIO);
+            mexFormattato.add(message);
             os.writeObject(mexFormattato);
             os.flush();
+            System.out.println("ho inviato il messaggio");
         }
         catch(Exception e){
             System.out.println(e.getMessage());
@@ -234,7 +239,7 @@ public class Connection {
         try {
             socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
         

@@ -2,7 +2,7 @@ package server;
 
  
 
-import server.Messaggio;
+import server.Message;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,10 +19,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sun.util.calendar.LocalGregorianCalendar.Date;
 
 /**
  * 
@@ -208,16 +212,16 @@ public class UserHandler extends Thread {
      */
     public synchronized boolean reindirizzaMessaggio(ArrayList mexIs){
         try{
-            addMexToDb((String)mexIs.get(1),(String)mexIs.get(2));
+            Message messaggio = (Message)mexIs.get(1);
+            addMexToDb(messaggio.getDestinatario(),messaggio.getMessage());
+            
             ArrayList mexReplicato = new ArrayList();
             for (UserHandler userH : Server.threadAperti) {
-                if (userH.getName().equals(mexIs.get(1))) {
+                if (userH.getName().equals(messaggio.getDestinatario())) {
                     mexReplicato.add("MEX-IN");
-                    mexReplicato.add(getName());
-                    mexReplicato.add(mexIs.get(2));
-                    System.out.println("Messaggio inoltrato a " + mexIs.get(1));
+                    mexReplicato.add(messaggio);
+                    System.out.println("Messaggio inoltrato a " + messaggio.getDestinatario());
                     userH.outputSocket(mexReplicato);
-                    addMexToDb((String)mexIs.get(1),(String)mexIs.get(2));
                     break;
                 }
             }
@@ -300,6 +304,7 @@ public class UserHandler extends Thread {
         Timestamp data = new java.sql.Timestamp(calendar.getTime().getTime());
 
         try {
+            System.out.println("autore:"+autore+",tipo"+tipo+",testo"+testo+"destinataroo"+destinatario);
             String SQL =  "INSERT INTO messaggi (autore,tipo,testo,path,data,destinatario) VALUES ('" + autore + "','" + tipo +  "','" + testo + "','" + path + "','"+ data +"','"+ destinatario +"');";
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(SQL);
@@ -307,6 +312,8 @@ public class UserHandler extends Thread {
             stmt.close();
             
             esito = true;
+            
+            System.out.println("Aggiunto il mex al db");
             
         } catch (SQLException ex) {
             System.out.println("Errore query addMexToDb --> "+ ex);
@@ -427,25 +434,41 @@ public class UserHandler extends Thread {
     }
     
     
-    public synchronized ArrayList reindirizzaListaMex(){
+    public synchronized ArrayList reindirizzaListaMex() throws ParseException{
     ArrayList ris = new ArrayList();
     ris.add("LIST_MEX-REC");
     String userName = datiPersonali.getUserName();
     
     try{
-            String SQL =  "SELECT * FROM `messaggi` WHERE autore = '" + userName + "' AND destinatario = '" + userName + "' ORDER BY data;" ;
-            Statement stmt = connection.createStatement();
+            String SQL =  "SELECT * FROM `messaggi` WHERE autore = '" + userName + "' OR destinatario = '" + userName + "' ORDER BY data;" ;
+        try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(SQL);
 
-            while (rs.next()) {   
-                if (rs.getString("tipo").equals("text")){
-                    Messaggio messaggio = new Messaggio(rs.getString("destinatario"),rs.getString("autore"),rs.getString("data"),rs.getString("testo"));
+            while (rs.next()) {
+                System.out.println("generato messaggio");
+                String data = rs.getString("data");
+                java.util.Date temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(data);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(temp);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int hour = cal.get(Calendar.HOUR_OF_DAY);
+                
+                if(rs.getString("tipo").equals("text")){ 
+                    Message messaggio = new Message(rs.getString("autore"),rs.getString("testo"),rs.getString("destinatario"),hour,day,TypeMessage.MESSAGGIO);
+                    ris.add(messaggio);
+                }if(rs.getString("tipo").equals("file")){
+                    Message messaggio = new Message(rs.getString("autore"),transformFileToByte(rs.getString("path")),rs.getString("destinatario"),hour,day,TypeMessage.FILE);
+                    ris.add(messaggio);
+                }if(rs.getString("tipo").equals("audio")){
+                    Message messaggio = new Message(rs.getString("autore"),transformFileToByte(rs.getString("path")),rs.getString("destinatario"),hour,day,TypeMessage.AUDIO);
+                    ris.add(messaggio);
+                }if(rs.getString("tipo").equals("foto")){
+                    Message messaggio = new Message(rs.getString("autore"),transformFileToByte(rs.getString("path")),rs.getString("destinatario"),hour,day,TypeMessage.FOTO);
                     ris.add(messaggio);
                 }
                 
             }
-   
-            stmt.close();
+        }
             System.out.println("Ho generato l'array di messaggi");
             
         } catch (SQLException ex) {
@@ -457,7 +480,7 @@ public class UserHandler extends Thread {
  
     }
     
-    public synchronized byte[] transformFileToByte(String percorso){
+    private synchronized byte[] transformFileToByte(String percorso){
         Path path = Paths.get(percorso);
         byte[] data = null;
         try {

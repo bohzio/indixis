@@ -11,13 +11,10 @@ import java.security.NoSuchAlgorithmException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -499,13 +496,15 @@ public class ChatGUi extends javax.swing.JFrame {
     public void inizialize() {
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
         panelMessage.setMaximumSize(new Dimension(600, 600));
-        scroll.setViewportView(panelMessage);                                  //add
-        //add
+        scroll.setViewportView(panelMessage);
         scroll.setPreferredSize(new Dimension(50, 50));
-        scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());         //add
+        scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
 
     }
 
+    public void setListaMessaggi(ArrayList messaggi){
+        listaMessaggi = messaggi;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFriend;
@@ -523,7 +522,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JPanel title;
     public javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
-       private ArrayList ar = new ArrayList();
+    private ArrayList ar = new ArrayList();
     public ArrayList arrayTab = new ArrayList();
     private String username;
     private String password;

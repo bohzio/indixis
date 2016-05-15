@@ -87,6 +87,12 @@ public class Ricezione extends Thread{
      
         while (continua) {
             try {
+                try{
+                   //System.out.println(is.readObject().getClass());
+                }catch(Exception e){
+                    System.out.println("eccezione nuova");
+                    e.printStackTrace();
+                }
                 mexInput = (ArrayList) is.readObject();
                 System.out.println("___" + mexInput.get(0));
                 switch ((String) mexInput.get(0)) {
@@ -130,9 +136,10 @@ public class Ricezione extends Thread{
             }
             catch (IOException e) {
                 continua = false;
-                System.out.println("ERRORE DI IO");
+                e.printStackTrace();
             }
             catch (ClassNotFoundException e) {
+                 e.printStackTrace();
             }
         }
     }
@@ -165,29 +172,30 @@ public class Ricezione extends Thread{
     private synchronized void riceviListaMex(ArrayList mexInput){
         System.out.println("lista messaggi arrivata");
         mexInput.remove(0);
-        mexInput.stream().forEach((i) -> {
-            System.out.println(((Messaggio)i).getMittente()); //puoi farti tutti i get per prenterdi i messaggio e aggiornare la grafica
-        });  
+        ArrayList<Message>messaggi = mexInput;
+        for (Message message : messaggi){
+            System.out.println("sono entrato nel ciclo");
+            System.out.println(message.getType());
+        }
     }
     
-    
+
     /**
      * 
      * @param mexInput
      */
     private synchronized void riceviMessaggio(ArrayList mexInput){
-        String mex =  (String)(mexInput.get(2));
-        String user =  (String)(mexInput.get(1));
+        Message messaggio = (Message)mexInput.get(1);
+        messaggio.setForeign(true); // truee vuol dire che è ricevuto
+        
+        String mex =  messaggio.getMessage();
+        String user =  messaggio.getUser();
+        
         System.out.println("user: "+user+" mex: "+mex);
+        
         graphics.addNotify(user);
-        
-        Calendar now = Calendar.getInstance();
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-        
-        Message message = new Message(user,mex,username,hour,day,TypeMessage.MESSAGGIO,true);
-        graphics.addMessage(message);
-        
+        graphics.addMessage(messaggio);
+    
     }
     
     /**
