@@ -7,6 +7,7 @@ package server;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -151,6 +152,7 @@ public class Indixis extends Application {
                 graphics.setUser(usernameLogin);
                 graphics.setVisible(true);
                 actiontarget.setText(" Sto loggando ...");
+                Platform.exit();
             }
         });
 
