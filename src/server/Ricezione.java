@@ -173,8 +173,9 @@ public class Ricezione extends Thread{
         System.out.println("lista messaggi arrivata");
         mexInput.remove(0);
         ArrayList<Message>messaggi = mexInput;
+        
+        graphics.setListaMessaggi(messaggi);
         for (Message message : messaggi){
-            System.out.println("sono entrato nel ciclo");
             System.out.println(message.getType());
         }
     }

@@ -453,8 +453,14 @@ public class UserHandler extends Thread {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 int hour = cal.get(Calendar.HOUR_OF_DAY);
                 
-                if(rs.getString("tipo").equals("text")){ 
-                    Message messaggio = new Message(rs.getString("autore"),rs.getString("testo"),rs.getString("destinatario"),hour,day,TypeMessage.MESSAGGIO);
+                if(rs.getString("tipo").equals("text")){
+                    boolean foregin = false;
+                    if (rs.getString("destinatario").equals(userName)){
+                        foregin = true;
+                    }if(rs.getString("autore").equals(userName)){
+                        foregin = false;
+                    }
+                    Message messaggio = new Message(rs.getString("autore"),rs.getString("testo"),rs.getString("destinatario"),hour,day,TypeMessage.MESSAGGIO,foregin);
                     ris.add(messaggio);
                 }if(rs.getString("tipo").equals("file")){
                     Message messaggio = new Message(rs.getString("autore"),transformFileToByte(rs.getString("path")),rs.getString("destinatario"),hour,day,TypeMessage.FILE);
