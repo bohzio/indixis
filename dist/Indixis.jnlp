@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="Indixis.jar" size="236364" download="eager" />
+=======
+    <jar href="Indixis.jar" size="237186" download="eager" />
+>>>>>>> 0d8945fc8a4d293361427e60ea5336ce4b826fd2
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Indixis" >
     <param name="requiredFXVersion" value="8.0+"/>
