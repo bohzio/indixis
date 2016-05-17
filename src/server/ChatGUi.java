@@ -352,8 +352,16 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param messaggio
      */
     public void addMessage(Message messaggio) {
-        listaMessaggi.add(messaggio);
-        setMessage();
+        //listaMessaggi.add(messaggio);
+        ListMessageUser listMexPerUser;
+        if(messaggio.getDestinatario().equals(username)){
+           listMexPerUser = findInListUsersMessage(messaggio.getUser());
+        } else{
+            listMexPerUser = findInListUsersMessage(messaggio.getDestinatario());
+        }
+        
+        listMexPerUser.addMessage(messaggio);
+        setMessage(listMexPerUser);
     }
 
     /**
@@ -362,12 +370,14 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param user
      */
     public void addNotify(String user) {
-        JLabel k = new JLabel();
-        int i = Integer.valueOf((String) notifiche.get(user));
-        k = (JLabel) (counterNotifiche.get(i));
-        String numberOfCurrentNotify = k.getText();
-        String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
-        k.setText(text);
+        if(!tab.getTitleAt(0).equals(user)){
+            JLabel k = new JLabel();
+            int i = Integer.valueOf((String) notifiche.get(user));
+            k = (JLabel) (counterNotifiche.get(i));
+            String numberOfCurrentNotify = k.getText();
+            String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
+            k.setText(text);
+        }
     }
 
     private boolean registrazione(String username, String password) {
@@ -399,12 +409,20 @@ public class ChatGUi extends javax.swing.JFrame {
         friend.setVisible(true);
         friend.revalidate();
     }
-
+    
+    private ListMessageUser findInListUsersMessage(String user){
+        for(ListMessageUser listUser: listUsersMessage){
+            System.out.println("Method to find user---" + listUser.getUser());
+            if(listUser.getUser().equals(user))  return listUser;
+        }
+        return null;
+    }
+    
     public void amici() {
         int x = 0;
         for (int i = 0; i < ar.size(); i++) {
             String text = (String) ar.get(i).toString();
-
+            listUsersMessage.add(new ListMessageUser(text));
             //notifiche
             notifiche.put(text, String.valueOf(i));
             JLabel notify = new JLabel("0");
@@ -425,7 +443,7 @@ public class ChatGUi extends javax.swing.JFrame {
                         int index = tab.getSelectedIndex();
                         tab.setTitleAt(0, text);
                     }
-                    setMessage();
+                    setMessage(findInListUsersMessage(tab.getTitleAt(0)));
                     System.out.println("--------------------------------------------");
                 }
             });
@@ -442,7 +460,7 @@ public class ChatGUi extends javax.swing.JFrame {
     /**
      * setta i messagi nel panel in corrispondenza dell utente
      */
-    public void setMessage() {
+    /*public void setMessage() {
         String destinatario = tab.getTitleAt(0);
         panelMessage.removeAll();
         //add your elements
@@ -483,11 +501,57 @@ public class ChatGUi extends javax.swing.JFrame {
         }
         panelMessage.revalidate();
         panelMessage.repaint();
+    }*/
+    
+    public void setMessage(ListMessageUser mexPerUser){
+        String destinatario = mexPerUser.getUser();
+        ArrayList<Message> listMex = mexPerUser.getMessage();
+        panelMessage.removeAll();
+        //add your elements
+        panelMessage.revalidate();
+        panelMessage.repaint();
+        for (int i = 0; i < listMex.size(); i++) {
+            System.out.println(listMex.get(i).toString());
+            //String userLocal = user.getText();
+            //if (listaMessaggi.get(i).getUser().equals(userLocal)) { //utente che esegue l'app   
+            if (listMex.get(i).getDestinatario().equals(destinatario) || listMex.get(i).getUser().equals(destinatario)) {  // il messaggio è rivolot all'utente che esgue il prg
+                
+                System.out.println(listMex.get(i).getDestinatario() + ", " + listMex.get(i).getMessage() + ", " + listMex.get(i).getUser() + ", " + listMex.get(i).isForeign());
+                JPanel boxMessage = new JPanel();
+                if (listMex.get(i).isForeign() == true) {
+                    boxMessage.setBackground(Color.blue);
+                    //aggiugnere i bordi rotondi
+                    boxMessage.setMaximumSize(new Dimension(400, 30));
+                    boxMessage.setAlignmentX(Component.LEFT_ALIGNMENT);//0.0
+                    JLabel message = new JLabel(listMex.get(i).getMessage());
+                    boxMessage.add(message);
+                    // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+                    panelMessage.add(boxMessage);
+                }
+//JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                else if (listMex.get(i).isForeign() == false) {
+                    boxMessage.setBackground(Color.red);
+                    //aggiugnere i bordi rotondi
+                    boxMessage.setMaximumSize(new Dimension(400, 30));
+                    boxMessage.setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
+                    JLabel message = new JLabel(listMex.get(i).getMessage());
+
+                    boxMessage.add(message);
+                    // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+                    
+                }
+                panelMessage.add(boxMessage);
+            }
+        }
+        panelMessage.revalidate();
+        panelMessage.repaint();
     }
 
     public void inizialize() {
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
         panelMessage.setMaximumSize(new Dimension(600, 600));
+        new JLabel().setAlignmentX(Component.RIGHT_ALIGNMENT);//0.0
+        new JLabel().setAlignmentX(Component.LEFT_ALIGNMENT);//0.0
         scroll.setViewportView(panelMessage);
         scroll.setPreferredSize(new Dimension(50, 50));
         scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
@@ -515,6 +579,7 @@ public class ChatGUi extends javax.swing.JFrame {
     public javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
     private ArrayList ar = new ArrayList();
+    private ArrayList<ListMessageUser> listUsersMessage = new ArrayList();
     public ArrayList arrayTab = new ArrayList();
     private String username;
     private String password;
