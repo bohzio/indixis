@@ -86,7 +86,7 @@ public class UserHandler extends Thread {
                 // inviamo la conferma dell'autenticazione all'utente
                 risp.add("AUT-R");
                 outputSocket(risp);
-                inviaNuovoUtenteAdAltri(datiPersonali.getUserName());
+//                inviaNuovoUtenteAdAltri(datiPersonali.getUserName());
                 System.out.println("Username: " + datiPersonali.getUserName());
                 
                 createDirFile();
@@ -196,13 +196,32 @@ public class UserHandler extends Thread {
     private synchronized ArrayList listaUtenti(){
         ArrayList listaReturn = new ArrayList();
         ArrayList utenti = new ArrayList();
-        
-        Server.utentiConnessi.stream().forEach((user) -> {
-            utenti.add(user.getUserName());
-        });
         listaReturn.add("LU-REC");
-        listaReturn.add(utenti);
+        
+       try{
+                String SQL =  "SELECT * FROM `users` WHERE username != '"+userName+"';"; 
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(SQL);
+
+                while (rs.next()) {   
+                   utenti.add(rs.getString("username"));
+                    System.out.println(rs.getString("username"));
+                }
+                           
+                listaReturn.add(utenti);
+                
+                stmt.close();
+                System.out.println("Ho generato l'array di utenti");
+
+            } catch (SQLException ex) {
+                System.out.println("Errore query listaUtenti --> "+ ex);
+
+            }
+     
+
         return listaReturn;
+        
+        
     }
     
     /**
@@ -362,7 +381,7 @@ public class UserHandler extends Thread {
             System.out.println(e.getMessage());
         }
         if (login){
-            rimuoviUtenteAdAltri(datiPersonali.getUserName());   
+//            rimuoviUtenteAdAltri(datiPersonali.getUserName());   
             System.out.println("L'utente-->" + datiPersonali.getUserName() + " si è disconnesso");
         }
     }
@@ -371,23 +390,23 @@ public class UserHandler extends Thread {
         return new UserObject((String) tmp.get(0), (String) tmp.get(1));
     }
 
-    private synchronized void inviaNuovoUtenteAdAltri(String nomeUtente) {
-        ArrayList msg = new ArrayList();
-        msg.add("NEW-U");
-        msg.add(nomeUtente);
-        for (int i = 0; i < Server.threadAperti.size() - 1; i++){
-            Server.threadAperti.get(i).outputSocket(msg);
-        }
-    }
-    
-    private synchronized void rimuoviUtenteAdAltri(String nomeUtente) {
-        ArrayList msg = new ArrayList();
-        msg.add("REMOVE-U");
-        msg.add(nomeUtente);
-        for (int i = 0; i < Server.threadAperti.size() - 1; i++){
-            Server.threadAperti.get(i).outputSocket(msg);
-        }
-    }
+//    private synchronized void inviaNuovoUtenteAdAltri(String nomeUtente) {
+//        ArrayList msg = new ArrayList();
+//        msg.add("NEW-U");
+//        msg.add(nomeUtente);
+//        for (int i = 0; i < Server.threadAperti.size() - 1; i++){
+//            Server.threadAperti.get(i).outputSocket(msg);
+//        }
+//    }
+//
+//    private synchronized void rimuoviUtenteAdAltri(String nomeUtente) {
+//        ArrayList msg = new ArrayList();
+//        msg.add("REMOVE-U");
+//        msg.add(nomeUtente);
+//        for (int i = 0; i < Server.threadAperti.size() - 1; i++){
+//            Server.threadAperti.get(i).outputSocket(msg);
+//        }
+//    }
     
     public static boolean connettiDB(){
         boolean esito = false;
@@ -445,7 +464,6 @@ public class UserHandler extends Thread {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
-                System.out.println("generato messaggio");
                 String data = rs.getString("data");
                 java.util.Date temp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS").parse(data);
                 Calendar cal = Calendar.getInstance();
@@ -502,7 +520,7 @@ public class UserHandler extends Thread {
         String autore = datiPersonali.getUserName();
         ArrayList risp = new ArrayList();
         risp.add("NEW-FRIEND-REQ");
-        risp.add(destinatario);
+        risp.add(autore);
         try {
             String SQL =  "INSERT INTO friends (user1,user2) VALUES ('" + autore + "','" + destinatario + "');";
             Statement stmt = connection.createStatement();
@@ -529,13 +547,24 @@ public class UserHandler extends Thread {
     public synchronized boolean acceptFriendRequest(String user1){
         boolean esito = true;
         String autore = datiPersonali.getUserName();
-  
+        ArrayList risp = new ArrayList<>();
+        risp.add("REQUEST-ACCEPT-REAL-TIME");
+        risp.add(user1);
+        
         try {
             String SQL =  "UPDATE friends SET stato=1 WHERE user1 = '"+user1+"' AND user2 = '" + autore + "';";
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(SQL);
   
             stmt.close();
+            
+            for (UserHandler userH : Server.threadAperti) {
+                if (userH.getName().equals(user1)) {
+                    userH.outputSocket(risp);   
+                } if (userH.getName().equals(autore)) {
+                    userH.outputSocket(risp);   
+                }
+            }
             
             esito = true;
             System.out.println("Amicizia tra --> "+autore+", "+user1);
@@ -555,20 +584,21 @@ public class UserHandler extends Thread {
         boolean esito = true;
         String autore = datiPersonali.getUserName();
         ArrayList risp = new ArrayList();
-        risp.add("REMOVE-FRIEND");
+        risp.add("REMOVE-FRIEND-REAL-TIME");
         risp.add(user1);
   
         try {
-            String SQL =  "DELETE from friends  WHERE user1 = '"+user1+"' AND user2 = '" + autore + "';";
+            String SQL =  "DELETE from friends  WHERE user1 = '"+user1+"' AND user2 = '" + autore + "' or user1 = '"+autore+"' AND user2 = '" + user1 + "';";
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(SQL);
   
             stmt.close();
             
             for (UserHandler userH : Server.threadAperti) {
-                if (userH.getName().equals(autore)) {
+                if (userH.getName().equals(user1)) {
                     userH.outputSocket(risp);   
-                    break;
+                } if (userH.getName().equals(autore)) {
+                    userH.outputSocket(risp);   
                 }
             }
             
@@ -592,15 +622,15 @@ public class UserHandler extends Thread {
         String userName = datiPersonali.getUserName();
 
         try{
-                String SQL =  "SELECT * FROM `friends` WHERE user1 = '"+userName+"' OR user2 = '"+userName+"' AND stato = 1;"; 
+                String SQL =  "SELECT * FROM `friends` WHERE user1 = '"+userName+"' OR user2 = '"+userName+"';"; 
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(SQL);
 
                 while (rs.next()) {   
-                    if (rs.getString("user1").equals(userName)){           
+                    if (rs.getString("user1").equals(userName) && rs.getString("stato").equals("1")){           
                         friends.add(rs.getString("user2"));
                     }
-                    if (rs.getString("user2").equals(userName)){           
+                    if (rs.getString("user2").equals(userName)&& rs.getString("stato").equals("1")){           
                         friends.add(rs.getString("user1"));
                     }
                 }

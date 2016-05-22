@@ -269,6 +269,7 @@ public class Connection {
             tmp.add(destinatario);
             os.writeObject(tmp);
             os.flush();
+            System.out.println("inviata richiesta di rimuovere");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

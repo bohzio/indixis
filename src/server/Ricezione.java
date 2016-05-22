@@ -19,9 +19,9 @@ public class Ricezione extends Thread {
     private final Socket socket;
     private boolean continua = true;
     private ObjectInputStream is;
-    private ArrayList listaUtenti;
-    private ArrayList friendsList;
-    private ArrayList friendsListWithoutAnswer;
+    public static ArrayList listaUtenti = new ArrayList<>();
+    public static ArrayList friendsList = new ArrayList<>();
+    public static ArrayList friendsListWithoutAnswer = new ArrayList<>();
     private final ChatGUi graphics;
     private final String username;
 
@@ -97,13 +97,7 @@ public class Ricezione extends Thread {
                 System.out.println("___" + mexInput.get(0));
                 switch ((String) mexInput.get(0)) {
                     case "LU-REC":
-                        listaUtenti = riceviListaUtenti((ArrayList) mexInput);
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                new AddFriend(listaUtenti);
-                            }
-                        });
+                        riceviListaUtenti(mexInput);
                         break;
                     case "MEX-IN":
                         riceviMessaggio(mexInput);
@@ -124,17 +118,27 @@ public class Ricezione extends Thread {
                         friendsList = riceviListaAmici((ArrayList) mexInput);
                         break;
                     case "NEW-FRIEND-REQ":
-                        updateFriendsListWithoutAnswer((ArrayList) mexInput);
-                        break;
-                    case "REMOVE-FRIEND":
-                        removeFriends((ArrayList) mexInput);
+                        System.out.println(mexInput.get(1)+"chi mi manda la richesta");
+                        updateFriendsListWithoutAnswer((String)mexInput.get(1));
+                        
                         break;
                     case "FRIENDS-LIST-WITHOUT-ANSWER":
                         friendsListWithoutAnswer = riceviListaAmiciSenzaRisposta((ArrayList) mexInput);
+                        RichiesteDiAmicizia.setListaRichieste(friendsListWithoutAnswer);
                         break;
                     case "ERRORE-REG-USERNAME-PRESENTE":
                         System.out.println("Username già presente !!");
                         Connection.termina();
+                        break;
+                     case "REQUEST-ACCEPT-REAL-TIME":
+                        friendsList.add((String)mexInput.get(1));
+                        graphics.nuovoAmico((String)mexInput.get(1));
+                        graphics.setFriendsListArray(friendsList);
+                        break;
+                     case "REMOVE-FRIEND-REAL-TIME":
+                        friendsList.remove((String)mexInput.get(1));
+                        graphics.rimozioneAmico((String)mexInput.get(1));
+                        graphics.setFriendsListArray(friendsList);
                         break;
                     default:
                         break;
@@ -154,7 +158,7 @@ public class Ricezione extends Thread {
      * @return
      */
     private synchronized ArrayList riceviListaUtenti(ArrayList mexInput) {
-        System.out.println("Ho ricevuto l'arrayList con i nomi utente");
+        AddFriend.setListUser((ArrayList) mexInput.get(1));
         return (ArrayList) mexInput.get(1);
     }
 
@@ -163,8 +167,10 @@ public class Ricezione extends Thread {
         return (ArrayList) mexInput.get(1);
     }
 
-    private synchronized void updateFriendsListWithoutAnswer(ArrayList mexInput) {
-        friendsListWithoutAnswer.add((String) mexInput.get(1));
+    private synchronized void updateFriendsListWithoutAnswer(String mittente) {
+        friendsListWithoutAnswer.add(mittente);
+        graphics.riceviAmicizia(mittente);
+        RichiesteDiAmicizia.setListaRichieste(friendsListWithoutAnswer);
     }
 
     private synchronized ArrayList riceviListaAmici(ArrayList mexInput) {
@@ -178,10 +184,7 @@ public class Ricezione extends Thread {
         System.out.println("lista messaggi arrivata");
         mexInput.remove(0);
         ArrayList<Message> messaggi = mexInput;
-        for (Message message : messaggi) {
-            System.out.println("sono entrato nel ciclo");
-            System.out.println(message.getType());
-        }
+        graphics.setListaMessaggi(messaggi);
     }
 
     /**
@@ -195,7 +198,7 @@ public class Ricezione extends Thread {
         String mex = messaggio.getMessage();
         String user = messaggio.getUser();
 
-        System.out.println("user: " + user + " mex: " + mex);
+        System.out.println("Ricevuto messaggio -> user: " + user + " mex: " + mex);
 
         graphics.addNotify(user);
         graphics.addMessage(messaggio);
