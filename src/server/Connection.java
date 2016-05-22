@@ -7,8 +7,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe che si connette al server e invia i dati
@@ -17,6 +15,7 @@ import java.util.logging.Logger;
  * @version 1.8
  */
 public class Connection {
+
     private static Socket socket;
     private static ObjectOutputStream os;
     private final int portServer; // 5555
@@ -28,42 +27,41 @@ public class Connection {
     private final ChatGUi graphics;
     private boolean esitoConnessione;
     private boolean esitoAutenticazione;
-    
-    public Connection(int port_server, String ip_server,String username,String password,String type,ChatGUi graphics) {
+
+    public Connection(int port_server, String ip_server, String username, String password, String type, ChatGUi graphics) {
         this.portServer = port_server;
         this.ipServer = ip_server;
         this.username = username;
         this.password = password;
         this.type = type;
         this.graphics = graphics;
-        if (type.equals("login")){
+        if (type.equals("login")) {
             controller("login");
-        }if (type.equals("registrazione")){
+        }
+        if (type.equals("registrazione")) {
             controller("registrazione");
         }
     }
-    
-    
-     
-     private void controller(String type){
-            if (connessione(type)){
-                System.out.println("Connessione riuscita");
-            }else{
-                System.out.println("Connessione fallita");
-                termina();
-                }
-     }
-    
+
+    private void controller(String type) {
+        if (connessione(type)) {
+            System.out.println("Connessione riuscita");
+        } else {
+            System.out.println("Connessione fallita");
+            termina();
+        }
+    }
+
     private boolean connessione(String regOrLog) {
         boolean result = false;
-        
+
         try {
 
             socket = new Socket(ipServer, portServer);
             os = new ObjectOutputStream(socket.getOutputStream());
             esitoConnessione = true;
-            ricezione = new Ricezione(socket,graphics,username);
-            if (regOrLog.equals("login")){
+            ricezione = new Ricezione(socket, graphics, username);
+            if (regOrLog.equals("login")) {
                 (this).autenticazione(username, password);
                 if (ricezione.autenticazione()) {
                     System.out.println("Autenticazione");
@@ -74,34 +72,34 @@ public class Connection {
                     ricezione.start();  //lancio il thread
                     result = true;
                 }
-            }if (regOrLog.equals("registrazione")){
-                (this).registrazione(username,password);
-                if (ricezione.registrazione()){
+            }
+            if (regOrLog.equals("registrazione")) {
+                (this).registrazione(username, password);
+                if (ricezione.registrazione()) {
                     System.out.println("Registrazione Riuscita !!!");
                     listaUtentiRequest();
                     listaMexRequest();
                     ricezione.start();  //lancio il thread
                     result = true;
                 }
-            
-            
+
             }
 
         } catch (Exception e) {
             result = false;
         }
-        
+
         return result;
     }
-    
+
     /**
-     * 
+     *
      * @param username
      * @param password
      */
     private void autenticazione(String username, String password) {
         ArrayList dati = new ArrayList();
-        
+
         dati.add(username);
         dati.add(password);
 
@@ -112,78 +110,72 @@ public class Connection {
             System.out.println(e.getMessage());
         }
     }
-    
+
     /**
-     * 
+     *
      */
-    public void listaUtentiRequest(){
-        try{
+    public static void listaUtentiRequest() {
+        try {
             ArrayList listaRequest = new ArrayList();
             listaRequest.add("LU-REQ");
             os.writeObject(listaRequest);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void friendsListRequest(){
-        try{
+
+    public void friendsListRequest() {
+        try {
             ArrayList listaRequest = new ArrayList();
             listaRequest.add("FRIENDS-LIST-REQ");
             os.writeObject(listaRequest);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    
-    
+
     /**
-     * 
+     *
      */
-    public void listaMexRequest(){
-        try{
+    public void listaMexRequest() {
+        try {
             System.out.println("Ho inviato la richiesta della lista messaggi");
             ArrayList listaRequest = new ArrayList();
             listaRequest.add("LIST-MEX");
             os.writeObject(listaRequest);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     /**
-     * 
+     *
      * @param mex
      * @param destinatario
      */
-    public static void inviaMessaggio(String mex, String destinatario){
-        try{
+    public static void inviaMessaggio(String mex, String destinatario) {
+        try {
             System.out.println("sono entrato");
             ArrayList mexFormattato = new ArrayList();
             mexFormattato.add("MEX-OUT");
             Calendar now = Calendar.getInstance();
             int day = now.get(Calendar.DAY_OF_MONTH);
             int hour = now.get(Calendar.HOUR_OF_DAY);
-            Message message = new Message(username,mex,destinatario,hour,day,TypeMessage.MESSAGGIO);
+            Message message = new Message(username, mex, destinatario, hour, day, TypeMessage.MESSAGGIO);
             mexFormattato.add(message);
             os.writeObject(mexFormattato);
             os.flush();
             System.out.println("ho inviato il messaggio");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    private static void invioStreamFile(ArrayList streamFile, String destinatario, String filename){
-        try{
+
+    private static void invioStreamFile(ArrayList streamFile, String destinatario, String filename) {
+        try {
             System.out.println("Inizio invio file");
             String name = filename.split("\\\\")[filename.split("\\\\").length - 1];
             System.out.println(name);
@@ -194,31 +186,30 @@ public class Connection {
             mexFormattato.add(name);
             os.writeObject(mexFormattato);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public static void inviaFile(String filename, String destinatario) {
         ArrayList streamFile = new ArrayList();
-        try(FileInputStream file = new FileInputStream(filename); 
-            BufferedInputStream fin = new BufferedInputStream(file)) {
+        try (FileInputStream file = new FileInputStream(filename);
+                BufferedInputStream fin = new BufferedInputStream(file)) {
             System.out.println("invio file da Connection...");
             System.out.println(filename);
             int line;
-            while ((line = fin.read()) != -1){
+            while ((line = fin.read()) != -1) {
                 streamFile.add(line);
             }
             invioStreamFile(streamFile, destinatario, filename);
-        } catch(java.io.IOException e){
+        } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public  boolean registrazione(String username, String password){
+
+    public boolean registrazione(String username, String password) {
         ArrayList dati = new ArrayList();
-        
+
         dati.add("NEW-REG");
         dati.add(username);
         dati.add(password);
@@ -233,67 +224,57 @@ public class Connection {
             return false;
         }
     }
-    
-    public static void termina(){
-        
+
+    public static void termina() {
+
         try {
             socket.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-        
-    public static void sendFriendRequest(String destinatario){
-        try{
+
+    public static void sendFriendRequest(String destinatario) {
+        try {
             //System.out.println("invio messaggio da Connection... ");
             ArrayList tmp = new ArrayList();
             tmp.add("FRIEND-REQ");
             tmp.add(destinatario);
             os.writeObject(tmp);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    
-    
+
     }
-    
-     public static void acceptFriendRequest(String destinatario){
-        try{
+
+    public static void acceptFriendRequest(String destinatario) {
+        try {
             //System.out.println("invio messaggio da Connection... ");
             ArrayList tmp = new ArrayList();
             tmp.add("ACCEPT-FRIEND");
             tmp.add(destinatario);
             os.writeObject(tmp);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-     }
-        
-    public static void removeFriend(String destinatario){
-        try{
+    }
+
+    public static void removeFriend(String destinatario) {
+        try {
             //System.out.println("invio messaggio da Connection... ");
             ArrayList tmp = new ArrayList();
             tmp.add("REMOVE-FRIEND");
             tmp.add(destinatario);
             os.writeObject(tmp);
             os.flush();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-}
     
-   
-
-        
-        
-   
-      
- 
-      
-  
+    public static String getUsername() {
+        return username;
+    }
+}
