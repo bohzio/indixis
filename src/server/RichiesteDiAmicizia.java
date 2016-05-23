@@ -29,16 +29,7 @@ public class RichiesteDiAmicizia extends javax.swing.JFrame {
    
     
     private ArrayList getUsers(){
-        ArrayList<String> ris = null;
-        if ((listaUtenti.size() - ChatGUi.ar.size()) > 0) {
-            ris = new ArrayList();
-            for (int i = 0; i < listaUtenti.size(); i++) {
-                if (isMyFriend((String) listaUtenti.get(i)) && !Connection.getUsername().equals(listaUtenti.get(i))) {
-                    ris.add((String) listaUtenti.get(i));
-                }
-            }
-        }
-        return ris;
+        return listaUtenti;
     }
     
     private boolean isMyFriend(String utente) {

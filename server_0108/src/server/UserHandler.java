@@ -120,6 +120,8 @@ public class UserHandler extends Thread {
                                 break;
                             case "REMOVE-FRIEND":
                                 removeFriend((String)richieste.get(1));
+                            case "GET-LIST-FRIEND-WITHOUT-ANSWERS":
+                                outputSocket(getFriendsListWithoutAnswers());
                         }
                     } catch (Exception e) {
                         continua = false;

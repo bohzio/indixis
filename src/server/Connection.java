@@ -69,6 +69,8 @@ public class Connection {
                     friendsListRequest();
                     listaUtentiRequest();
                     listaMexRequest();
+                    getListFriendWithoutAnswers();
+                    
                     ricezione.start();  //lancio il thread
                     result = true;
                 }
@@ -270,6 +272,19 @@ public class Connection {
             os.writeObject(tmp);
             os.flush();
             System.out.println("inviata richiesta di rimuovere");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void getListFriendWithoutAnswers() {
+        try {
+            //System.out.println("invio messaggio da Connection... ");
+            ArrayList tmp = new ArrayList();
+            tmp.add("GET-LIST-FRIEND-WITHOUT-ANSWERS");
+            os.writeObject(tmp);
+            os.flush();
+            System.out.println("inviata richiesta GET-LIST-FRIEND-WITHOUT-ANSWERS");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

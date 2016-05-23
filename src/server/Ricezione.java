@@ -123,6 +123,7 @@ public class Ricezione extends Thread {
                         
                         break;
                     case "FRIENDS-LIST-WITHOUT-ANSWER":
+                        System.out.println("Ho ricevuto l'arrayList con le richieste di amicizia in sospeso a cui io non ho risposto");
                         friendsListWithoutAnswer = riceviListaAmiciSenzaRisposta((ArrayList) mexInput);
                         RichiesteDiAmicizia.setListaRichieste(friendsListWithoutAnswer);
                         break;
@@ -163,7 +164,7 @@ public class Ricezione extends Thread {
     }
 
     private synchronized ArrayList riceviListaAmiciSenzaRisposta(ArrayList mexInput) {
-        System.out.println("Ho ricevuto l'arrayList con le richieste di amicizia in sospeso a cui io non ho risposto");
+        System.out.println(((ArrayList)(mexInput.get(1))).get(0)+"RICHIESTA############à");
         return (ArrayList) mexInput.get(1);
     }
 
@@ -174,7 +175,7 @@ public class Ricezione extends Thread {
     }
 
     private synchronized ArrayList riceviListaAmici(ArrayList mexInput) {
-        ArrayList ris = (ArrayList) mexInput.get(1);
+        ArrayList<String> ris = (ArrayList<String>) mexInput.get(1);
         graphics.setFriendsListArray(ris);
         System.out.println("Ho settato la lista degli amici");
         return ris;
