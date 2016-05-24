@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mattia/Documents/indixis_finale/src/server/Connection.java</file>
-            <file>file:/C:/Users/mattia/Documents/indixis_finale/src/server/RemoveFriend.java</file>
-            <file>file:/C:/Users/mattia/Documents/indixis_finale/src/server/RichiesteDiAmicizia.java</file>
-            <file>file:/C:/Users/mattia/Documents/indixis_finale/src/server/Ricezione.java</file>
-            <file>file:/C:/Users/mattia/Documents/indixis_finale/src/server/ChatGUi.java</file>
+            <file>file:/C:/Users/Francesco-Taioli/Documents/INDIXIS_FINAL_3/src/server/ChatGUi.java</file>
+            <file>file:/C:/Users/Francesco-Taioli/Documents/INDIXIS_FINAL_3/src/server/ChatPanel.java</file>
+            <file>file:/C:/Users/Francesco-Taioli/Documents/INDIXIS_FINAL_3/src/server/ChatPaneMsgBox.java</file>
+            <file>file:/C:/Users/Francesco-Taioli/Documents/INDIXIS_FINAL_3/src/server/TextBubbleBorder.java</file>
         </group>
     </open-files>
 </project-private>

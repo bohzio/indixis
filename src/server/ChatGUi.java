@@ -146,7 +146,7 @@ public class ChatGUi extends javax.swing.JFrame {
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,15 +166,17 @@ public class ChatGUi extends javax.swing.JFrame {
         );
         friendLayout.setVerticalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
 
         tab.setBackground(new java.awt.Color(255, 255, 255));
         tab.setForeground(new java.awt.Color(0, 153, 102));
         tab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         tab.setAutoscrolls(true);
-        tab.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
+        tab.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tab.setInheritsPopupMenu(true);
+        tab.setMaximumSize(new java.awt.Dimension(600, 600));
+        tab.setMinimumSize(new java.awt.Dimension(500, 600));
 
         messageText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -224,20 +226,24 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 24, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sendFile, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sendFile, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(79, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -250,21 +256,22 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(343, 343, 343)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(sendFile)
-                                .addGap(31, 31, 31))))
-                    .addComponent(friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addGap(42, 42, 42))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2))))
+                    .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 818, Short.MAX_VALUE)))
+                    .addGap(0, 636, Short.MAX_VALUE)))
         );
 
         pack();
@@ -294,6 +301,11 @@ public class ChatGUi extends javax.swing.JFrame {
 
         } else {
             String text = messageText.getText();
+            
+                ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text),true);
+                 addPanel(paneRight);
+            
+            /*
             JLabel label = new JLabel(text + " inviato");
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBackground(Color.red);
@@ -304,7 +316,7 @@ public class ChatGUi extends javax.swing.JFrame {
             panelMessage.add(panel);
             panelMessage.revalidate();
             panelMessage.repaint();
-            /*JPanel boxMessage = new JPanel();
+            JPanel boxMessage = new JPanel();
             boxMessage.setBackground(Color.blue);
             //aggiugnere i bordi rotondi
             boxMessage.setMaximumSize(new Dimension(400, 30));
@@ -469,7 +481,7 @@ public class ChatGUi extends javax.swing.JFrame {
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     notify.setText("0");
-                    //panelMessage.setBackground(Color.white);
+                    panelMessage.setBackground(Color.white);
                     arrayTab.add(tab);
                     if (x == 0) {
                         tab.addTab(text, scroll);
@@ -513,6 +525,10 @@ public class ChatGUi extends javax.swing.JFrame {
         //add your elements
         panelMessage.revalidate();
         panelMessage.repaint();
+        ChatPaneMsgBox defaultMessage = new ChatPaneMsgBox("Benvenuto in Indixis, qui potrai messaggiare con gli amici!",true);
+        addPanel(defaultMessage);
+        ChatPaneMsgBox defaultMessage2 = new ChatPaneMsgBox("<html>Inzia subito a scrivere ai tuoi amici, <br>e non dimenticare, <br> <strong>divertiti!</strong><html>",false);
+        addPanel(defaultMessage2);
         for (int i = 0; i < listaMessaggi.size(); i++) {
             System.out.println(listaMessaggi.get(i).toString());
             //String userLocal = user.getText();
@@ -522,6 +538,8 @@ public class ChatGUi extends javax.swing.JFrame {
                 System.out.println(listaMessaggi.get(i).getDestinatario() + ", " + listaMessaggi.get(i).getMessage() + ", " + listaMessaggi.get(i).getUser() + ", " + listaMessaggi.get(i).isForeign());
 
                 if (listaMessaggi.get(i).isForeign() == true) {
+                    ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),false);
+                    addPanel(paneLeft);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panel = new JPanel(new BorderLayout());
@@ -530,15 +548,18 @@ public class ChatGUi extends javax.swing.JFrame {
                     //panel.setPreferredSize(new Dimension(20, 20));
                     panel.add(message, BorderLayout.WEST);
                     panel.setSize(20, 20);
-                            */
+                          
                     JPanel left = new JPanel(new FlowLayout(FlowLayout.LEFT) );
                         left.add(new JLabel(listaMessaggi.get(i).getMessage()));
                         //add(left);
                     panelMessage.add(left);
                     panelMessage.revalidate();
+                              */
 
                 } //JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 else if (listaMessaggi.get(i).isForeign() == false) {
+                    ChatPaneMsgBox paneRight = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),true);
+                    addPanel(paneRight);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panelF = new JPanel(new BorderLayout());
@@ -548,28 +569,62 @@ public class ChatGUi extends javax.swing.JFrame {
                     panelF.add(message, BorderLayout.EAST);
                     panelF.setSize(20, 20);
                    
-                            */JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                            JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                         right.add(new JLabel(listaMessaggi.get(i).getMessage()));
                         //add(right);
                      panelMessage.add(right);
                     panelMessage.revalidate();
+*/
                 }
                 //panelMessage.add(boxMessage);
             }
         }
+       // panelMessage.revalidate();
+        //panelMessage.repaint();
+    }
+
+    /**
+     * aggiunge un pboxPanel al pannello dei messaggi
+     * @param panel 
+     */
+    private void addPanel(Component panel){
+        panelMessage.add(panel);
         panelMessage.revalidate();
         panelMessage.repaint();
     }
-
+    
+    /**
+     * controlla la lughezza del messaggio, se > di 44 va a capo
+     * @param message
+     * @return 
+     */
+    private String lenControl(String message){
+        
+       
+        String newMessage = "<html>";
+        String [] splitMessage;
+        if(message.length() > 44 ){
+        splitMessage = message.split(" ");
+        for(int i = 0; i< splitMessage.length -1;i++){
+            newMessage +=  " " + splitMessage[i] ;
+        }
+        System.out.println("################################PRIMAAA#"+ " " + newMessage);
+        newMessage += "<br>" + splitMessage[splitMessage.length-1] + "</html>";
+            System.out.println("##############################################"+ " " + newMessage);
+    }
+        return newMessage;
+    }
+    
+    
     public void inizialize() {
         panelMessage = new JPanel();
-        RelativeLayout rl = new RelativeLayout(RelativeLayout.Y_AXIS);
-        rl.setFill(true);
-        panelMessage.setLayout( rl );
+        
+        System.out.println("################################################aggiutno");
+        panelMessage.setLayout( new BoxLayout(panelMessage, BoxLayout.Y_AXIS) );
         //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
      //scroll.add(panelMessage);
         //panelMessage.setSize(new Dimension(500,500));
-        panelMessage.setBackground(Color.pink);
+        //panelMessage.setBackground(Color.pink);
         //panelMessage.setMaximumSize(new Dimension(600, 600));
      scroll.setViewportView(panelMessage);
         //scroll.setPreferredSize(new Dimension(50, 50));
@@ -605,7 +660,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private Connection connection;
     private JPanel panelMessage;
     int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
     JScrollPane scroll = new JScrollPane(v, h);
     private List<Message> listaMessaggi = new ArrayList();
     LinkedHashMap notifiche = new LinkedHashMap();
