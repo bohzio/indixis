@@ -173,8 +173,10 @@ public class ChatGUi extends javax.swing.JFrame {
         tab.setForeground(new java.awt.Color(0, 153, 102));
         tab.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         tab.setAutoscrolls(true);
-        tab.setFont(new java.awt.Font("Segoe UI Symbol", 0, 14)); // NOI18N
+        tab.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tab.setInheritsPopupMenu(true);
+        tab.setMaximumSize(new java.awt.Dimension(600, 600));
+        tab.setMinimumSize(new java.awt.Dimension(500, 600));
 
         messageText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -299,6 +301,11 @@ public class ChatGUi extends javax.swing.JFrame {
 
         } else {
             String text = messageText.getText();
+            
+                ChatPaneMsgBox paneRight = new ChatPaneMsgBox(text,true);
+                 addPanel(paneRight);
+            
+            /*
             JLabel label = new JLabel(text + " inviato");
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBackground(Color.red);
@@ -309,7 +316,7 @@ public class ChatGUi extends javax.swing.JFrame {
             panelMessage.add(panel);
             panelMessage.revalidate();
             panelMessage.repaint();
-            /*JPanel boxMessage = new JPanel();
+            JPanel boxMessage = new JPanel();
             boxMessage.setBackground(Color.blue);
             //aggiugnere i bordi rotondi
             boxMessage.setMaximumSize(new Dimension(400, 30));
@@ -474,7 +481,7 @@ public class ChatGUi extends javax.swing.JFrame {
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent ae) {
                     notify.setText("0");
-                    //panelMessage.setBackground(Color.white);
+                    panelMessage.setBackground(Color.white);
                     arrayTab.add(tab);
                     if (x == 0) {
                         tab.addTab(text, scroll);
@@ -518,6 +525,8 @@ public class ChatGUi extends javax.swing.JFrame {
         //add your elements
         panelMessage.revalidate();
         panelMessage.repaint();
+        ChatPaneMsgBox defaultMessage = new ChatPaneMsgBox("Benvenuto in Indixis, qui potrai messaggiare con gli amici!",true);
+        addPanel(defaultMessage);
         for (int i = 0; i < listaMessaggi.size(); i++) {
             System.out.println(listaMessaggi.get(i).toString());
             //String userLocal = user.getText();
@@ -527,6 +536,8 @@ public class ChatGUi extends javax.swing.JFrame {
                 System.out.println(listaMessaggi.get(i).getDestinatario() + ", " + listaMessaggi.get(i).getMessage() + ", " + listaMessaggi.get(i).getUser() + ", " + listaMessaggi.get(i).isForeign());
 
                 if (listaMessaggi.get(i).isForeign() == true) {
+                    ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),false);
+                    addPanel(paneLeft);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panel = new JPanel(new BorderLayout());
@@ -535,15 +546,18 @@ public class ChatGUi extends javax.swing.JFrame {
                     //panel.setPreferredSize(new Dimension(20, 20));
                     panel.add(message, BorderLayout.WEST);
                     panel.setSize(20, 20);
-                            */
+                          
                     JPanel left = new JPanel(new FlowLayout(FlowLayout.LEFT) );
                         left.add(new JLabel(listaMessaggi.get(i).getMessage()));
                         //add(left);
                     panelMessage.add(left);
                     panelMessage.revalidate();
+                              */
 
                 } //JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 else if (listaMessaggi.get(i).isForeign() == false) {
+                    ChatPaneMsgBox paneRight = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),true);
+                    addPanel(paneRight);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panelF = new JPanel(new BorderLayout());
@@ -553,28 +567,37 @@ public class ChatGUi extends javax.swing.JFrame {
                     panelF.add(message, BorderLayout.EAST);
                     panelF.setSize(20, 20);
                    
-                            */JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                            JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                         right.add(new JLabel(listaMessaggi.get(i).getMessage()));
                         //add(right);
                      panelMessage.add(right);
                     panelMessage.revalidate();
+*/
                 }
                 //panelMessage.add(boxMessage);
             }
         }
+       // panelMessage.revalidate();
+        //panelMessage.repaint();
+    }
+
+    private void addPanel(Component panel){
+        panelMessage.add(panel);
         panelMessage.revalidate();
         panelMessage.repaint();
     }
-
+    
+    
+    
     public void inizialize() {
         panelMessage = new JPanel();
-        RelativeLayout rl = new RelativeLayout(RelativeLayout.Y_AXIS);
-        rl.setFill(true);
-        panelMessage.setLayout( rl );
+        
+        System.out.println("################################################aggiutno");
+        panelMessage.setLayout( new BoxLayout(panelMessage, BoxLayout.Y_AXIS) );
         //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
      //scroll.add(panelMessage);
         //panelMessage.setSize(new Dimension(500,500));
-        panelMessage.setBackground(Color.pink);
+        //panelMessage.setBackground(Color.pink);
         //panelMessage.setMaximumSize(new Dimension(600, 600));
      scroll.setViewportView(panelMessage);
         //scroll.setPreferredSize(new Dimension(50, 50));

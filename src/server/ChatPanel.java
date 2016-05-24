@@ -1,4 +1,4 @@
-package prova;
+package server;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -26,13 +26,10 @@ public class ChatPanel {
     public ChatPanel() {
         jp = new JPanel();
         jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
-        mb = new ChatPaneMsgBox("<html><body style='width: 200px; padding: 5px;'>"
-                + "<h1>Do U C Me?</h1>"
-                + "Here is a long string that will wrap.  "
-                + "The effect we want is a multi-line label.", true);
-        addmsg(mb);
-        mb2 = new ChatPaneMsgBox("Hello 2", false);
-        addmsg(mb2);
+        //mb = new ChatPaneMsgBox("a destra", true);
+        //addmsg(mb);
+        //mb2 = new ChatPaneMsgBox("Hello 2", false);
+        //addmsg(mb2);
         scroll.setViewportView(jp);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -40,21 +37,18 @@ public class ChatPanel {
 
             public void actionPerformed(ActionEvent e) {
             	 mb2 = new ChatPaneMsgBox("Hello 2", false);
-                 ChatPaneMsgBox prova = new ChatPaneMsgBox("porova",false);
+                 //ChatPaneMsgBox prova = new ChatPaneMsgBox("porova",false);
                  addmsg(mb2);
-                Rectangle rect = jp.getBounds();
-                Rectangle r2 = scroll.getViewport().getVisibleRect();
-                jp.scrollRectToVisible(new Rectangle((int) rect.getWidth(), 
-                        (int) rect.getHeight(), (int) r2.getWidth(), (int) r2.getHeight()));
+                //Rectangle rect = jp.getBounds();
+                //Rectangle r2 = scroll.getViewport().getVisibleRect();
+                //jp.scrollRectToVisible(new Rectangle((int) rect.getWidth(), 
+                       // (int) rect.getHeight(), (int) r2.getWidth(), (int) r2.getHeight()));
             }
         });
         jb1.addActionListener(new ActionListener() {
      
             public void actionPerformed(ActionEvent e) {
-            	mb = new ChatPaneMsgBox("<html><body style='width: 200px; padding: 5px;'>"
-                        + "<h1>Do U C Me?</h1>"
-                        + "Here is a long string that will wrap.  "
-                        + "The effect we want is a multi-line label.", true);
+            	mb = new ChatPaneMsgBox("Benvenuto nella nostra applicazione, ora puoi chattare con indixis!", true);
                 addmsg(mb);
                 
                 

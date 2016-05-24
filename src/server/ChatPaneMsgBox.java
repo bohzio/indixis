@@ -1,4 +1,4 @@
-package prova;
+package server;
 
 import java.awt.Color;
 
