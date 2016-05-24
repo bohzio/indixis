@@ -302,7 +302,7 @@ public class ChatGUi extends javax.swing.JFrame {
         } else {
             String text = messageText.getText();
             
-                ChatPaneMsgBox paneRight = new ChatPaneMsgBox(text,true);
+                ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text),true);
                  addPanel(paneRight);
             
             /*
@@ -527,6 +527,8 @@ public class ChatGUi extends javax.swing.JFrame {
         panelMessage.repaint();
         ChatPaneMsgBox defaultMessage = new ChatPaneMsgBox("Benvenuto in Indixis, qui potrai messaggiare con gli amici!",true);
         addPanel(defaultMessage);
+        ChatPaneMsgBox defaultMessage2 = new ChatPaneMsgBox("<html>Inzia subito a scrivere ai tuoi amici, <br>e non dimenticare, <br> <strong>divertiti!</strong><html>",false);
+        addPanel(defaultMessage2);
         for (int i = 0; i < listaMessaggi.size(); i++) {
             System.out.println(listaMessaggi.get(i).toString());
             //String userLocal = user.getText();
@@ -581,12 +583,37 @@ public class ChatGUi extends javax.swing.JFrame {
         //panelMessage.repaint();
     }
 
+    /**
+     * aggiunge un pboxPanel al pannello dei messaggi
+     * @param panel 
+     */
     private void addPanel(Component panel){
         panelMessage.add(panel);
         panelMessage.revalidate();
         panelMessage.repaint();
     }
     
+    /**
+     * controlla la lughezza del messaggio, se > di 44 va a capo
+     * @param message
+     * @return 
+     */
+    private String lenControl(String message){
+        
+       
+        String newMessage = "<html>";
+        String [] splitMessage;
+        if(message.length() > 44 ){
+        splitMessage = message.split(" ");
+        for(int i = 0; i< splitMessage.length -1;i++){
+            newMessage +=  " " + splitMessage[i] ;
+        }
+        System.out.println("################################PRIMAAA#"+ " " + newMessage);
+        newMessage += "<br>" + splitMessage[splitMessage.length-1] + "</html>";
+            System.out.println("##############################################"+ " " + newMessage);
+    }
+        return newMessage;
+    }
     
     
     public void inizialize() {
@@ -633,7 +660,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private Connection connection;
     private JPanel panelMessage;
     int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
     JScrollPane scroll = new JScrollPane(v, h);
     private List<Message> listaMessaggi = new ArrayList();
     LinkedHashMap notifiche = new LinkedHashMap();
