@@ -21,6 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  *
@@ -432,12 +434,17 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        Connection prova = new Connection(5555, "127.0.0.1", username, password, "login", this);
+        Connection connection = new Connection(5555,"127.0.0.1", username, password, "login", this);
 
         return true;
     }
 
+    /**
+     *
+     * @param listaAmici
+     */
     public void setFriendsListArray(ArrayList<String> listaAmici) {
+        friend.removeAll();
         ar = listaAmici;
         amici();
 
@@ -515,6 +522,7 @@ public class ChatGUi extends javax.swing.JFrame {
                 System.out.println(listaMessaggi.get(i).getDestinatario() + ", " + listaMessaggi.get(i).getMessage() + ", " + listaMessaggi.get(i).getUser() + ", " + listaMessaggi.get(i).isForeign());
 
                 if (listaMessaggi.get(i).isForeign() == true) {
+                    /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panel = new JPanel(new BorderLayout());
                     panel.setBackground(Color.red);
@@ -522,12 +530,16 @@ public class ChatGUi extends javax.swing.JFrame {
                     //panel.setPreferredSize(new Dimension(20, 20));
                     panel.add(message, BorderLayout.WEST);
                     panel.setSize(20, 20);
-                    panelMessage.add(panel);
-                    //panelMessage.revalidate();
+                            */
+                    JPanel left = new JPanel(new FlowLayout(FlowLayout.LEFT) );
+                        left.add(new JLabel(listaMessaggi.get(i).getMessage()));
+                        //add(left);
+                    panelMessage.add(left);
+                    panelMessage.revalidate();
 
                 } //JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 else if (listaMessaggi.get(i).isForeign() == false) {
-                    
+                    /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
                     JPanel panelF = new JPanel(new BorderLayout());
                     panelF.setBackground(Color.black);
@@ -535,8 +547,12 @@ public class ChatGUi extends javax.swing.JFrame {
                     //panelF.setPreferredSize(new Dimension(20, 20));
                     panelF.add(message, BorderLayout.EAST);
                     panelF.setSize(20, 20);
-                    panelMessage.add(panelF);
-                   // panelMessage.revalidate();
+                   
+                            */JPanel right = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                        right.add(new JLabel(listaMessaggi.get(i).getMessage()));
+                        //add(right);
+                     panelMessage.add(right);
+                    panelMessage.revalidate();
                 }
                 //panelMessage.add(boxMessage);
             }
@@ -547,7 +563,10 @@ public class ChatGUi extends javax.swing.JFrame {
 
     public void inizialize() {
         panelMessage = new JPanel();
-        panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
+        RelativeLayout rl = new RelativeLayout(RelativeLayout.Y_AXIS);
+        rl.setFill(true);
+        panelMessage.setLayout( rl );
+        //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
      //scroll.add(panelMessage);
         //panelMessage.setSize(new Dimension(500,500));
         panelMessage.setBackground(Color.pink);

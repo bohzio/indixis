@@ -164,7 +164,7 @@ public class Ricezione extends Thread {
     }
 
     private synchronized ArrayList riceviListaAmiciSenzaRisposta(ArrayList mexInput) {
-        System.out.println(((ArrayList)(mexInput.get(1))).get(0)+"RICHIESTA############à");
+
         return (ArrayList) mexInput.get(1);
     }
 
