@@ -1,46 +1,45 @@
-
 package server;
 
-  
-
 /**
- * 
- * @author dallachiaram@gmail.com
- * @version 1.5
+ * Classe che rappresenta un utente
+ * @author Dalla Chiara Michele
  */
 public class UserObject {
+
     private String userName;
     private String password;
-    
+
     /**
-     * Costruttore UserObject con acquisizione variabili processanti userName, password
+     * Costruttore UserObject con acquisizione variabili processanti userName,
+     * password
+     *
      * @param userName
-     * @param password 
+     * @param password
      */
     public UserObject(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
+
     /**
      * Costruttore UserObject senza acquisizioni
      */
-    public UserObject(){
+    public UserObject() {
     }
-    
-    //getter & setter attributi
+
+    /**
+     * @return the userName
+     */
     public String getUserName() {
         return userName;
     }
 
+
+    /**
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

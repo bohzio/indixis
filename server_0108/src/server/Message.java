@@ -3,9 +3,10 @@ package server;
 import java.io.Serializable;
 
 /**
- *
- * @author prova
+ * Classe che rappresenta un oggetto messaggio che verrà serializzato in rete.
+ * @author Taioli Francesco, Corradi Mattia.
  */
+
 public class Message implements Serializable{
     private String user;
     private String message;
@@ -16,6 +17,15 @@ public class Message implements Serializable{
     private boolean foreign;
     private byte[] file;
 
+    /**
+     * Costruttore per generare un messaggio di testo generico
+     * @param user
+     * @param message
+     * @param destinatario
+     * @param ora
+     * @param day
+     * @param type 
+     */
     public Message(String user, String message, String destinatario, int ora, int day, TypeMessage type) {
         this.user = user;
         this.message = message;
@@ -25,6 +35,14 @@ public class Message implements Serializable{
         this.type = type;
     }
     
+    /**
+     * Costruttore per generare un messaggio di testo senza data
+     * @param user
+     * @param message
+     * @param destinatario
+     * @param type
+     * @param foreign 
+     */
      public Message(String user, String message, String destinatario, TypeMessage type, boolean foreign) {
         this.user = user;
         this.message = message;
@@ -32,7 +50,16 @@ public class Message implements Serializable{
         this.type = type;
         this.foreign = foreign;
     }
-    
+    /**
+     * Costruttore per generare un messaggio di testo con con data
+     * @param user
+     * @param message
+     * @param destinatario
+     * @param ora
+     * @param day
+     * @param type
+     * @param foreign 
+     */
     public Message(String user, String message, String destinatario, int ora, int day, TypeMessage type, boolean foreign) {
         this.user = user;
         this.message = message;
@@ -42,7 +69,15 @@ public class Message implements Serializable{
         this.type = type;
         this.foreign = foreign;
     }
-    
+    /**
+     * Costruttore per generare un oggetto file generico senza sapere se è inviato o ricevuto
+     * @param user
+     * @param file
+     * @param destinatario
+     * @param ora
+     * @param day
+     * @param type 
+     */
     public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type) {
         this.user = user;
         this.file = file;
@@ -52,6 +87,16 @@ public class Message implements Serializable{
         this.type = type;
     }
     
+    /**
+     * Costruttore per generare un oggetto di tipo file con data
+     * @param user
+     * @param file
+     * @param destinatario
+     * @param ora
+     * @param day
+     * @param type
+     * @param foreign 
+     */
     public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type, boolean foreign) {
         this.user = user;
         this.file = file;
@@ -61,6 +106,14 @@ public class Message implements Serializable{
         this.type = type;
     }
     
+   /**
+    * Costruttore per generare un oggetto di tipo file senza data
+    * @param user 
+    * @param file 
+    * @param destinatario 
+    * @param type
+    * @param foreign 
+    */
      public Message(String user, byte[] file, String destinatario, TypeMessage type, boolean foreign) {
         this.user = user;
         this.file = file;
