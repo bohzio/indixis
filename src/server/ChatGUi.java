@@ -19,10 +19,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
-import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  *
@@ -315,10 +323,10 @@ public class ChatGUi extends javax.swing.JFrame {
 
         } else {
             String text = messageText.getText();
-            
-                ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text),true);
-                 addPanel(paneRight);
-            
+
+            ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text), true);
+            addPanel(paneRight);
+
             /*
             JLabel label = new JLabel(text + " inviato");
             JPanel panel = new JPanel(new BorderLayout());
@@ -339,7 +347,6 @@ public class ChatGUi extends javax.swing.JFrame {
             boxMessage.add(label);
             // panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
             panelMessage.add(boxMessage);*/
-
             messageText.setText("");
             sendButton.setText("Registra");
             //panelMessage.add(label);
@@ -397,11 +404,12 @@ public class ChatGUi extends javax.swing.JFrame {
     }//GEN-LAST:event_messageTextKeyReleased
 
     private void friendRequestListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendRequestListActionPerformed
-       
-        if (Ricezione.friendsListWithoutAnswer.isEmpty()){
-            JOptionPane.showMessageDialog(null,"Non sono presenti richieste di amicizia");
-        }else
-        new RichiesteDiAmicizia();
+
+        if (Ricezione.friendsListWithoutAnswer.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Non sono presenti richieste di amicizia");
+        } else {
+            new RichiesteDiAmicizia();
+        }
     }//GEN-LAST:event_friendRequestListActionPerformed
 
     private void removeFriendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFriendsActionPerformed
@@ -427,7 +435,7 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param messaggio
      */
     public void addMessage(Message messaggio) {
-        
+
         startSound("/indixis/sound/soundMessage.mp3");
         listaMessaggi.add(messaggio);
         setMessage();
@@ -463,7 +471,7 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        Connection connection = new Connection(5555,"127.0.0.1", username, password, "login", this);
+        Connection connection = new Connection(5555, "127.0.0.1", username, password, "login", this);
 
         return true;
     }
@@ -520,18 +528,19 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println((String) ar.get(i).toString());
         }
     }
-    
-    public void riceviAmicizia(String username){
-       setNumberOfRequest();
-        JOptionPane.showMessageDialog(null,"Hai ricevuto una richiesta d'amicizia da "+username+ "vai nell'apposita sezione per accettare");
+
+    public void riceviAmicizia(String username) {
+        setNumberOfRequest(); 
+        startSound("request.wav");
+        JOptionPane.showMessageDialog(null, "Hai ricevuto una richiesta d'amicizia da " + username + "vai nell'apposita sezione per accettare");
     }
-    
-    public void nuovoAmico(String username){
-       JOptionPane.showMessageDialog(null,username+" è un tuo nuovo amico ! Ora puoi chattarci !!!");
+
+    public void nuovoAmico(String username) {
+        JOptionPane.showMessageDialog(null, username + " è un tuo nuovo amico ! Ora puoi chattarci !!!");
     }
-    
-     public void rimozioneAmico(String username){
-       JOptionPane.showMessageDialog(null,username+" non è più tuo amico :(");
+
+    public void rimozioneAmico(String username) {
+        JOptionPane.showMessageDialog(null, username + " non è più tuo amico :(");
     }
 
     /**
@@ -543,9 +552,9 @@ public class ChatGUi extends javax.swing.JFrame {
         //add your elements
         panelMessage.revalidate();
         panelMessage.repaint();
-        ChatPaneMsgBox defaultMessage = new ChatPaneMsgBox("Benvenuto in Indixis! inizia a chattare!",true);
+        ChatPaneMsgBox defaultMessage = new ChatPaneMsgBox("Benvenuto in Indixis! inizia a chattare!", true);
         addPanel(defaultMessage);
-        ChatPaneMsgBox defaultMessage2 = new ChatPaneMsgBox("Scrivi subito ai tuoi amici!",false);
+        ChatPaneMsgBox defaultMessage2 = new ChatPaneMsgBox("Scrivi subito ai tuoi amici!", false);
         addPanel(defaultMessage2);
         for (int i = 0; i < listaMessaggi.size(); i++) {
             System.out.println(listaMessaggi.get(i).toString());
@@ -556,7 +565,7 @@ public class ChatGUi extends javax.swing.JFrame {
                 System.out.println(listaMessaggi.get(i).getDestinatario() + ", " + listaMessaggi.get(i).getMessage() + ", " + listaMessaggi.get(i).getUser() + ", " + listaMessaggi.get(i).isForeign());
 
                 if (listaMessaggi.get(i).isForeign() == true) {
-                    ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),false);
+                    ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(), false);
                     addPanel(paneLeft);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
@@ -572,11 +581,11 @@ public class ChatGUi extends javax.swing.JFrame {
                         //add(left);
                     panelMessage.add(left);
                     panelMessage.revalidate();
-                              */
+                     */
 
                 } //JPanel boxMessage = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 else if (listaMessaggi.get(i).isForeign() == false) {
-                    ChatPaneMsgBox paneRight = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(),true);
+                    ChatPaneMsgBox paneRight = new ChatPaneMsgBox(listaMessaggi.get(i).getMessage(), true);
                     addPanel(paneRight);
                     /*
                     JLabel message = new JLabel(listaMessaggi.get(i).getMessage());
@@ -592,95 +601,102 @@ public class ChatGUi extends javax.swing.JFrame {
                         //add(right);
                      panelMessage.add(right);
                     panelMessage.revalidate();
-*/
+                     */
                 }
                 //panelMessage.add(boxMessage);
             }
         }
-       // panelMessage.revalidate();
+        // panelMessage.revalidate();
         //panelMessage.repaint();
     }
 
     /**
      * aggiunge un pboxPanel al pannello dei messaggi
-     * @param panel 
+     *
+     * @param panel
      */
-    private void addPanel(Component panel){
+    private void addPanel(Component panel) {
         panelMessage.add(panel);
         panelMessage.revalidate();
         panelMessage.repaint();
     }
-    
+
     /**
      * controlla la lughezza del messaggio, se > di 44 va a capo
+     *
      * @param message
-     * @return 
+     * @return
      */
-    private String lenControl(String message){
-        
-       
+    private String lenControl(String message) {
+
         String newMessage = "<html>";
-        String [] splitMessage;
-        if(message.length() > 44 ){
-        splitMessage = message.split(" ");
-        for(int i = 0; i< splitMessage.length -1;i++){
-            if(i == 1){
-                newMessage += splitMessage[i] ;
+        String[] splitMessage;
+        if (message.length() > 44) {
+            splitMessage = message.split(" ");
+            for (int i = 0; i < splitMessage.length - 1; i++) {
+                if (i == 1) {
+                    newMessage += splitMessage[i];
+                } else {
+                    newMessage += " " + splitMessage[i];
+                }
             }
-            else{
-            newMessage +=  " " + splitMessage[i] ;
-            }
+            System.out.println("################################PRIMAAA#" + " " + newMessage);
+            newMessage += "<br>" + splitMessage[splitMessage.length - 1] + "</html>";
+
         }
-        System.out.println("################################PRIMAAA#"+ " " + newMessage);
-        newMessage += "<br>" + splitMessage[splitMessage.length-1] + "</html>";
-           
-    }
-         System.out.println("##############################################"+ " " + newMessage);
+        System.out.println("##############################################" + " " + newMessage);
         return newMessage;
     }
-    
+
     /**
      * fa partire un suono che avvisa l'arrivo di un messaggio
-     * @param sound 
+     *
+     * @param sound
      */
-    private void startSound(String sound){
-        System.out.println(sound);
-        
+    private void startSound(String sound) {
+       try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(ChatGUi.class.getResource(sound));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception ex) {
+            Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    
+
     /**
      * setta i bottoni circolari
      */
-    private void setCircolar(){
+    private void setCircolar() {
         addFriend.setBorder(new RoundedBorder(10));
         removeFriends.setBorder(new RoundedBorder(10));
     }
-    
+
     public void inizialize() {
         panelMessage = new JPanel();
         //panelMessage.setBackground(Color.LIGHT_GRAY);
         setCircolar();
 
         System.out.println("################################################aggiutno");
-        panelMessage.setLayout( new BoxLayout(panelMessage, BoxLayout.Y_AXIS) );
+        panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
         //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-     //scroll.add(panelMessage);
+        //scroll.add(panelMessage);
         //panelMessage.setSize(new Dimension(500,500));
         //panelMessage.setBackground(Color.pink);
         //panelMessage.setMaximumSize(new Dimension(600, 600));
-     scroll.setViewportView(panelMessage);
+        scroll.setViewportView(panelMessage);
         //scroll.setPreferredSize(new Dimension(50, 50));
         //scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
 
     }
-    
+
     /**
      * setta il numero delle richieste di amicizia
      */
-    private void setNumberOfRequest(){
-            numberOfRequest.setText(String.valueOf(Ricezione.friendsListWithoutAnswer.size()));
-            
+    private void setNumberOfRequest() {
+        numberOfRequest.setText(String.valueOf(Ricezione.friendsListWithoutAnswer.size()));
+
     }
 
     public void setListaMessaggi(ArrayList messaggi) {
