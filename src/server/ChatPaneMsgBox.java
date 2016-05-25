@@ -30,7 +30,7 @@ class ChatPaneMsgBox extends JPanel {
             jl.setOpaque(true);
             jl.setBorder(new TextBubbleBorder(Color.LIGHT_GRAY, 1, 10, 7, ij));
 
-            jl.setBackground(new Color(123, 104, 238));
+            jl.setBackground(new Color(129, 199, 132));
             jl.setAlignmentX(0);
         } else {
             jl = new JLabel(msg, SwingConstants.RIGHT);
@@ -38,10 +38,10 @@ class ChatPaneMsgBox extends JPanel {
             jl.setOpaque(true);
             jl.setBorder(new TextBubbleBorder(Color.LIGHT_GRAY, 1, 10, 7, ij));
 
-            jl.setBackground(new Color(224, 102, 255));
+            jl.setBackground(new Color(238, 238, 238));
             jl.setAlignmentX(1);
         }
         this.add(jl);
-        System.out.print("\nThis executed");
+        
     }
 }
