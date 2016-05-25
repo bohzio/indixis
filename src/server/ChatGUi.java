@@ -87,14 +87,17 @@ public class ChatGUi extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        addFriend.setText("aggiungi amico");
+        addFriend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/add.png"))); // NOI18N
+        addFriend.setText("Add");
+        addFriend.setBorder(null);
         addFriend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addFriendActionPerformed(evt);
             }
         });
 
-        removeFriends.setText("rimuovi amico");
+        removeFriends.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/remove.png"))); // NOI18N
+        removeFriends.setText("Remove");
         removeFriends.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeFriendsActionPerformed(evt);
@@ -113,31 +116,34 @@ public class ChatGUi extends javax.swing.JFrame {
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(259, 259, 259)
                 .addComponent(friendRequestList)
                 .addGap(22, 22, 22)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(removeFriends, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addFriend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titleLayout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addFriend)
-                    .addComponent(removeFriends)
-                    .addComponent(friendRequestList))
+                .addGap(28, 28, 28)
+                .addComponent(friendRequestList)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(titleLayout.createSequentialGroup()
+                        .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         menu.setBackground(new java.awt.Color(100, 181, 246));
@@ -146,7 +152,7 @@ public class ChatGUi extends javax.swing.JFrame {
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +243,7 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sendFile, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -269,7 +275,7 @@ public class ChatGUi extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 454, Short.MAX_VALUE)))
+                    .addGap(0, 443, Short.MAX_VALUE)))
         );
 
         pack();
@@ -380,20 +386,20 @@ public class ChatGUi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_messageTextKeyReleased
 
+    private void friendRequestListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendRequestListActionPerformed
+        if (Ricezione.friendsListWithoutAnswer.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Non sono presenti richieste di amicizia");
+        }else
+        new RichiesteDiAmicizia();
+    }//GEN-LAST:event_friendRequestListActionPerformed
+
     private void removeFriendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFriendsActionPerformed
         new RemoveFriend();
     }//GEN-LAST:event_removeFriendsActionPerformed
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-       new AddFriend();
+        new AddFriend();
     }//GEN-LAST:event_addFriendActionPerformed
-
-    private void friendRequestListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendRequestListActionPerformed
-        if (Ricezione.friendsListWithoutAnswer.isEmpty()){
-             JOptionPane.showMessageDialog(null,"Non sono presenti richieste di amicizia");
-        }else
-            new RichiesteDiAmicizia();
-    }//GEN-LAST:event_friendRequestListActionPerformed
 
     /**
      * setta il nome dell'utente nella barra titolo
@@ -619,10 +625,19 @@ public class ChatGUi extends javax.swing.JFrame {
         return newMessage;
     }
     
+    /**
+     * setta i bottoni circolari
+     */
+    private void setCircolar(){
+        addFriend.setBorder(new RoundedBorder(10));
+        removeFriends.setBorder(new RoundedBorder(10));
+    }
     
     public void inizialize() {
         panelMessage = new JPanel();
         //panelMessage.setBackground(Color.LIGHT_GRAY);
+        setCircolar();
+
         System.out.println("################################################aggiutno");
         panelMessage.setLayout( new BoxLayout(panelMessage, BoxLayout.Y_AXIS) );
         //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
@@ -655,7 +670,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JButton sendFile;
     private javax.swing.JTabbedPane tab;
     private javax.swing.JPanel title;
-    public javax.swing.JLabel user;
+    private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
     public static ArrayList ar = new ArrayList();
     public ArrayList arrayTab = new ArrayList();
