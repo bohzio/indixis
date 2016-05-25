@@ -1,6 +1,5 @@
 package server;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -20,9 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import java.awt.*;
-import javax.swing.*;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -416,6 +416,8 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param messaggio
      */
     public void addMessage(Message messaggio) {
+        
+        startSound("/indixis/sound/soundMessage.mp3");
         listaMessaggi.add(messaggio);
         setMessage();
     }
@@ -624,6 +626,16 @@ public class ChatGUi extends javax.swing.JFrame {
          System.out.println("##############################################"+ " " + newMessage);
         return newMessage;
     }
+    
+    /**
+     * fa partire un suono che avvisa l'arrivo di un messaggio
+     * @param sound 
+     */
+    private void startSound(String sound){
+        System.out.println(sound);
+        
+    }
+    
     
     /**
      * setta i bottoni circolari
