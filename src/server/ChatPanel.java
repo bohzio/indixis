@@ -36,7 +36,7 @@ public class ChatPanel {
         jb.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-            	 mb2 = new ChatPaneMsgBox("Hello 2", false);
+            	 mb2 = new ChatPaneMsgBox("Hello 2", false,TypeMessage.MESSAGGIO);
                  //ChatPaneMsgBox prova = new ChatPaneMsgBox("porova",false);
                  addmsg(mb2);
                 //Rectangle rect = jp.getBounds();
@@ -48,7 +48,7 @@ public class ChatPanel {
         jb1.addActionListener(new ActionListener() {
      
             public void actionPerformed(ActionEvent e) {
-            	mb = new ChatPaneMsgBox("Benvenuto nella nostra applicazione, ora puoi chattare con indixis!", true);
+            	mb = new ChatPaneMsgBox("Benvenuto nella nostra applicazione, ora puoi chattare con indixis!", true,TypeMessage.MESSAGGIO);
                 addmsg(mb);
                 
                 

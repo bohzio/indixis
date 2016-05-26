@@ -13,12 +13,15 @@ import javax.swing.JScrollPane;
  * @author michele
  */
 public class RemoveFriend extends javax.swing.JFrame {
+
+    private final ChatGUi graphics;
     
     /**
      * Creates new form AggiungiAmicp
      * @param listaUtenti
      */
-    public RemoveFriend() {
+    public RemoveFriend(ChatGUi graphics) {
+            this.graphics = graphics;
             initComponents();
             setElementInPanels();
             setVisible(true);
@@ -62,6 +65,7 @@ public class RemoveFriend extends javax.swing.JFrame {
                 @Override
                 public void mouseReleased(MouseEvent evt) {
                     if(userRequest.getText().equals("Rimuovi " + name)){
+                        graphics.setNumberOfRequest();
                         Connection.removeFriend(name);
                         Ricezione.friendsList.remove(name);
                         ChatGUi.ar.remove(name);

@@ -1,6 +1,7 @@
 package server;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,6 +25,7 @@ public class Ricezione extends Thread {
     public static ArrayList friendsListWithoutAnswer = new ArrayList<>();
     private final ChatGUi graphics;
     private final String username;
+    public static final String pathFileReceived =  System.getProperty("user.dir") + "\\src\\client\\file\\ricevuti\\";
 
     /**
      * Default constructor
@@ -118,6 +120,7 @@ public class Ricezione extends Thread {
                         friendsList = riceviListaAmici((ArrayList) mexInput);
                         break;
                     case "NEW-FRIEND-REQ":
+                        graphics.setNumberOfRequest();
                         System.out.println(mexInput.get(1)+"chi mi manda la richesta");
                         updateFriendsListWithoutAnswer((String)mexInput.get(1));
                         
@@ -126,6 +129,7 @@ public class Ricezione extends Thread {
                         System.out.println("Ho ricevuto l'arrayList con le richieste di amicizia in sospeso a cui io non ho risposto");
                         friendsListWithoutAnswer = riceviListaAmiciSenzaRisposta((ArrayList) mexInput);
                         RichiesteDiAmicizia.setListaRichieste(friendsListWithoutAnswer);
+                        graphics.setNumberOfRequest();
                         break;
                     case "ERRORE-REG-USERNAME-PRESENTE":
                         System.out.println("Username già presente !!");
@@ -181,8 +185,7 @@ public class Ricezione extends Thread {
         return ris;
     }
 
-    private synchronized void riceviListaMex(ArrayList mexInput) {
-        System.out.println("lista messaggi arrivata");
+    private synchronized void riceviListaMex(ArrayList mexInput) throws FileNotFoundException, IOException {;
         mexInput.remove(0);
         ArrayList<Message> messaggi = mexInput;
         graphics.setListaMessaggi(messaggi);
@@ -211,16 +214,18 @@ public class Ricezione extends Thread {
      * @param mexInput
      */
     private synchronized void riceviStreamFile(ArrayList mexInput) {
+        Message message = (Message)mexInput.get(1);
         try {
-            try (FileOutputStream file = new FileOutputStream(
-                    System.getProperty("user.dir") + "\\src\\client\\file\\"
-                    + "ricevuti\\" + ((ArrayList) mexInput).get(3)); BufferedOutputStream fout = new BufferedOutputStream(file)) {
-                for (int line : (ArrayList<Integer>) mexInput.get(2)) {
-                    fout.write(line);
-                    fout.flush();
-                }
-            }
+            System.out.println("path dove salva la ricezione"+pathFileReceived + message.getFilename());
+            FileOutputStream fos = new FileOutputStream(pathFileReceived + message.getFilename());
+            fos.write(message.getFile());
+            fos.close();
+            
             System.out.println("File totale rivevuto");
+            
+             graphics.addNotify(message.getUser());
+             graphics.addMessage(message);
+             
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }

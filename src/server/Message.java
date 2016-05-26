@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author prova
+ * @author corradi , taioli
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
+
     private String user;
     private String message;
     private String destinatario;
@@ -15,6 +16,7 @@ public class Message implements Serializable{
     private TypeMessage type;
     private boolean foreign;
     private byte[] file;
+    private String filename;
 
     public Message(String user, String message, String destinatario, int ora, int day, TypeMessage type) {
         this.user = user;
@@ -24,15 +26,15 @@ public class Message implements Serializable{
         this.day = day;
         this.type = type;
     }
-    
-     public Message(String user, String message, String destinatario, TypeMessage type, boolean foreign) {
+
+    public Message(String user, String message, String destinatario, TypeMessage type, boolean foreign) {
         this.user = user;
         this.message = message;
         this.destinatario = destinatario;
         this.type = type;
         this.foreign = foreign;
     }
-    
+
     public Message(String user, String message, String destinatario, int ora, int day, TypeMessage type, boolean foreign) {
         this.user = user;
         this.message = message;
@@ -42,26 +44,18 @@ public class Message implements Serializable{
         this.type = type;
         this.foreign = foreign;
     }
-    
-    public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type) {
+
+    public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type, String filename) {
         this.user = user;
         this.file = file;
         this.destinatario = destinatario;
         this.ora = ora;
         this.day = day;
         this.type = type;
+        this.filename = filename;
     }
-    
-    public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type, boolean foreign) {
-        this.user = user;
-        this.file = file;
-        this.destinatario = destinatario;
-        this.ora = ora;
-        this.day = day;
-        this.type = type;
-    }
-    
-     public Message(String user, byte[] file, String destinatario, TypeMessage type, boolean foreign) {
+
+    public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type, boolean foreign, String filename) {
         this.user = user;
         this.file = file;
         this.destinatario = destinatario;
@@ -69,13 +63,21 @@ public class Message implements Serializable{
         this.day = day;
         this.type = type;
         this.foreign = foreign;
+        this.filename = filename;
     }
 
-  
+    public Message(String user, byte[] file, String destinatario, TypeMessage type, boolean foreign, String filename) {
+        this.user = user;
+        this.file = file;
+        this.destinatario = destinatario;
+        this.type = type;
+        this.foreign = foreign;
+        this.filename = filename;
+    }
 
     @Override
     public String toString() {
-        return "Message{" + "user=" + getUser() + ", message=" + getMessage() + ", destinatario=" + getDestinatario() + ", type=" + getType() + ", foreign=" + isForeign() + '}';
+        return "Message{" + "user=" + getUser() + ", message=" + getMessage() + ", destinatario=" + getDestinatario() + ", type=" + getType() + ", foreign=" + isForeign() + ", nomeFile=" + getFilename()+'}';
     }
 
     /**
@@ -190,5 +192,18 @@ public class Message implements Serializable{
         this.foreign = foreign;
     }
 
-   
+    /**
+     * @return the filename
+     */
+    public String getFilename() {
+        return filename;
+    }
+
+    /**
+     * @param filename the filename to set
+     */
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
 }

@@ -7,10 +7,10 @@ package server;
  *
  */
 public enum TypeMessage {
-    FILE("FILE"),
-    AUDIO("AUDIO"),
-    MESSAGGIO("MESSAGGIO"),
-    FOTO("FOTO");
+    FILE("file"),
+    AUDIO("audio"),
+    MESSAGGIO("messaggio"),
+    FOTO("foto");
 
     private final String text;
 

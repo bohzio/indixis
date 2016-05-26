@@ -5,8 +5,13 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classe che si connette al server e invia i dati
@@ -27,6 +32,7 @@ public class Connection {
     private final ChatGUi graphics;
     private boolean esitoConnessione;
     private boolean esitoAutenticazione;
+    public static final String pathSendImage = "C:\\Users\\mattia\\Documents\\indixis_finale\\src\\client\\file\\inviati\\";
 
     public Connection(int port_server, String ip_server, String username, String password, String type, ChatGUi graphics) {
         this.portServer = port_server;
@@ -176,37 +182,39 @@ public class Connection {
         }
     }
 
-    private static void invioStreamFile(ArrayList streamFile, String destinatario, String filename) {
+    public static void invioFile(String path, String destinatario,TypeMessage type) {
         try {
+            Calendar now = Calendar.getInstance();
+            int day = now.get(Calendar.DAY_OF_MONTH);
+            int hour = now.get(Calendar.HOUR_OF_DAY);
             System.out.println("Inizio invio file");
-            String name = filename.split("\\\\")[filename.split("\\\\").length - 1];
+            String name = path.split("\\\\")[path.split("\\\\").length - 1];
+            byte[] file = transformFileToByte(path);
             System.out.println(name);
             ArrayList mexFormattato = new ArrayList();
             mexFormattato.add("FILE-OUT");
-            mexFormattato.add(destinatario);
-            mexFormattato.add(streamFile);
-            mexFormattato.add(name);
+            Message message = new Message(username,file,destinatario,hour,day,type,name);
+            mexFormattato.add(message);
             os.writeObject(mexFormattato);
             os.flush();
+            System.out.println("ho inviato il file nel metodo invioFile");
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("errore invio file");
         }
     }
 
-    public static void inviaFile(String filename, String destinatario) {
-        ArrayList streamFile = new ArrayList();
-        try (FileInputStream file = new FileInputStream(filename);
-                BufferedInputStream fin = new BufferedInputStream(file)) {
-            System.out.println("invio file da Connection...");
-            System.out.println(filename);
-            int line;
-            while ((line = fin.read()) != -1) {
-                streamFile.add(line);
-            }
-            invioStreamFile(streamFile, destinatario, filename);
-        } catch (java.io.IOException e) {
-            System.out.println(e.getMessage());
+    
+    private static byte[] transformFileToByte(String percorso) {
+        Path path = Paths.get(percorso);
+        byte[] data = null;
+        try {
+            data = Files.readAllBytes(path);
+            System.out.println("ho convertito il file");
+        } catch (IOException ex) {
+           ex.printStackTrace();
         }
+        return data;
     }
 
     public boolean registrazione(String username, String password) {

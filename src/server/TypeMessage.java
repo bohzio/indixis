@@ -1,17 +1,16 @@
 package server;
 
 /**
+ * Enum per rappresentare il tipo di file
  *
- * @author Francesco-Taioli
- * rappresenta un tipo di file
- * 
+ * @author Francesco Taioli
+ *
  */
 public enum TypeMessage {
-    FILE("FILE"),
-    AUDIO("AUDIO"),
-    MESSAGGIO("MESSAGGIO"),
-    FOTO("FOTO")
-    ;
+    FILE("file"),
+    AUDIO("audio"),
+    MESSAGGIO("messaggio"),
+    FOTO("foto");
 
     private final String text;
 
@@ -22,7 +21,6 @@ public enum TypeMessage {
         this.text = text;
     }
 
-   
     @Override
     public String toString() {
         return text;

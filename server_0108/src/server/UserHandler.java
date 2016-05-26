@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -255,16 +257,16 @@ public class UserHandler extends Thread {
      * @param mexIs 
      */
     public synchronized void reindirizzaFile(ArrayList mexIs) {
+        Message messaggio = (Message) mexIs.get(1);
+        messaggio.setForeign(true);
+        addFileToDb(messaggio.getDestinatario(), messaggio.getFile(),messaggio.getFilename(),messaggio.getType());
         try {
             ArrayList mexReplicato = new ArrayList();
             for (UserHandler userH : Server.threadAperti) {
-                if (userH.getName().equals(mexIs.get(1))) {
+                if (userH.getName().equals(messaggio.getDestinatario())) {
                     mexReplicato.add("FILE-IN");
-                    mexReplicato.add(getName());
-                    mexReplicato.add(mexIs.get(2));
-                    mexReplicato.add(mexIs.get(3));
-                    userH.outputSocket(mexReplicato);
-                    addFileToDb((String) mexIs.get(1), mexIs.get(2), (String) mexIs.get(3));
+                    mexReplicato.add(messaggio);
+                    userH.outputSocket(mexReplicato);   
                     break;
                 }
             }
@@ -278,24 +280,21 @@ public class UserHandler extends Thread {
      * @param nomefile
      * @return boolean
      */
-    public synchronized boolean addFileToDb(String destinatario, Object file, String nomefile) {
+    public synchronized boolean addFileToDb(String destinatario, byte[] file, String nomefile,TypeMessage type) {
         boolean esito = true;
         String autore = datiPersonali.getUserName();
-        String tipo = "file";
+        String tipo = type.toString();
         System.out.println(nomefile);
         String path = datiPersonali.getUserName() + "\\" + nomefile;
         Calendar calendar = Calendar.getInstance();
         Timestamp data = new java.sql.Timestamp(calendar.getTime().getTime());
 
         try {
-            FileOutputStream filein = new FileOutputStream(System.getProperty("user.dir") + "\\saved_file\\" + path);
-            BufferedOutputStream fout = new BufferedOutputStream(filein);
-            for (int line : (ArrayList<Integer>) file) {
-                fout.write(line);
-                fout.flush();
-            }
-            fout.close();
-            filein.close();
+            
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "\\saved_file\\" + path);
+            fos.write(file);
+            fos.close();
+            
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
@@ -305,14 +304,20 @@ public class UserHandler extends Thread {
         System.out.println(path);
 
         try {
-            String SQL = "INSERT INTO messaggi (autore,tipo,testo,path,data,destinatario) VALUES ('" + autore + "','" + tipo + "','" + "" + "','" + path + "','" + data + "','" + destinatario + "');";
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate(SQL);
-            stmt.close();
+            String SQL = "INSERT INTO messaggi (autore,tipo,testo,path,data,destinatario) VALUES (?,?,?,?,?,?);";
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, autore);
+            preparedStatement.setString(2, tipo);
+            preparedStatement.setString(3, nomefile);
+            preparedStatement.setString(4, path);
+            preparedStatement.setTimestamp(5, data);
+            preparedStatement.setString(6, destinatario);
+            preparedStatement.executeUpdate(); 
+            preparedStatement.close();
             esito = true;
 
         } catch (SQLException ex) {
-            System.out.println("Errore query login --> " + ex);
+            System.out.println("Errore query insersci file database --> " + ex);
             esito = false;
         }
 
@@ -492,15 +497,36 @@ public class UserHandler extends Thread {
                         ris.add(messaggio);
                     }
                     if (rs.getString("tipo").equals("file")) {
-                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.FILE);
+                        boolean foregin = false;
+                        if (rs.getString("destinatario").equals(userName)) {
+                            foregin = true;
+                        }
+                        if (rs.getString("autore").equals(userName)) {
+                            foregin = false;
+                        }
+                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.FILE,foregin,rs.getString("testo"));
                         ris.add(messaggio);
                     }
                     if (rs.getString("tipo").equals("audio")) {
-                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.AUDIO);
+                         boolean foregin = false;
+                        if (rs.getString("destinatario").equals(userName)) {
+                            foregin = true;
+                        }
+                        if (rs.getString("autore").equals(userName)) {
+                            foregin = false;
+                        }
+                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.AUDIO,foregin,rs.getString("testo"));
                         ris.add(messaggio);
                     }
                     if (rs.getString("tipo").equals("foto")) {
-                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.FOTO);
+                        boolean foregin = false;
+                        if (rs.getString("destinatario").equals(userName)) {
+                            foregin = true;
+                        }
+                        if (rs.getString("autore").equals(userName)) {
+                            foregin = false;
+                        }
+                        Message messaggio = new Message(rs.getString("autore"), transformFileToByte(rs.getString("path")), rs.getString("destinatario"), hour, day, TypeMessage.FOTO,foregin,rs.getString("testo"));
                         ris.add(messaggio);
                     }
 
@@ -577,7 +603,7 @@ public class UserHandler extends Thread {
         String autore = datiPersonali.getUserName();
         ArrayList risp = new ArrayList<>();
         risp.add("REQUEST-ACCEPT-REAL-TIME");
-        risp.add(user1);
+        
 
         try {
             String SQL = "UPDATE friends SET stato=1 WHERE user1 = '" + user1 + "' AND user2 = '" + autore + "';";
@@ -587,13 +613,24 @@ public class UserHandler extends Thread {
             stmt.close();
 
             for (UserHandler userH : Server.threadAperti) {
+                risp.add(autore);
                 if (userH.getName().equals(user1)) {
                     userH.outputSocket(risp);
-                }
-                if (userH.getName().equals(autore)) {
-                    userH.outputSocket(risp);
+                    break;
                 }
             }
+            
+            risp.remove(autore);
+            
+            for (UserHandler userH : Server.threadAperti) {
+                if (userH.getName().equals(autore)) {
+                    risp.add(user1);
+                    userH.outputSocket(risp);
+                    break;        
+                }
+            }
+            
+            risp.remove(user1);
 
             esito = true;
             System.out.println("Amicizia tra --> " + autore + ", " + user1);

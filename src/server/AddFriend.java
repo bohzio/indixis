@@ -13,15 +13,18 @@ import javax.swing.JScrollPane;
  * @author michele
  */
 public class AddFriend extends javax.swing.JFrame {
+
+    private ChatGUi graphics;
     
     /**
      * Creates new form AggiungiAmicp
      * @param listaUtenti
      */
-    public AddFriend() {
+    public AddFriend(ChatGUi graphics) {
         if(viewResponse()){
             initComponents();
             setElementInPanels();
+            this.graphics = graphics;
         }
     }
     
@@ -97,6 +100,7 @@ public class AddFriend extends javax.swing.JFrame {
                 @Override
                 public void mouseReleased(MouseEvent evt) {
                     if(userRequest.getText().equals("Aggiungi " + name)){
+                        graphics.setNumberOfRequest();
                         Connection.sendFriendRequest(name);
                         Ricezione.listaUtenti.remove(name);
                         listaUtenti.remove(name);
