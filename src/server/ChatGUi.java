@@ -1,6 +1,6 @@
 package server;
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -486,12 +486,14 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param user
      */
     public void addNotify(String user) {
+        if(!user.equals(tab.getTitleAt(0))){
         JLabel k = new JLabel();
         int i = Integer.valueOf((String) notifiche.get(user));
         k = (JLabel) (counterNotifiche.get(i));
         String numberOfCurrentNotify = k.getText();
         String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
         k.setText(text);
+        }
     }
 
     private boolean registrazione(String username, String password) {
@@ -530,6 +532,9 @@ public class ChatGUi extends javax.swing.JFrame {
         friend.repaint();
     }
 
+    /**
+     * setta gli amici, aggiunge i l abel delle notifche
+     */
     public void amici() {
         int x = 0;
         for (int i = 0; i < ar.size(); i++) {
