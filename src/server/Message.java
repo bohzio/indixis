@@ -55,6 +55,7 @@ public class Message implements Serializable {
         this.filename = filename;
     }
 
+    
     public Message(String user, byte[] file, String destinatario, int ora, int day, TypeMessage type, boolean foreign, String filename) {
         this.user = user;
         this.file = file;

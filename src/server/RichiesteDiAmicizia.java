@@ -27,7 +27,10 @@ public class RichiesteDiAmicizia extends javax.swing.JFrame {
        
     }
    
-    
+    /**
+     * 
+     * @return 
+     */
     private ArrayList getUsers(){
         return listaUtenti;
     }

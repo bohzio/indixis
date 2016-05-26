@@ -1,13 +1,13 @@
 package server;
 
-import java.io.BufferedOutputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import javax.swing.SwingUtilities;
+
 
 /**
  * Classe che riceve i dati dal server e setta la grafica.

@@ -3,32 +3,24 @@ package server;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javax.swing.JLabel;
 import server.ChatGUi;
 
 /**
@@ -58,7 +50,7 @@ public class Indixis extends Application {
         primaryStage.setScene(scene);
         scene.getStylesheets().add(Indixis.class.getResource("Indixis.css").toExternalForm());
         primaryStage.setResizable(false);
-//        primaryStage.getIcons().add(new Image("icon.svg"));                 // immagine
+
         Text scenetitle = new Text("Indixis");
         scenetitle.setFont(Font.loadFont("src/Roboto.ttf", 120));
         FadeTransition ft = new FadeTransition(Duration.millis(5000), scenetitle);
@@ -113,7 +105,7 @@ public class Indixis extends Application {
         grid.add(advanced, 0, 9);
 
         
-
+        //bottoni register and sign in
         Button btn = new Button("Sign in");
         Button register = new Button("Register");
         HBox hbBtn = new HBox(14);

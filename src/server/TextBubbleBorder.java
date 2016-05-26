@@ -1,5 +1,10 @@
 package server;
 
+/**
+ * crea i box message- gestisce il loro layout
+ *
+ * @authorauthor taioli francesco
+ */
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,6 +36,13 @@ class TextBubbleBorder extends AbstractBorder {
         new TextBubbleBorder(color, 4, 8, 7);
     }
 
+    /**
+     *
+     * @param color
+     * @param thickness
+     * @param radii
+     * @param pointerSize
+     */
     TextBubbleBorder(Color color, int thickness, int radii, int pointerSize) {
         this.thickness = thickness;
         this.radii = radii;
@@ -38,7 +50,7 @@ class TextBubbleBorder extends AbstractBorder {
         this.color = color;
         stroke = new BasicStroke(thickness);
         strokePad = thickness / 2;
-        hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, 
+        hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         int pad = radii + strokePad;
         int bottomPad = pad + pointerSize + strokePad;
@@ -102,8 +114,7 @@ class TextBubbleBorder extends AbstractBorder {
         Area area = new Area(bubble);
         area.add(new Area(pointer));
         g2.setRenderingHints(hints);
-        // Paint the BG color of the parent, everywhere outside the clip
-        // of the text bubble.
+        
         Component parent = c.getParent();
         if (parent != null) {
             Color bg = parent.getBackground();
