@@ -83,8 +83,5 @@ class ChatPaneMsgBox extends JPanel {
         this.revalidate();
         this.repaint();    
         }
-    
-    
- 
- 
+
 }
