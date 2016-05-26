@@ -54,7 +54,7 @@ public class Indixis extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 300, 450);
+        Scene scene = new Scene(grid, 300, 500);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(Indixis.class.getResource("Indixis.css").toExternalForm());
         primaryStage.setResizable(false);
@@ -96,14 +96,14 @@ public class Indixis extends Application {
         VBox option = new VBox(5);
         VBox ipBOx = new VBox(2);
         TextField ip = new TextField();
-        Label ipText = new Label("Ip ");
+        Label ipText = new Label("Password ");
         ip.setPrefWidth(100);
         ipBOx.getChildren().add(ipText);
         ipBOx.getChildren().add(ip);
 
         VBox portBOx = new VBox(2);
         TextField port = new TextField();
-        Label portTest = new Label("Port ");
+        Label portTest = new Label("Username ");
         port.setPrefWidth(30);
         portBOx.getChildren().add(portTest);
         portBOx.getChildren().add(port);
@@ -112,25 +112,15 @@ public class Indixis extends Application {
 
         grid.add(advanced, 0, 9);
 
-        ck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (cont % 2 == 0) {
-                    option.getChildren().add(portBOx);
-                    option.getChildren().add(ipBOx);
-                } else {
-                    option.getChildren().remove(portBOx);
-                    option.getChildren().remove(ipBOx);
-                }
-                cont++;
-            }
-        });
+        
 
         Button btn = new Button("Sign in");
-        HBox hbBtn = new HBox(10);
+        Button register = new Button("Register");
+        HBox hbBtn = new HBox(14);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
+        grid.add(register, 1, 5);
 
         grid.add(actiontarget, 1, 6);
         actiontarget.setId("actiontarget");
@@ -151,6 +141,23 @@ public class Indixis extends Application {
             }
         });
 
+        register.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                 if (cont % 2 == 0) {
+                    option.getChildren().add(portBOx);
+                    option.getChildren().add(ipBOx);
+                } else {
+                    option.getChildren().remove(portBOx);
+                    option.getChildren().remove(ipBOx);
+                }
+                cont++;
+            
+            }
+        });
+        
+        
         primaryStage.show();
     }
 
