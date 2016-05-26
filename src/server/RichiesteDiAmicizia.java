@@ -43,6 +43,9 @@ public class RichiesteDiAmicizia extends javax.swing.JFrame {
     }
     
     private void setElementInPanels() {
+        sectionUsername.removeAll();sectionRequest.removeAll();
+        sectionUsername.revalidate();sectionRequest.revalidate();
+        sectionUsername.repaint();sectionRequest.repaint();
         ArrayList<String> variousUser = getUsers();
         for(String name: variousUser){
             JLabel username = new JLabel();
@@ -80,8 +83,7 @@ public class RichiesteDiAmicizia extends javax.swing.JFrame {
                     if(userRequest.getText().equals("Accetta " + name)){
                         Connection.acceptFriendRequest(name);
                         Ricezione.friendsListWithoutAnswer.remove(name);
-                        userRequest.setText("Accettata richiesta da " + name);
-                        userRequest.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                        setElementInPanels();
                     }
                 }
             });

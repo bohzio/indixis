@@ -32,7 +32,7 @@ public class Connection {
     private final ChatGUi graphics;
     private boolean esitoConnessione;
     private boolean esitoAutenticazione;
-    public static final String pathSendImage = "C:\\Users\\mattia\\Documents\\indixis_finale\\src\\client\\file\\inviati\\";
+    public static final String pathSendImage = System.getProperty("user.dir") + "\\src\\client\\file\\ricevuti\\";
 
     public Connection(int port_server, String ip_server, String username, String password, String type, ChatGUi graphics) {
         this.portServer = port_server;
@@ -198,12 +198,22 @@ public class Connection {
             os.writeObject(mexFormattato);
             os.flush();
             System.out.println("ho inviato il file nel metodo invioFile");
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("errore invio file");
         }
     }
-
+    
+    public void insertFile(String path, String destinatario,TypeMessage type){
+        Calendar now = Calendar.getInstance();
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        String name = path.split("\\\\")[path.split("\\\\").length - 1];
+        Message message = new Message(username,transformFileToByte(path),destinatario,hour,day,type,name);
+        message.setForeign(false);
+        graphics.addMessage(message);
+    }
     
     private static byte[] transformFileToByte(String percorso) {
         Path path = Paths.get(percorso);

@@ -30,6 +30,9 @@ public class RemoveFriend extends javax.swing.JFrame {
    
     
     private void setElementInPanels() {
+        sectionUsername.removeAll();sectionRequest.removeAll();
+        sectionUsername.revalidate();sectionRequest.revalidate();
+        sectionUsername.repaint();sectionRequest.repaint();
         ArrayList<String> variousUser = ChatGUi.ar;
         for(String name: variousUser){
             JLabel username = new JLabel();
@@ -69,8 +72,7 @@ public class RemoveFriend extends javax.swing.JFrame {
                         Connection.removeFriend(name);
                         Ricezione.friendsList.remove(name);
                         ChatGUi.ar.remove(name);
-                        userRequest.setText("Rimosso dagli amici  " + name);
-                        userRequest.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                        setElementInPanels();
                     }
                 }
             });

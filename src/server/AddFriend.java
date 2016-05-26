@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
  * @author michele
  */
 public class AddFriend extends javax.swing.JFrame {
-
     private ChatGUi graphics;
     
     /**
@@ -29,7 +28,6 @@ public class AddFriend extends javax.swing.JFrame {
     }
     
     private boolean viewResponse() {
-        System.out.println("Risposta: " + (listaUtenti.size() - ChatGUi.ar.size()) + ", " + listaUtenti.size() + ", " +  ChatGUi.ar.size());
         if ((listaUtenti.size() - ChatGUi.ar.size()) > 0) {
             setVisible(true);
             return true;
@@ -65,6 +63,9 @@ public class AddFriend extends javax.swing.JFrame {
     }
     
     private void setElementInPanels() {
+        sectionUsername.removeAll();sectionRequest.removeAll();
+        sectionUsername.revalidate();sectionRequest.revalidate();
+        sectionUsername.repaint();sectionRequest.repaint();
         ArrayList<String> variousUser = getUsers();
         for(String name: variousUser){
             JLabel username = new JLabel();
@@ -104,8 +105,7 @@ public class AddFriend extends javax.swing.JFrame {
                         Connection.sendFriendRequest(name);
                         Ricezione.listaUtenti.remove(name);
                         listaUtenti.remove(name);
-                        userRequest.setText("Richiesta inviata a " + name);
-                        userRequest.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                        setElementInPanels();
                     }
                 }
             });

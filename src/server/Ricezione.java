@@ -226,6 +226,7 @@ public class Ricezione extends Thread {
              graphics.addNotify(message.getUser());
              graphics.addMessage(message);
              
+             
         } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }

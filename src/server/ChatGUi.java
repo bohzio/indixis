@@ -383,8 +383,7 @@ public class ChatGUi extends javax.swing.JFrame {
         addPanel(paneLeft);
         
         Connection.invioFile(dest.toString(),destinatario, TypeMessage.FOTO);
-        Message message = new Message(localUser, dest.toString(),destinatario, hour, day, TypeMessage.FOTO, false);
-        addMessage(message);
+        connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FOTO);
         }
     }//GEN-LAST:event_inviaFotoActionPerformed
 
@@ -441,6 +440,7 @@ public class ChatGUi extends javax.swing.JFrame {
         if (returnValue == filechooser.APPROVE_OPTION) {
             System.out.println(filechooser.getSelectedFile().getAbsolutePath());;
             Connection.invioFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
+            connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
         }
     }//GEN-LAST:event_inviaFileActionPerformed
 
@@ -508,7 +508,7 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        Connection connection = new Connection(5555, "127.0.0.1", username, password, "login", this);
+        connection = new Connection(5555, "127.0.0.1", username, password, "login", this);
 
         return true;
     }
