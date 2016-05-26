@@ -471,7 +471,7 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void addMessage(Message messaggio) {
 
-        //startSound("/indixis/sound/soundMessage.mp3");
+        
         listaMessaggi.add(messaggio);
         try {
             setMessage();
@@ -518,7 +518,7 @@ public class ChatGUi extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * setta la lista degli amici
      * @param listaAmici
      */
     public void setFriendsListArray(ArrayList<String> listaAmici) {
@@ -533,7 +533,7 @@ public class ChatGUi extends javax.swing.JFrame {
     }
 
     /**
-     * setta gli amici, aggiunge i l abel delle notifche
+     * setta gli amici, aggiunge i label delle notifche in un array
      */
     public void amici() {
         int x = 0;
@@ -594,6 +594,9 @@ public class ChatGUi extends javax.swing.JFrame {
 
     /**
      * setta i messagi nel panel in corrispondenza dell utente
+     * riconosce i messagi in entrata e in uscita
+     * @throws FileNotFoundException
+     * @throws IOException 
      */
     public void setMessage() throws FileNotFoundException, IOException {
         String destinatario = tab.getTitleAt(0);
@@ -625,7 +628,7 @@ public class ChatGUi extends javax.swing.JFrame {
             addPanel(paneLeft);
             }
         }
-        
+        //sposta lo scrool in corrispondena dell'ultimo mess
          Rectangle rect = panelMessage.getBounds();
                 Rectangle r2 = scroll.getViewport().getVisibleRect();
                 panelMessage.scrollRectToVisible(new Rectangle((int) rect.getWidth(), 
@@ -633,7 +636,7 @@ public class ChatGUi extends javax.swing.JFrame {
     }
 
     /**
-     * aggiunge un pboxPanel al pannello dei messaggi
+     * aggiunge un boxPanel al pannello dei messaggi
      *
      * @param panel
      */
@@ -702,6 +705,9 @@ public class ChatGUi extends javax.swing.JFrame {
         inviaAudio.setBorder(new RoundedBorder(10));
     }
 
+    /**
+     * setta i il font material di google- roboto-thin.ttf
+     */
     private void setFont() {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("Roboto-thin.ttf"));
@@ -716,22 +722,20 @@ public class ChatGUi extends javax.swing.JFrame {
 
     }
 
+    /**
+     * metodo usato per settare delle impostazioni
+     */
     public void inizialize() {
         panelMessage = new JPanel();
-        //panelMessage.setBackground(Color.LIGHT_GRAY);
+       
         setCircolar();
         setFont();
              friend.setBackground(new java.awt.Color(227, 242, 253));
         System.out.println("################################################aggiutno");
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-        //panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-        //scroll.add(panelMessage);
-        //panelMessage.setSize(new Dimension(500,500));
-        //panelMessage.setBackground(Color.pink);
-        //panelMessage.setMaximumSize(new Dimension(600, 600));
+        
         scroll.setViewportView(panelMessage);
-        //scroll.setPreferredSize(new Dimension(50, 50));
-        //scroll.getVerticalScrollBar().setUI(new MyScrollBarUI());
+        
 
     }
 
@@ -743,6 +747,10 @@ public class ChatGUi extends javax.swing.JFrame {
 
     }
 
+    /**
+     * setta la lista dei messagi
+     * @param messaggi 
+     */
     public void setListaMessaggi(ArrayList messaggi) {
         listaMessaggi = messaggi;
     }
