@@ -4,11 +4,13 @@ package server;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.BoxLayout;
@@ -93,14 +95,22 @@ public class ChatGUi extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(100, 181, 246));
+        setMaximumSize(new java.awt.Dimension(900, 700));
+        setMinimumSize(new java.awt.Dimension(900, 700));
+        setPreferredSize(new java.awt.Dimension(900, 700));
+        setResizable(false);
 
         title.setBackground(new java.awt.Color(100, 181, 246));
+        title.setPreferredSize(new java.awt.Dimension(900, 88));
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         addFriend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/add.png"))); // NOI18N
         addFriend.setText("Add");
         addFriend.setBorder(null);
+        addFriend.setMaximumSize(new java.awt.Dimension(100, 30));
+        addFriend.setMinimumSize(new java.awt.Dimension(100, 30));
+        addFriend.setPreferredSize(new java.awt.Dimension(100, 30));
         addFriend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addFriendActionPerformed(evt);
@@ -109,6 +119,9 @@ public class ChatGUi extends javax.swing.JFrame {
 
         removeFriends.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/remove.png"))); // NOI18N
         removeFriends.setText("Remove");
+        removeFriends.setMaximumSize(new java.awt.Dimension(100, 30));
+        removeFriends.setMinimumSize(new java.awt.Dimension(100, 30));
+        removeFriends.setPreferredSize(new java.awt.Dimension(100, 30));
         removeFriends.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeFriendsActionPerformed(evt);
@@ -117,44 +130,49 @@ public class ChatGUi extends javax.swing.JFrame {
 
         friendRequestList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/request.png"))); // NOI18N
         friendRequestList.setText("View request");
+        friendRequestList.setMaximumSize(new java.awt.Dimension(130, 30));
+        friendRequestList.setMinimumSize(new java.awt.Dimension(130, 30));
+        friendRequestList.setPreferredSize(new java.awt.Dimension(130, 30));
         friendRequestList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 friendRequestListActionPerformed(evt);
             }
         });
 
-        numberOfRequest.setBackground(new java.awt.Color(0, 0, 255));
+        numberOfRequest.setBackground(new java.awt.Color(204, 204, 255));
         numberOfRequest.setForeground(new java.awt.Color(0, 51, 51));
+        numberOfRequest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         numberOfRequest.setText("0");
+        numberOfRequest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        numberOfRequest.setOpaque(true);
 
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGap(600, 600, 600)
+                .addGap(580, 580, 580)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(removeFriends)
+                    .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(titleLayout.createSequentialGroup()
-                        .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(friendRequestList)
+                        .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(numberOfRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(titleLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(numberOfRequest)
-                    .addComponent(addFriend, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numberOfRequest))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 9, Short.MAX_VALUE))
@@ -166,7 +184,7 @@ public class ChatGUi extends javax.swing.JFrame {
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,16 +195,19 @@ public class ChatGUi extends javax.swing.JFrame {
         );
 
         friend.setBackground(new java.awt.Color(227, 242, 253));
+        friend.setMaximumSize(new java.awt.Dimension(190, 536));
+        friend.setMinimumSize(new java.awt.Dimension(190, 536));
+        friend.setPreferredSize(new java.awt.Dimension(190, 536));
 
         javax.swing.GroupLayout friendLayout = new javax.swing.GroupLayout(friend);
         friend.setLayout(friendLayout);
         friendLayout.setHorizontalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 156, Short.MAX_VALUE)
+            .addGap(0, 190, Short.MAX_VALUE)
         );
         friendLayout.setVerticalGroup(
             friendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         tab.setBackground(new java.awt.Color(255, 255, 255));
@@ -206,8 +227,9 @@ public class ChatGUi extends javax.swing.JFrame {
         jScrollPane2.setViewportView(messageText);
 
         inviaTesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/telegram-logo.png"))); // NOI18N
-        inviaTesto.setMaximumSize(new java.awt.Dimension(205, 137));
-        inviaTesto.setMinimumSize(new java.awt.Dimension(205, 137));
+        inviaTesto.setMaximumSize(new java.awt.Dimension(75, 40));
+        inviaTesto.setMinimumSize(new java.awt.Dimension(75, 40));
+        inviaTesto.setPreferredSize(new java.awt.Dimension(75, 40));
         inviaTesto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 inviaTestoMousePressed(evt);
@@ -233,6 +255,9 @@ public class ChatGUi extends javax.swing.JFrame {
         });
 
         inviaFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/image.png"))); // NOI18N
+        inviaFoto.setMaximumSize(new java.awt.Dimension(75, 40));
+        inviaFoto.setMinimumSize(new java.awt.Dimension(75, 40));
+        inviaFoto.setPreferredSize(new java.awt.Dimension(75, 40));
         inviaFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inviaFotoActionPerformed(evt);
@@ -242,6 +267,9 @@ public class ChatGUi extends javax.swing.JFrame {
         indixis.setText("INDIXIS");
 
         inviaFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/attachment.png"))); // NOI18N
+        inviaFile.setMaximumSize(new java.awt.Dimension(75, 40));
+        inviaFile.setMinimumSize(new java.awt.Dimension(75, 40));
+        inviaFile.setPreferredSize(new java.awt.Dimension(75, 40));
         inviaFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inviaFileActionPerformed(evt);
@@ -249,6 +277,17 @@ public class ChatGUi extends javax.swing.JFrame {
         });
 
         inviaAudio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/indixis/img/microphone.png"))); // NOI18N
+        inviaAudio.setMaximumSize(new java.awt.Dimension(75, 40));
+        inviaAudio.setMinimumSize(new java.awt.Dimension(75, 40));
+        inviaAudio.setPreferredSize(new java.awt.Dimension(75, 40));
+        inviaAudio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                inviaAudioMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                inviaAudioMouseReleased(evt);
+            }
+        });
         inviaAudio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inviaAudioActionPerformed(evt);
@@ -264,40 +303,39 @@ public class ChatGUi extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
-                        .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(inviaTesto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inviaAudio, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(inviaFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(inviaFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(157, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(indixis, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(526, 526, 526))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(inviaTesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(inviaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(inviaAudio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inviaFile, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(91, 91, 91))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(information, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,35 +345,31 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(indixis, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(information, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(friend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(43, 43, 43))
-                        .addComponent(tab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(inviaFile)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(inviaFoto)))
-                .addGap(8, 8, 8)
+                .addGap(30, 30, 30)
+                .addComponent(information, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(inviaTesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inviaAudio)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(inviaAudio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                                .addComponent(inviaFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(inviaTesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(inviaFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(friend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 544, Short.MAX_VALUE)))
+                    .addGap(0, 730, Short.MAX_VALUE)))
         );
 
         pack();
@@ -408,15 +442,7 @@ public class ChatGUi extends javax.swing.JFrame {
     }//GEN-LAST:event_inviaTestoPropertyChange
 
     private void messageTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageTextKeyReleased
-        if (messageText.getText().equals("")) {
-            inviaTesto.setText("Registra");
-            inviaTesto.revalidate();
-            inviaTesto.repaint();
-        } else {
-            inviaTesto.setText("Invia");
-            inviaTesto.revalidate();
-            inviaTesto.repaint();
-        }
+
     }//GEN-LAST:event_messageTextKeyReleased
 
     private void inviaFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaFileActionPerformed
@@ -454,6 +480,14 @@ public class ChatGUi extends javax.swing.JFrame {
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
         new AddFriend(this);
     }//GEN-LAST:event_addFriendActionPerformed
+
+    private void inviaAudioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviaAudioMousePressed
+
+    }//GEN-LAST:event_inviaAudioMousePressed
+
+    private void inviaAudioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviaAudioMouseReleased
+
+    }//GEN-LAST:event_inviaAudioMouseReleased
 
     /**
      * setta il nome dell'utente nella barra titolo
@@ -537,15 +571,61 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void amici() {
         int x = 0;
+        friend.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < ar.size(); i++) {
             String text = (String) ar.get(i).toString();
 
             //notifiche
             notifiche.put(text, String.valueOf(i));
+            
             JLabel notify = new JLabel("0");
+            notify.setFont(new java.awt.Font("Traditional Arabic", 0, 18));
+            notify.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            notify.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            notify.setPreferredSize(new java.awt.Dimension(15, 30));
+            notify.setOpaque(true);
+            notify.setBackground(new Color(126, 225, 230));
 //            notify.set
             counterNotifiche.add(notify);
+            
+            JLabel label = new JLabel((String) ar.get(i).toString());
+            label.setFont(new java.awt.Font("Traditional Arabic", 0, 18));
+            label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            label.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            label.setPreferredSize(new java.awt.Dimension(175, 30));
+            label.setOpaque(true);
+            label.setBackground(new Color(126, 225, 230));
+            label.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent evt){
+                    label.setBackground(new java.awt.Color(92, 255, 179));
+                }
+                
+                @Override
+                public void mouseReleased(MouseEvent evt){
+                    label.setBackground(new Color(126, 225, 230));
+                    notify.setText("0");
+                    //panelMessage.setBackground(Color.LIGHT_GRAY);
+                    arrayTab.add(tab);
+                    if (x == 0) {
+                        tab.addTab(text, scroll);
 
+                    } else {
+                        int index = tab.getSelectedIndex();
+                        tab.setTitleAt(0, text);
+                    }
+                    try {
+                        setMessage();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            
+            //panelFriend.add(label);
+            
+            /*
             JButton button = new JButton((String) ar.get(i).toString());
 
             button.addActionListener(new ActionListener() {
@@ -567,11 +647,11 @@ public class ChatGUi extends javax.swing.JFrame {
                     }
                     System.out.println("--------------------------------------------");
                 }
-            });
+            });*/
             JPanel p = new JPanel();
-            p.setBackground(Color.red);
-            p.setMaximumSize(new Dimension(200, 30));
-            p.add(button);
+            p.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+            p.setMaximumSize(new Dimension(190, 30));
+            p.add(label);
             p.add(notify);
             friend.add(p);
             System.out.println((String) ar.get(i).toString());
@@ -789,4 +869,6 @@ public class ChatGUi extends javax.swing.JFrame {
     private List<Message> listaMessaggi = new ArrayList();
     LinkedHashMap notifiche = new LinkedHashMap();
     private List<JLabel> counterNotifiche = new ArrayList();
+    private AudioRecorder audioRecorder;
+    private Thread threadForAudio;
 }
