@@ -16,12 +16,13 @@ import javax.sound.sampled.TargetDataLine;
  * @version 1.8
  * Classe che permette di registrare e creare un file audio
  */
-public class AudioRecorder {
+public class AudioRecorder extends Thread{
     private AudioFormat formato;
     private File tracciaAudio;
     private DataLine.Info info;
     private TargetDataLine line;
     private AudioInputStream audiostream;
+    private Thread thread;
     
     public AudioRecorder(String filePath){
         try {
@@ -35,7 +36,7 @@ public class AudioRecorder {
         }
     }
 
-    public void inizioRecord() {
+    public void record() {
         try{
             line.open(formato, line.getBufferSize());
             line.start();
@@ -47,12 +48,31 @@ public class AudioRecorder {
         }
     }
     
+    public void startRecorder(){
+        thread = new Thread();
+    }
+    
+    public void endRecorder(){
+        thread = null;
+    }
+    
     public void fineRecord(){
         line.stop();
         line.close();
         System.out.println("Fine registrazione");
     }
     
+    @Override
+    public void run() {
+        while (thread != null){
+            try {
+                thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                break;
+            }
+        }
+    }
+    /**
     public static void main(String[] args){
         AudioRecorder audioRecorder = new AudioRecorder(
                 System.getProperty("user.dir") + "\\src\\client\\file\\"
@@ -64,10 +84,10 @@ public class AudioRecorder {
                 System.out.println(System.getProperty("user.dir") + "\\src\\client\\file\\"
                         + "inviati\\tracciaAudio\\" + "registra.au");
             } catch (InterruptedException ex) {
-                
             }
         });
         stopper.start();
         audioRecorder.inizioRecord();
-    }
+    }*/
+    
 }
