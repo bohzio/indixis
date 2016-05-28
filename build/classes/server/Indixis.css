@@ -1,3 +1,5 @@
+/* created by Taioli Francesco -  */
+
 .root {
    -fx-background-color: linear-gradient(#1565C0, #1565C0);
 }
@@ -65,3 +67,22 @@
      -fx-border-style: dotted;
      -fx-border-width: 2;
     }
+    
+    
+#reg {
+    -fx-text-fill: white;
+    -fx-font-family: "Roboto";
+    -fx-background-color: 
+        #000000,
+        linear-gradient(#7ebcea, #2f4b8f),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 9 20 9 20;
+    -fx-text-fill: white;
+    
+}
+#reg:hover {
+    -fx-background-color: linear-gradient(#1E88E5, #2196F3);
+}
