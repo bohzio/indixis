@@ -46,7 +46,7 @@ public class Indixis extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 300, 600);
+        Scene scene = new Scene(grid, 300, 550);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(Indixis.class.getResource("Indixis.css").toExternalForm());
         primaryStage.setResizable(false);
@@ -85,13 +85,16 @@ public class Indixis extends Application {
 
         GridPane advanced = new GridPane();
 
+        
+        //register
         VBox option = new VBox(5);
-        VBox ipBOx = new VBox(3);
+        VBox ipBOx = new VBox(5);
         TextField ip = new TextField();
         Label ipText = new Label("Password ");
         ip.setPrefWidth(100);
         ipBOx.getChildren().add(ipText);
         ipBOx.getChildren().add(ip);
+        
 
         VBox portBOx = new VBox(3);
         TextField port = new TextField();
@@ -99,8 +102,10 @@ public class Indixis extends Application {
         port.setPrefWidth(30);
         portBOx.getChildren().add(portTest);
         portBOx.getChildren().add(port);
-
+        
         Button reg = new Button("Register");
+        reg.setId("reg");
+        ipBOx.getChildren().add(reg);
         reg.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -115,7 +120,7 @@ public class Indixis extends Application {
         });
 
         advanced.add(option, 0, 1);
-        portBOx.getChildren().add(reg);
+        
         grid.add(advanced, 0, 10);
 
         //bottoni register and sign in
