@@ -8,13 +8,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +30,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -41,12 +41,15 @@ import java.util.logging.Logger;
  */
 public class ChatGUi extends javax.swing.JFrame {
 
+    private final String tipo;
+
     /**
      * Creates new form IndixisGui
      */
-    public ChatGUi(String username, String password) {
+    public ChatGUi(String username, String password,String tipo) {
         this.username = username;
         this.password = password;
+        this.tipo = tipo;
         initComponents();
         registrazione(username, password);
         inizialize();
@@ -80,7 +83,6 @@ public class ChatGUi extends javax.swing.JFrame {
         inviaFile = new javax.swing.JButton();
         inviaAudio = new javax.swing.JButton();
         user = new javax.swing.JLabel();
-        information = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -296,8 +298,6 @@ public class ChatGUi extends javax.swing.JFrame {
 
         user.setFont(new java.awt.Font("Lucida Sans Unicode", 0, 24)); // NOI18N
 
-        information.setText("Your list of friends");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -331,9 +331,6 @@ public class ChatGUi extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(information, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE))
         );
@@ -345,9 +342,7 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(indixis, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(information, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tab, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -528,6 +523,7 @@ public class ChatGUi extends javax.swing.JFrame {
         String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
         k.setText(text);
         }
+        startSound("request.wav");
     }
 
     private boolean registrazione(String username, String password) {
@@ -546,7 +542,8 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        connection = new Connection(5555, "127.0.0.1", username, password, "login", this);
+        
+        connection = new Connection(5555, "127.0.0.1", username, password, tipo, this);
 
         return true;
     }
@@ -623,31 +620,6 @@ public class ChatGUi extends javax.swing.JFrame {
                 }
             });
             
-            //panelFriend.add(label);
-            
-            /*
-            JButton button = new JButton((String) ar.get(i).toString());
-
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent ae) {
-                    notify.setText("0");
-                    //panelMessage.setBackground(Color.LIGHT_GRAY);
-                    arrayTab.add(tab);
-                    if (x == 0) {
-                        tab.addTab(text, scroll);
-
-                    } else {
-                        int index = tab.getSelectedIndex();
-                        tab.setTitleAt(0, text);
-                    }
-                    try {
-                        setMessage();
-                    } catch (IOException ex) {
-                        Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    System.out.println("--------------------------------------------");
-                }
-            });*/
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
             p.setMaximumSize(new Dimension(190, 30));
@@ -660,7 +632,7 @@ public class ChatGUi extends javax.swing.JFrame {
 
     public void riceviAmicizia(String username) {
         setNumberOfRequest();
-        //startSound("request.wav");
+        startSound("request.wav");
         JOptionPane.showMessageDialog(null, "Hai ricevuto una richiesta d'amicizia da " + username + "vai nell'apposita sezione per accettare");
     }
 
@@ -760,17 +732,17 @@ public class ChatGUi extends javax.swing.JFrame {
      *
      * @param sound
      */
-//    private void startSound(String sound) {
-//        try {
-//            AudioInputStream audioIn = AudioSystem.getAudioInputStream(ChatGUi.class.getResource(sound));
-//            Clip clip = AudioSystem.getClip();
-//            clip.open(audioIn);
-//            clip.start();
-//        } catch (Exception ex) {
-//            Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
+    private void startSound(String sound) {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(ChatGUi.class.getResource(sound));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception ex) {
+            Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * setta i bottoni circolari
@@ -792,8 +764,6 @@ public class ChatGUi extends javax.swing.JFrame {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("Roboto-thin.ttf"));
             indixis.setFont(font.deriveFont(Font.BOLD, 48f));
-            information.setFont(font.deriveFont(Font.BOLD, 22f));
-           
         } catch (FontFormatException ex) {
             Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -840,7 +810,6 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JPanel friend;
     private javax.swing.JButton friendRequestList;
     private javax.swing.JLabel indixis;
-    private javax.swing.JLabel information;
     private javax.swing.JButton inviaAudio;
     private javax.swing.JButton inviaFile;
     private javax.swing.JButton inviaFoto;

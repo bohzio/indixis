@@ -46,6 +46,7 @@ public class Connection {
         }
         if (type.equals("registrazione")) {
             controller("registrazione");
+            System.out.println("sto registrando");
         }
     }
 
@@ -81,7 +82,7 @@ public class Connection {
                     result = true;
                 }
             }
-            if (regOrLog.equals("registrazione")) {
+            else if (regOrLog.equals("registrazione")) {
                 (this).registrazione(username, password);
                 if (ricezione.registrazione()) {
                     System.out.println("Registrazione Riuscita !!!");
@@ -90,9 +91,7 @@ public class Connection {
                     ricezione.start();  //lancio il thread
                     result = true;
                 }
-
             }
-
         } catch (Exception e) {
             result = false;
         }

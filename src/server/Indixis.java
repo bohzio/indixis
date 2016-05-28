@@ -46,7 +46,7 @@ public class Indixis extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 300, 500);
+        Scene scene = new Scene(grid, 300, 600);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(Indixis.class.getResource("Indixis.css").toExternalForm());
         primaryStage.setResizable(false);
@@ -86,25 +86,38 @@ public class Indixis extends Application {
         GridPane advanced = new GridPane();
 
         VBox option = new VBox(5);
-        VBox ipBOx = new VBox(2);
+        VBox ipBOx = new VBox(3);
         TextField ip = new TextField();
         Label ipText = new Label("Password ");
         ip.setPrefWidth(100);
         ipBOx.getChildren().add(ipText);
         ipBOx.getChildren().add(ip);
 
-        VBox portBOx = new VBox(2);
+        VBox portBOx = new VBox(3);
         TextField port = new TextField();
         Label portTest = new Label("Username ");
         port.setPrefWidth(30);
         portBOx.getChildren().add(portTest);
         portBOx.getChildren().add(port);
 
+        Button reg = new Button("Register");
+        reg.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                String usernameLogin = ip.getText();
+                String passwordLogin = port.getText();
+                ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin, "login"); //i mettere le stringe sopra
+                graphics.setUser(usernameLogin);
+                actiontarget.setText(" Sto loggando ...");
+                graphics.setVisible(true);
+            }
+        });
+
         advanced.add(option, 0, 1);
+        portBOx.getChildren().add(reg);
+        grid.add(advanced, 0, 10);
 
-        grid.add(advanced, 0, 9);
-
-        
         //bottoni register and sign in
         Button btn = new Button("Sign in");
         Button register = new Button("Register");
@@ -121,14 +134,15 @@ public class Indixis extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                String usernameLogin = userTextField.getText();
-                String passwordLogin = String.valueOf(password.getText());
+                String usernameLogin = ip.getText();
+                String passwordLogin = port.getText();
                 System.out.println(usernameLogin + "--" + passwordLogin);
                 //ChatGUi graphics = new ChatGUi("giovanni", "123456--"); //senza mettere i nomi in debug
-                ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin); //i mettere le stringe sopra
+
+                ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin, "registrazione"); //i mettere le stringe sopra
                 graphics.setUser(usernameLogin);
                 graphics.setVisible(true);
-                actiontarget.setText(" Sto loggando ...");
+                actiontarget.setText(" Sto registrando ...");
                 Platform.exit();
             }
         });
@@ -137,7 +151,7 @@ public class Indixis extends Application {
 
             @Override
             public void handle(ActionEvent e) {
-                 if (cont % 2 == 0) {
+                if (cont % 2 == 0) {
                     option.getChildren().add(portBOx);
                     option.getChildren().add(ipBOx);
                 } else {
@@ -145,11 +159,10 @@ public class Indixis extends Application {
                     option.getChildren().remove(ipBOx);
                 }
                 cont++;
-            
+
             }
         });
-        
-        
+
         primaryStage.show();
     }
 

@@ -92,10 +92,6 @@
                   </Group>
               </Group>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="information" min="-2" pref="211" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="title" alignment="0" pref="981" max="32767" attributes="0"/>
           </Group>
@@ -111,9 +107,7 @@
                   </Group>
                   <Component id="indixis" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="information" min="-2" pref="28" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="tab" min="-2" pref="424" max="-2" attributes="0"/>
@@ -476,11 +470,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="information">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Your list of friends"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
