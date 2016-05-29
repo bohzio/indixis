@@ -31,8 +31,11 @@ import server.ChatGUi;
 public class Indixis extends Application {
 
     private static int cont = 0;
-    TextField userTextField = new TextField();
-    PasswordField password = new PasswordField();
+    TextField userLogin = new TextField();//login
+    PasswordField passwordLogin = new PasswordField();//login
+
+    TextField usernameRegistrazione = new TextField();//registrazione
+    PasswordField passwordRegistrazione = new PasswordField();//registrazione
     final Text actiontarget = new Text();
 
     @Override
@@ -64,7 +67,7 @@ public class Indixis extends Application {
         GridPane nomeutente = new GridPane();
         Label userName = new Label("Username");
 
-        nomeutente.add(userTextField, 1, 1);
+        nomeutente.add(userLogin, 1, 1);
 
         nomeutente.add(userName, 1, 0);
         grid.add(nomeutente, 0, 1);
@@ -73,86 +76,82 @@ public class Indixis extends Application {
 
         Label pw = new Label("Password");
         passwordGrid.add(pw, 1, 0);
-        passwordGrid.add(password, 1, 1);
+        passwordGrid.add(passwordLogin, 1, 1);
 
         grid.add(passwordGrid, 0, 2);
 
-        //chekckbox
-        HBox ckBox = new HBox(10);
-        CheckBox ck = new CheckBox("Show advanced option");
-        ckBox.getChildren().add(ck);
-        grid.add(ckBox, 0, 6);
-
         GridPane advanced = new GridPane();
 
-        
         //register
         VBox option = new VBox(5);
         VBox ipBOx = new VBox(5);
-        TextField ip = new TextField();
-        Label ipText = new Label("Password ");
-        ip.setPrefWidth(100);
-        ipBOx.getChildren().add(ipText);
-        ipBOx.getChildren().add(ip);
-        
+
+        Label passwordLabel = new Label("Password ");
+        passwordRegistrazione.setPrefWidth(100);
+        ipBOx.getChildren().add(passwordLabel);
+        ipBOx.getChildren().add(passwordRegistrazione);
 
         VBox portBOx = new VBox(3);
-        TextField port = new TextField();
-        Label portTest = new Label("Username ");
-        port.setPrefWidth(30);
-        portBOx.getChildren().add(portTest);
-        portBOx.getChildren().add(port);
-        
-        Button reg = new Button("Register");
-        reg.setId("reg");
-        ipBOx.getChildren().add(reg);
-        reg.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent e) {
-                String usernameLogin = ip.getText();
-                String passwordLogin = port.getText();
-                ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin, "login"); //i mettere le stringe sopra
-                graphics.setUser(usernameLogin);
-                actiontarget.setText(" Sto loggando ...");
-                graphics.setVisible(true);
-            }
-        });
+        Label usernameLabel = new Label("Username ");
+        usernameRegistrazione.setPrefWidth(30);
+        portBOx.getChildren().add(usernameLabel);
+        portBOx.getChildren().add(usernameRegistrazione);
 
-        advanced.add(option, 0, 1);
-        
-        grid.add(advanced, 0, 10);
-
-        //bottoni register and sign in
-        Button btn = new Button("Sign in");
         Button register = new Button("Register");
-        HBox hbBtn = new HBox(14);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
-        grid.add(register, 1, 5);
-
-        grid.add(actiontarget, 1, 6);
-        actiontarget.setId("actiontarget");
-        btn.setDefaultButton(true);
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        register.setId("reg");
+        ipBOx.getChildren().add(register);
+        register.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-                String usernameLogin = ip.getText();
-                String passwordLogin = port.getText();
-                System.out.println(usernameLogin + "--" + passwordLogin);
-                //ChatGUi graphics = new ChatGUi("giovanni", "123456--"); //senza mettere i nomi in debug
-
-                ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin, "registrazione"); //i mettere le stringe sopra
-                graphics.setUser(usernameLogin);
-                graphics.setVisible(true);
+                String usernameReg = usernameRegistrazione.getText();
+                String passwordReg = passwordRegistrazione.getText();
+                System.out.println(usernameReg + " " + passwordReg);
+                ChatGUi graphics = new ChatGUi(usernameReg, passwordReg, "registrazione"); //i mettere le stringe sopra
+                graphics.setUser(usernameReg);
                 actiontarget.setText(" Sto registrando ...");
+                graphics.setVisible(true);
                 Platform.exit();
             }
         });
 
-        register.setOnAction(new EventHandler<ActionEvent>() {
+        advanced.add(option, 0, 1);
+
+        grid.add(advanced, 0, 10);
+
+        //bottoni register and sign in
+        Button login = new Button("Sign in");
+        Button openRegister = new Button("Register");
+        HBox hbBtn = new HBox(14);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(login);
+        grid.add(hbBtn, 1, 4);
+        grid.add(openRegister, 1, 5);
+
+        grid.add(actiontarget, 1, 6);
+        actiontarget.setId("actiontarget");
+        login.setDefaultButton(true);
+        login.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                String usernameLogin = userLogin.getText();
+                String passLogin = passwordLogin.getText();
+                System.out.println(usernameLogin + "--" + passLogin);
+                //ChatGUi graphics = new ChatGUi("giovanni", "123456--"); //senza mettere i nomi in debug
+
+                //ChatGUi graphics = new ChatGUi(usernameLogin, passwordLogin, "login"); //i mettere le stringe sopra
+                //graphics.setUser(usernameLogin);
+                ChatGUi graphics = new ChatGUi(usernameLogin, passLogin, "login"); //i mettere le stringe sopra
+                graphics.setUser(usernameLogin);
+                graphics.setVisible(true);
+                actiontarget.setText(" Sto facendo il login ...");
+                Platform.exit();
+            }
+        });
+
+        //apre i textfield per la registrazione
+        openRegister.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
