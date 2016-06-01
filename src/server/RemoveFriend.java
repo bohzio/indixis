@@ -5,7 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /**
@@ -13,15 +12,12 @@ import javax.swing.JScrollPane;
  * @author michele
  */
 public class RemoveFriend extends javax.swing.JFrame {
-
-    private final ChatGUi graphics;
     
     /**
      * Creates new form AggiungiAmicp
-     * @param listaUtenti
+     * 
      */
-    public RemoveFriend(ChatGUi graphics) {
-            this.graphics = graphics;
+    public RemoveFriend() {
             initComponents();
             setElementInPanels();
             setVisible(true);
@@ -61,18 +57,13 @@ public class RemoveFriend extends javax.swing.JFrame {
             userRequest.setPreferredSize(new java.awt.Dimension(200, 30));
             userRequest.addMouseListener(new MouseAdapter(){
                 @Override
-                public void mousePressed(MouseEvent evt) {
-                    
-                }
-
-                @Override
                 public void mouseReleased(MouseEvent evt) {
                     if(userRequest.getText().equals("Rimuovi " + name)){
-                        graphics.setNumberOfRequest();
                         Connection.removeFriend(name);
                         Ricezione.friendsList.remove(name);
                         ChatGUi.ar.remove(name);
                         setElementInPanels();
+                        ChatGUi.setNumberOfRequest();
                     }
                 }
             });

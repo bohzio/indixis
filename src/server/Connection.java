@@ -1,7 +1,5 @@
 package server;
 
-import java.io.FileInputStream;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -10,8 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe che si connette al server e invia i dati
@@ -41,13 +37,7 @@ public class Connection {
         this.password = password;
         this.type = type;
         this.graphics = graphics;
-        if (type.equals("login")) {
-            controller("login");
-        }
-        if (type.equals("registrazione")) {
-            controller("registrazione");
-            System.out.println("sto registrando");
-        }
+        controller(type);
     }
 
     private void controller(String type) {
@@ -61,7 +51,6 @@ public class Connection {
 
     private boolean connessione(String regOrLog) {
         boolean result = false;
-
         try {
 
             socket = new Socket(ipServer, portServer);
@@ -77,17 +66,16 @@ public class Connection {
                     listaUtentiRequest();
                     listaMexRequest();
                     getListFriendWithoutAnswers();
-                    
                     ricezione.start();  //lancio il thread
                     result = true;
                 }
             }
             else if (regOrLog.equals("registrazione")) {
-                (this).registrazione(username, password);
+                registrazione(username, password);
                 if (ricezione.registrazione()) {
                     System.out.println("Registrazione Riuscita !!!");
                     listaUtentiRequest();
-                    listaMexRequest();
+                    friendsListRequest(); // è inutile ma così evito un NullPointerException in addFriend
                     ricezione.start();  //lancio il thread
                     result = true;
                 }

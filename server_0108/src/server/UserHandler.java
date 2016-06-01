@@ -613,25 +613,21 @@ public class UserHandler extends Thread {
             stmt.close();
 
             for (UserHandler userH : Server.threadAperti) {
-                risp.add(autore);
                 if (userH.getName().equals(user1)) {
+                    risp.add(autore);
                     userH.outputSocket(risp);
                     break;
                 }
             }
             
             risp.remove(autore);
-            
+            risp.add(user1);
             for (UserHandler userH : Server.threadAperti) {
                 if (userH.getName().equals(autore)) {
-                    risp.add(user1);
                     userH.outputSocket(risp);
                     break;        
                 }
             }
-            
-            risp.remove(user1);
-
             esito = true;
             System.out.println("Amicizia tra --> " + autore + ", " + user1);
 

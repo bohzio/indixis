@@ -13,22 +13,24 @@ import javax.swing.JScrollPane;
  * @author michele
  */
 public class AddFriend extends javax.swing.JFrame {
-    private ChatGUi graphics;
     
+    private int numFriend;
+    private int numUtenti;
     /**
      * Creates new form AggiungiAmicp
-     * @param listaUtenti
+     * 
      */
-    public AddFriend(ChatGUi graphics) {
+    public AddFriend() {
+        this.numFriend = (ChatGUi.ar == null ? 0: ChatGUi.ar.size());
+        this.numUtenti = (listaUtenti == null ? 0: listaUtenti.size());
         if(viewResponse()){
             initComponents();
             setElementInPanels();
-            this.graphics = graphics;
         }
     }
     
     private boolean viewResponse() {
-        if ((listaUtenti.size() - ChatGUi.ar.size()) > 0) {
+        if ((numUtenti - numFriend) > 0) {
             setVisible(true);
             return true;
         } else{
@@ -40,8 +42,10 @@ public class AddFriend extends javax.swing.JFrame {
     }
     
     private ArrayList getUsers(){
+        int numFriend = (ChatGUi.ar == null ? 0: ChatGUi.ar.size());
         ArrayList<String> ris = null;
-        if ((listaUtenti.size() - ChatGUi.ar.size()) > 0) {
+        
+        if ((numUtenti - numFriend) > 0) {
             ris = new ArrayList();
             for (int i = 0; i < listaUtenti.size(); i++) {
                 if (isMyFriend((String) listaUtenti.get(i)) && !Connection.getUsername().equals(listaUtenti.get(i))) {
@@ -53,7 +57,7 @@ public class AddFriend extends javax.swing.JFrame {
     }
     
     private boolean isMyFriend(String utente) {
-        for (int i = 0; i < ChatGUi.ar.size(); i++) {
+        for (int i = 0; i < numFriend; i++) {
             System.out.println(Connection.getUsername().equals(utente));
             if (ChatGUi.ar.get(i).equals(utente)) {
                 return false;
@@ -94,18 +98,13 @@ public class AddFriend extends javax.swing.JFrame {
             userRequest.setPreferredSize(new java.awt.Dimension(200, 30));
             userRequest.addMouseListener(new MouseAdapter(){
                 @Override
-                public void mousePressed(MouseEvent evt) {
-                    
-                }
-
-                @Override
                 public void mouseReleased(MouseEvent evt) {
                     if(userRequest.getText().equals("Aggiungi " + name)){
-                        graphics.setNumberOfRequest();
                         Connection.sendFriendRequest(name);
                         Ricezione.listaUtenti.remove(name);
                         listaUtenti.remove(name);
                         setElementInPanels();
+                        ChatGUi.setNumberOfRequest();
                     }
                 }
             });

@@ -89,12 +89,6 @@ public class Ricezione extends Thread {
         ArrayList mexInput = null;
         while (continua) {
             try {
-                try {
-                    //System.out.println(is.readObject().getClass());
-                } catch (Exception e) {
-                    System.out.println("eccezione nuova");
-                    e.printStackTrace();
-                }
                 mexInput = (ArrayList) is.readObject();
                 System.out.println("___" + mexInput.get(0));
                 switch ((String) mexInput.get(0)) {
@@ -136,6 +130,7 @@ public class Ricezione extends Thread {
                         Connection.termina();
                         break;
                      case "REQUEST-ACCEPT-REAL-TIME":
+                         System.out.println((String)mexInput.get(1));
                         friendsList.add((String)mexInput.get(1));
                         graphics.nuovoAmico((String)mexInput.get(1));
                         graphics.setFriendsListArray(friendsList);

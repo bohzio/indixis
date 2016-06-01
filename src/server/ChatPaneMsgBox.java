@@ -2,13 +2,9 @@ package server;
 
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,18 +25,27 @@ class ChatPaneMsgBox extends JPanel {
         this.position = position;
         this.mexOrPath = mexOrPath;
         System.out.println("mexOrPath" + mexOrPath);
-        if (type == TypeMessage.MESSAGGIO) {
-            messagePanel();
-        }
-        else if (type == TypeMessage.FOTO) {
-            ImageIcon img = new ImageIcon(mexOrPath);
-            Image Imageimg = img.getImage();
-            Image newimg = Imageimg.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
-            newIcon = new ImageIcon(newimg);
-            fotoPanel();
-        }
-        else if (type == TypeMessage.FILE){
-            filePanel();
+        if (null != type) {
+            switch (type) {
+                case MESSAGGIO:
+                    messagePanel();
+                    break;
+                case FOTO:
+                    ImageIcon img = new ImageIcon(mexOrPath);
+                    Image Imageimg = img.getImage();
+                    Image newimg = Imageimg.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
+                    newIcon = new ImageIcon(newimg);
+                    fotoPanel();
+                    break;
+                case FILE:
+                    filePanel(type);
+                    break;
+                case AUDIO:
+                    filePanel(type);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -93,11 +98,14 @@ class ChatPaneMsgBox extends JPanel {
         this.repaint();
     }
 
-    private void filePanel() {
+    private void filePanel(TypeMessage type) {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         if (position) {
-            jl = new JLabel("<html>E' stato ricevuto un file!<br>Clicca questo messaggio per aprirlo</html>", SwingConstants.RIGHT);
-
+            if(type == TypeMessage.FILE){
+                jl = new JLabel("<html>E' stato ricevuto un file!<br>Clicca questo messaggio per aprirlo</html>", SwingConstants.RIGHT);
+            } else{
+                jl = new JLabel("<html>E' stato ricevuto un file Audio!<br>Clicca questo messaggio per aprirlo</html>", SwingConstants.RIGHT);
+            }
             jl.setOpaque(true);
             jl.setBorder(new TextBubbleBorder(Color.LIGHT_GRAY, 1, 10, 7, position));
 
@@ -105,7 +113,11 @@ class ChatPaneMsgBox extends JPanel {
             jl.setAlignmentX(1);
 
         } else {
-            jl = new JLabel("<html>E' stato inviato un file!<br>Clicca questo messaggio per aprirlo</html>");
+            if(type == TypeMessage.FILE){
+                jl = new JLabel("<html>E' stato inviato un file!<br>Clicca questo messaggio per aprirlo</html>");
+            } else{
+                jl = new JLabel("<html>E' stato inviato un file Audio!<br>Clicca questo messaggio per aprirlo</html>");
+            }
             jl.setOpaque(true);
             jl.setBorder(new TextBubbleBorder(Color.LIGHT_GRAY, 1, 10, 7, position));
 
@@ -124,9 +136,5 @@ class ChatPaneMsgBox extends JPanel {
                 }
             }
         });
-        this.add(jl);
-        this.revalidate();
-        this.repaint();
     }
-
 }

@@ -87,6 +87,7 @@ public class RichiesteDiAmicizia extends javax.swing.JFrame {
                         Connection.acceptFriendRequest(name);
                         Ricezione.friendsListWithoutAnswer.remove(name);
                         setElementInPanels();
+                        ChatGUi.setNumberOfRequest();
                     }
                 }
             });
