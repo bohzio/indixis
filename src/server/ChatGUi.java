@@ -1,6 +1,5 @@
 package server;
 
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -46,7 +45,7 @@ public class ChatGUi extends javax.swing.JFrame {
     /**
      * Creates new form IndixisGui
      */
-    public ChatGUi(String username, String password,String tipo) {
+    public ChatGUi(String username, String password, String tipo) {
         this.username = username;
         this.password = password;
         this.tipo = tipo;
@@ -139,12 +138,16 @@ public class ChatGUi extends javax.swing.JFrame {
             }
         });
 
-        numberOfRequest.setBackground(new java.awt.Color(204, 204, 255));
-        numberOfRequest.setForeground(new java.awt.Color(204, 0, 0));
+        numberOfRequest.setBackground(new java.awt.Color(153, 204, 255));
+        numberOfRequest.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        numberOfRequest.setForeground(new java.awt.Color(255, 51, 51));
         numberOfRequest.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         numberOfRequest.setText("0");
         numberOfRequest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        numberOfRequest.setMaximumSize(new java.awt.Dimension(30, 20));
+        numberOfRequest.setMinimumSize(new java.awt.Dimension(30, 20));
         numberOfRequest.setOpaque(true);
+        numberOfRequest.setPreferredSize(new java.awt.Dimension(30, 20));
 
         javax.swing.GroupLayout titleLayout = new javax.swing.GroupLayout(title);
         title.setLayout(titleLayout);
@@ -160,21 +163,19 @@ public class ChatGUi extends javax.swing.JFrame {
                         .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(numberOfRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(numberOfRequest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         titleLayout.setVerticalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(titleLayout.createSequentialGroup()
-                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(titleLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(numberOfRequest))
+                .addContainerGap()
+                .addGroup(titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(friendRequestList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numberOfRequest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 9, Short.MAX_VALUE))
@@ -371,50 +372,53 @@ public class ChatGUi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void inviaTestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaTestoActionPerformed
-        String text = messageText.getText();
-        ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text), true, TypeMessage.MESSAGGIO);
-        addPanel(paneRight);
+        if (arrayTab.size() > 0 && (messageText.getText() != "")) {
+            String text = messageText.getText();
+            ChatPaneMsgBox paneRight = new ChatPaneMsgBox(lenControl(text), true, TypeMessage.MESSAGGIO);
+            addPanel(paneRight);
 
-        messageText.setText("");;
+            messageText.setText("");;
 
-        String localUser = user.getText();
-        String destinatario = tab.getTitleAt(0);
-        Calendar now = Calendar.getInstance();
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-        Message message = new Message(localUser, text, destinatario, hour, day, TypeMessage.MESSAGGIO, false);
-        addMessage(message);
-        Connection.inviaMessaggio(text, destinatario);
+            String localUser = user.getText();
+            String destinatario = tab.getTitleAt(0);
+            Calendar now = Calendar.getInstance();
+            int day = now.get(Calendar.DAY_OF_MONTH);
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            Message message = new Message(localUser, text, destinatario, hour, day, TypeMessage.MESSAGGIO, false);
+            addMessage(message);
+            Connection.inviaMessaggio(text, destinatario);
+        }
     }//GEN-LAST:event_inviaTestoActionPerformed
 
     private void inviaFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaFotoActionPerformed
-        String localUser = user.getText();
-        String destinatario = tab.getTitleAt(0);
-        Calendar now = Calendar.getInstance();
-        int day = now.get(Calendar.DAY_OF_MONTH);
-        int hour = now.get(Calendar.HOUR_OF_DAY);
-        JFileChooser filechooser = new JFileChooser();
-        
-        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
-        if (returnValue == filechooser.APPROVE_OPTION) {
-        
-            
-        Path from = Paths.get(filechooser.getSelectedFile().getAbsolutePath());
-        Path dest = Paths.get(Connection.pathSendImage+filechooser.getSelectedFile().getName());
-        System.out.println("dest"+dest);
-        System.out.println("from"+from);
-        
-            try {
-                Files.copy(from,dest,StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException ex) {
-                Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+        if (arrayTab.size() > 0) {
+            String localUser = user.getText();
+            String destinatario = tab.getTitleAt(0);
+            Calendar now = Calendar.getInstance();
+            int day = now.get(Calendar.DAY_OF_MONTH);
+            int hour = now.get(Calendar.HOUR_OF_DAY);
+            JFileChooser filechooser = new JFileChooser();
+
+            int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
+            if (returnValue == filechooser.APPROVE_OPTION) {
+
+                Path from = Paths.get(filechooser.getSelectedFile().getAbsolutePath());
+                Path dest = Paths.get(Connection.pathSendImage + filechooser.getSelectedFile().getName());
+                System.out.println("dest" + dest);
+                System.out.println("from" + from);
+
+                try {
+                    Files.copy(from, dest, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(dest.toString(), true, TypeMessage.FOTO);
+                addPanel(paneLeft);
+
+                Connection.invioFile(dest.toString(), destinatario, TypeMessage.FOTO);
+                connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FOTO);
             }
-       
-        ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(dest.toString(), true, TypeMessage.FOTO);
-        addPanel(paneLeft);
-        
-        Connection.invioFile(dest.toString(),destinatario, TypeMessage.FOTO);
-        connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FOTO);
         }
     }//GEN-LAST:event_inviaFotoActionPerformed
 
@@ -441,21 +445,26 @@ public class ChatGUi extends javax.swing.JFrame {
     }//GEN-LAST:event_messageTextKeyReleased
 
     private void inviaFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaFileActionPerformed
-        JFileChooser filechooser = new JFileChooser();
-        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
-        if (returnValue == filechooser.APPROVE_OPTION) {
-            System.out.println(filechooser.getSelectedFile().getAbsolutePath());;
-            Connection.invioFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
-            connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
+        if (arrayTab.size() > 0) {
+            JFileChooser filechooser = new JFileChooser();
+            int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
+            if (returnValue == filechooser.APPROVE_OPTION) {
+                System.out.println(filechooser.getSelectedFile().getAbsolutePath());;
+                Connection.invioFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
+                connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.FILE);
+            }
         }
     }//GEN-LAST:event_inviaFileActionPerformed
 
     private void inviaAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inviaAudioActionPerformed
-        JFileChooser filechooser = new JFileChooser();
-        int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
-        if (returnValue == filechooser.APPROVE_OPTION) {
-            System.out.println(filechooser.getSelectedFile().getAbsolutePath());;
-            Connection.invioFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.AUDIO);
+        if (arrayTab.size() > 0) {
+            JFileChooser filechooser = new JFileChooser();
+            int returnValue = filechooser.showOpenDialog(null); //del parent maggiore
+            if (returnValue == filechooser.APPROVE_OPTION) {
+                System.out.println(filechooser.getSelectedFile().getAbsolutePath());;
+                Connection.invioFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.AUDIO);
+                connection.insertFile(filechooser.getSelectedFile().getAbsolutePath(), tab.getTitleAt(0), TypeMessage.AUDIO);
+            }
         }
     }//GEN-LAST:event_inviaAudioActionPerformed
 
@@ -469,11 +478,11 @@ public class ChatGUi extends javax.swing.JFrame {
     }//GEN-LAST:event_friendRequestListActionPerformed
 
     private void removeFriendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFriendsActionPerformed
-        new RemoveFriend(this);
+        new RemoveFriend();
     }//GEN-LAST:event_removeFriendsActionPerformed
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
-        new AddFriend(this);
+        new AddFriend();
     }//GEN-LAST:event_addFriendActionPerformed
 
     private void inviaAudioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inviaAudioMousePressed
@@ -500,7 +509,6 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void addMessage(Message messaggio) {
 
-        
         listaMessaggi.add(messaggio);
         try {
             setMessage();
@@ -515,20 +523,19 @@ public class ChatGUi extends javax.swing.JFrame {
      * @param user
      */
     public void addNotify(String user) {
-        if(!user.equals(tab.getTitleAt(0))){
-        JLabel k = new JLabel();
-        int i = Integer.valueOf((String) notifiche.get(user));
-        k = (JLabel) (counterNotifiche.get(i));
-        String numberOfCurrentNotify = k.getText();
-        String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
-        k.setText(text);
+        if (!user.equals(tab.getTitleAt(0))) {
+            JLabel k = new JLabel();
+            int i = Integer.valueOf((String) notifiche.get(user));
+            k = (JLabel) (counterNotifiche.get(i));
+            String numberOfCurrentNotify = k.getText();
+            String text = String.valueOf(Integer.parseInt(numberOfCurrentNotify) + 1);
+            k.setText(text);
         }
         startSound("request.wav");
     }
 
     private boolean registrazione(String username, String password) {
         MessageDigest md;
-
         try {
             md = MessageDigest.getInstance("MD5");
             byte[] passBytes = password.getBytes();
@@ -542,7 +549,6 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        
         connection = new Connection(5555, "127.0.0.1", username, password, tipo, this);
 
         return true;
@@ -550,6 +556,7 @@ public class ChatGUi extends javax.swing.JFrame {
 
     /**
      * setta la lista degli amici
+     *
      * @param listaAmici
      */
     public void setFriendsListArray(ArrayList<String> listaAmici) {
@@ -568,39 +575,42 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void amici() {
         int x = 0;
-        friend.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+        friend.setLayout(new FlowLayout(FlowLayout.LEADING, 3, 0));
         for (int i = 0; i < ar.size(); i++) {
             String text = (String) ar.get(i).toString();
-
+            if(arrayTab.size() == 0){
+                arrayTab.add(tab);
+                tab.addTab(text, scroll);
+            }
             //notifiche
             notifiche.put(text, String.valueOf(i));
-            
+
             JLabel notify = new JLabel("0");
             notify.setFont(new java.awt.Font("Traditional Arabic", 0, 18));
             notify.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             notify.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-            notify.setPreferredSize(new java.awt.Dimension(15, 30));
+            notify.setPreferredSize(new java.awt.Dimension(20, 30));
             notify.setOpaque(true);
             notify.setBackground(new Color(126, 225, 230));
 //            notify.set
             counterNotifiche.add(notify);
-            
+
             JLabel label = new JLabel((String) ar.get(i).toString());
             label.setFont(new java.awt.Font("Traditional Arabic", 0, 18));
             label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             label.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            label.setPreferredSize(new java.awt.Dimension(175, 30));
+            label.setPreferredSize(new java.awt.Dimension(165, 30));
             label.setOpaque(true);
             label.setBackground(new Color(126, 225, 230));
             label.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
-                public void mousePressed(MouseEvent evt){
+                public void mousePressed(MouseEvent evt) {
                     label.setBackground(new java.awt.Color(92, 255, 179));
                 }
-                
+
                 @Override
-                public void mouseReleased(MouseEvent evt){
+                public void mouseReleased(MouseEvent evt) {
                     label.setBackground(new Color(126, 225, 230));
                     notify.setText("0");
                     //panelMessage.setBackground(Color.LIGHT_GRAY);
@@ -619,7 +629,7 @@ public class ChatGUi extends javax.swing.JFrame {
                     }
                 }
             });
-            
+
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
             p.setMaximumSize(new Dimension(190, 30));
@@ -645,10 +655,11 @@ public class ChatGUi extends javax.swing.JFrame {
     }
 
     /**
-     * setta i messagi nel panel in corrispondenza dell utente
-     * riconosce i messagi in entrata e in uscita
+     * setta i messagi nel panel in corrispondenza dell utente riconosce i
+     * messagi in entrata e in uscita
+     *
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
     public void setMessage() throws FileNotFoundException, IOException {
         String destinatario = tab.getTitleAt(0);
@@ -661,30 +672,28 @@ public class ChatGUi extends javax.swing.JFrame {
         ChatPaneMsgBox defaultMessage2 = new ChatPaneMsgBox("Scrivi subito ai tuoi amici!", false, TypeMessage.MESSAGGIO);
         addPanel(defaultMessage2);
 
-        
-        
         for (int i = 0; i < listaMessaggi.size(); i++) {
-        
-             if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario)) {
-            System.out.println(listaMessaggi.get(i).toString());
 
-            Message mex = listaMessaggi.get(i);
-            String pathOrText = "";
-            if (mex.getType() == TypeMessage.AUDIO || mex.getType() == TypeMessage.FILE || mex.getType() == TypeMessage.FOTO) {
-                pathOrText = Ricezione.pathFileReceived + listaMessaggi.get(i).getFilename();
-            } else {
-                pathOrText = mex.getMessage();
-            }
+            if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario)) {
+                System.out.println(listaMessaggi.get(i).toString());
 
-            ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(pathOrText, mex.isForeign(), mex.getType());
-            addPanel(paneLeft);
+                Message mex = listaMessaggi.get(i);
+                String pathOrText = "";
+                if (mex.getType() == TypeMessage.AUDIO || mex.getType() == TypeMessage.FILE || mex.getType() == TypeMessage.FOTO) {
+                    pathOrText = Ricezione.pathFileReceived + listaMessaggi.get(i).getFilename();
+                } else {
+                    pathOrText = mex.getMessage();
+                }
+
+                ChatPaneMsgBox paneLeft = new ChatPaneMsgBox(pathOrText, mex.isForeign(), mex.getType());
+                addPanel(paneLeft);
             }
         }
         //sposta lo scrool in corrispondena dell'ultimo mess
-         Rectangle rect = panelMessage.getBounds();
-                Rectangle r2 = scroll.getViewport().getVisibleRect();
-                panelMessage.scrollRectToVisible(new Rectangle((int) rect.getWidth(), 
-                        (int) rect.getHeight(), (int) r2.getWidth(), (int) r2.getHeight()));
+        Rectangle rect = panelMessage.getBounds();
+        Rectangle r2 = scroll.getViewport().getVisibleRect();
+        panelMessage.scrollRectToVisible(new Rectangle((int) rect.getWidth(),
+                (int) rect.getHeight(), (int) r2.getWidth(), (int) r2.getHeight()));
     }
 
     /**
@@ -697,8 +706,6 @@ public class ChatGUi extends javax.swing.JFrame {
         panelMessage.revalidate();
         panelMessage.repaint();
     }
-
- 
 
     /**
      * controlla la lughezza del messaggio, se > di 44 va a capo
@@ -751,9 +758,9 @@ public class ChatGUi extends javax.swing.JFrame {
         addFriend.setBorder(new RoundedBorder(10));
         removeFriends.setBorder(new RoundedBorder(10));
         friendRequestList.setBorder(new RoundedBorder(10));
-         inviaFile.setBorder(new RoundedBorder(10));
-         inviaFoto.setBorder(new RoundedBorder(10));
-         inviaTesto.setBorder(new RoundedBorder(10));
+        inviaFile.setBorder(new RoundedBorder(10));
+        inviaFoto.setBorder(new RoundedBorder(10));
+        inviaTesto.setBorder(new RoundedBorder(10));
         inviaAudio.setBorder(new RoundedBorder(10));
     }
 
@@ -777,29 +784,28 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void inizialize() {
         panelMessage = new JPanel();
-       
+
         setCircolar();
         setFont();
-             friend.setBackground(new java.awt.Color(227, 242, 253));
+        friend.setBackground(new java.awt.Color(227, 242, 253));
         System.out.println("################################################aggiutno");
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-        
+
         scroll.setViewportView(panelMessage);
-        
 
     }
 
     /**
      * setta il numero delle richieste di amicizia
      */
-    public void setNumberOfRequest() {
+    public static void setNumberOfRequest() {
         numberOfRequest.setText(String.valueOf(Ricezione.friendsListWithoutAnswer.size()));
-
     }
 
     /**
      * setta la lista dei messagi
-     * @param messaggi 
+     *
+     * @param messaggi
      */
     public void setListaMessaggi(ArrayList messaggi) {
         listaMessaggi = messaggi;
@@ -820,7 +826,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel menu;
     private javax.swing.JTextPane messageText;
-    private javax.swing.JLabel numberOfRequest;
+    private static javax.swing.JLabel numberOfRequest;
     private javax.swing.JButton removeFriends;
     private javax.swing.JTabbedPane tab;
     private javax.swing.JPanel title;
