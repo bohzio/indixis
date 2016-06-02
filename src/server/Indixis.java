@@ -122,7 +122,7 @@ public class Indixis extends Application {
 
         //bottoni register and sign in
         Button login = new Button("Sign in");
-        Button openRegister = new Button("Register");
+        Button openRegister = new Button("Sign up");
         HBox hbBtn = new HBox(14);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(login);

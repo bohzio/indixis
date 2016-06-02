@@ -1,9 +1,16 @@
 package server;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,6 +34,28 @@ public class AddFriend extends javax.swing.JFrame {
             initComponents();
             setElementInPanels();
         }
+        setFont();
+        setPosition();
+    }
+    
+    /**
+     * setta i il font material di google- roboto-thin.ttf
+     */
+    private void setFont() {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("Roboto-thin.ttf"));
+            titolo.setFont(font.deriveFont(Font.BOLD, 30f));
+        } catch (FontFormatException ex) {
+            Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    private void setPosition(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     private boolean viewResponse() {
@@ -130,15 +159,14 @@ public class AddFriend extends javax.swing.JFrame {
 
         root = new javax.swing.JPanel();
         panelTitolo = new javax.swing.JPanel();
+        containerTitle = new javax.swing.JPanel();
         titolo = new javax.swing.JLabel();
         panelUser = new javax.swing.JPanel();
         sectionUsername = new javax.swing.JPanel();
         sectionRequest = new javax.swing.JPanel();
 
         setTitle("Aggiungi amico");
-        setMaximumSize(new java.awt.Dimension(400, 300));
         setMinimumSize(new java.awt.Dimension(400, 300));
-        setPreferredSize(new java.awt.Dimension(400, 350));
         setResizable(false);
 
         root.setBackground(new java.awt.Color(255, 255, 255));
@@ -148,21 +176,40 @@ public class AddFriend extends javax.swing.JFrame {
         panelTitolo.setMinimumSize(new java.awt.Dimension(400, 50));
         panelTitolo.setPreferredSize(new java.awt.Dimension(400, 50));
 
+        containerTitle.setBackground(new java.awt.Color(33, 150, 243));
+
+        titolo.setBackground(new java.awt.Color(33, 150, 243));
         titolo.setFont(new java.awt.Font("Microsoft YaHei UI Light", 1, 24)); // NOI18N
-        titolo.setForeground(new java.awt.Color(255, 0, 0));
         titolo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titolo.setText("Aggiungi un amico");
         titolo.setPreferredSize(new java.awt.Dimension(400, 50));
+
+        javax.swing.GroupLayout containerTitleLayout = new javax.swing.GroupLayout(containerTitle);
+        containerTitle.setLayout(containerTitleLayout);
+        containerTitleLayout.setHorizontalGroup(
+            containerTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerTitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titolo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        containerTitleLayout.setVerticalGroup(
+            containerTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerTitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titolo, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout panelTitoloLayout = new javax.swing.GroupLayout(panelTitolo);
         panelTitolo.setLayout(panelTitoloLayout);
         panelTitoloLayout.setHorizontalGroup(
             panelTitoloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titolo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(containerTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelTitoloLayout.setVerticalGroup(
             panelTitoloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titolo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(containerTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         JScrollPane scrollPane = new JScrollPane(panelUser);
@@ -230,6 +277,7 @@ public class AddFriend extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel containerTitle;
     private javax.swing.JPanel panelTitolo;
     private javax.swing.JPanel panelUser;
     private javax.swing.JPanel root;
