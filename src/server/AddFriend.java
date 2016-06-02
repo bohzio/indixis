@@ -1,8 +1,10 @@
 package server;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class AddFriend extends javax.swing.JFrame {
             setElementInPanels();
         }
         setFont();
+        setPosition();
     }
     
     /**
@@ -50,6 +53,10 @@ public class AddFriend extends javax.swing.JFrame {
 
     }
     
+    private void setPosition(){
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    }
     
     private boolean viewResponse() {
         if ((numUtenti - numFriend) > 0) {

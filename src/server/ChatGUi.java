@@ -771,6 +771,7 @@ public class ChatGUi extends javax.swing.JFrame {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("Roboto-thin.ttf"));
             indixis.setFont(font.deriveFont(Font.BOLD, 48f));
+            user.setFont(font.deriveFont(Font.BOLD, 23f));
         } catch (FontFormatException ex) {
             Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -839,7 +840,7 @@ public class ChatGUi extends javax.swing.JFrame {
     private Connection connection;
     private JPanel panelMessage;
     int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
-    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
+    int h = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
     JScrollPane scroll = new JScrollPane(v, h);
     private List<Message> listaMessaggi = new ArrayList();
     LinkedHashMap notifiche = new LinkedHashMap();
