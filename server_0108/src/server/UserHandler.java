@@ -127,7 +127,6 @@ public class UserHandler extends Thread {
                         } catch (Exception e) {
                             continua = false;
                             termina();
-
                         }
                     } // fine del ciclo del thread
                 } else {
@@ -637,7 +636,6 @@ public class UserHandler extends Thread {
         }
 
         return esito;
-
     }
 
     /**

@@ -28,14 +28,15 @@ public class AddFriend extends javax.swing.JFrame {
      * 
      */
     public AddFriend() {
+        System.out.println(listaUtenti);
         this.numFriend = (ChatGUi.ar == null ? 0: ChatGUi.ar.size());
         this.numUtenti = (listaUtenti == null ? 0: listaUtenti.size());
         if(viewResponse()){
             initComponents();
             setElementInPanels();
+            setFont();
+            setPosition();
         }
-        setFont();
-        setPosition();
     }
     
     /**

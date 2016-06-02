@@ -101,11 +101,12 @@ class ChatPaneMsgBox extends JPanel {
     private void filePanel(TypeMessage type) {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         if (position) {
-            if(type == TypeMessage.FILE){
+            if (type == TypeMessage.FILE){
                 jl = new JLabel("<html>E' stato ricevuto un file!<br>Clicca questo messaggio per aprirlo</html>", SwingConstants.RIGHT);
             } else{
                 jl = new JLabel("<html>E' stato ricevuto un file Audio!<br>Clicca questo messaggio per aprirlo</html>", SwingConstants.RIGHT);
             }
+            
             jl.setOpaque(true);
             jl.setBorder(new TextBubbleBorder(Color.LIGHT_GRAY, 1, 10, 7, position));
 
@@ -113,9 +114,9 @@ class ChatPaneMsgBox extends JPanel {
             jl.setAlignmentX(1);
 
         } else {
-            if(type == TypeMessage.FILE){
+            if (type == TypeMessage.FILE){
                 jl = new JLabel("<html>E' stato inviato un file!<br>Clicca questo messaggio per aprirlo</html>");
-            } else{
+            } else {
                 jl = new JLabel("<html>E' stato inviato un file Audio!<br>Clicca questo messaggio per aprirlo</html>");
             }
             jl.setOpaque(true);
@@ -136,5 +137,8 @@ class ChatPaneMsgBox extends JPanel {
                 }
             }
         });
+        this.add(jl);
+        this.revalidate();
+        this.repaint();
     }
 }

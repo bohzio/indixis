@@ -469,7 +469,7 @@ public class ChatGUi extends javax.swing.JFrame {
     }//GEN-LAST:event_inviaAudioActionPerformed
 
     private void friendRequestListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendRequestListActionPerformed
-
+        Connection.listaUtentiRequest();
         if (Ricezione.friendsListWithoutAnswer.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Non sono presenti richieste di amicizia");
         } else {
@@ -549,7 +549,7 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println("Errore creazione hash password");
         }
 
-        connection = new Connection(5555, "127.0.0.1", username, password, tipo, this);
+        connection = new Connection(5555, "51.255.46.220", username, password, tipo, this);
 
         return true;
     }
@@ -575,12 +575,18 @@ public class ChatGUi extends javax.swing.JFrame {
      */
     public void amici() {
         int x = 0;
+        arrayTab = new ArrayList();
         friend.setLayout(new FlowLayout(FlowLayout.LEADING, 3, 0));
-        for (int i = 0; i < ar.size(); i++) {
+        for (int i = 0; i <= ar.size(); i++) {
             String text = (String) ar.get(i).toString();
             if(arrayTab.size() == 0){
                 arrayTab.add(tab);
                 tab.addTab(text, scroll);
+                try {
+                    setMessage();
+                } catch (IOException ex) {
+                    Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             //notifiche
             notifiche.put(text, String.valueOf(i));
@@ -592,7 +598,6 @@ public class ChatGUi extends javax.swing.JFrame {
             notify.setPreferredSize(new java.awt.Dimension(20, 30));
             notify.setOpaque(true);
             notify.setBackground(new Color(126, 225, 230));
-//            notify.set
             counterNotifiche.add(notify);
 
             JLabel label = new JLabel((String) ar.get(i).toString());
@@ -631,6 +636,7 @@ public class ChatGUi extends javax.swing.JFrame {
             });
 
             JPanel p = new JPanel();
+            p.setBackground(new Color(227,242,253));
             p.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
             p.setMaximumSize(new Dimension(190, 30));
             p.add(label);
@@ -639,7 +645,17 @@ public class ChatGUi extends javax.swing.JFrame {
             System.out.println((String) ar.get(i).toString());
         }
     }
-
+    
+    public static int findTab(String name){
+        for(int i = 0; i < arrayTab.size(); i++){
+            System.out.println(((javax.swing.JTabbedPane)arrayTab.get(i)).getTitleAt(0));
+            if(((javax.swing.JTabbedPane)arrayTab.get(i)).getTitleAt(0).equals(name)){
+                return i;
+            }
+        }
+        return arrayTab.size();
+    }
+    
     public void riceviAmicizia(String username) {
         setNumberOfRequest();
         startSound("request.wav");
@@ -673,7 +689,6 @@ public class ChatGUi extends javax.swing.JFrame {
         addPanel(defaultMessage2);
 
         for (int i = 0; i < listaMessaggi.size(); i++) {
-
             if (listaMessaggi.get(i).getDestinatario().equals(destinatario) || listaMessaggi.get(i).getUser().equals(destinatario)) {
                 System.out.println(listaMessaggi.get(i).toString());
 
@@ -726,11 +741,9 @@ public class ChatGUi extends javax.swing.JFrame {
                     newMessage += " " + splitMessage[i];
                 }
             }
-            System.out.println("################################PRIMAAA#" + " " + newMessage);
             newMessage += "<br>" + splitMessage[splitMessage.length - 1] + "</html>";
 
         }
-        System.out.println("##############################################" + " " + newMessage);
         return newMessage;
     }
 
@@ -748,7 +761,6 @@ public class ChatGUi extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -777,7 +789,6 @@ public class ChatGUi extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ChatGUi.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -789,11 +800,8 @@ public class ChatGUi extends javax.swing.JFrame {
         setCircolar();
         setFont();
         friend.setBackground(new java.awt.Color(227, 242, 253));
-        System.out.println("################################################aggiutno");
         panelMessage.setLayout(new BoxLayout(panelMessage, BoxLayout.Y_AXIS));
-
         scroll.setViewportView(panelMessage);
-
     }
 
     /**
@@ -834,7 +842,7 @@ public class ChatGUi extends javax.swing.JFrame {
     public javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
     public static ArrayList ar = new ArrayList();
-    public ArrayList arrayTab = new ArrayList();
+    public static ArrayList arrayTab = new ArrayList();
     private String username;
     private String password;
     private Connection connection;

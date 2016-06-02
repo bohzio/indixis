@@ -62,8 +62,11 @@ public class RemoveFriend extends javax.swing.JFrame {
                         Connection.removeFriend(name);
                         Ricezione.friendsList.remove(name);
                         ChatGUi.ar.remove(name);
+                        if(ChatGUi.arrayTab.size() != ChatGUi.findTab(name)){
+                            System.out.println("//////////////////////Qua dentro ci entro");
+                            ChatGUi.arrayTab.remove(ChatGUi.findTab(name));
+                        }
                         setElementInPanels();
-                        ChatGUi.setNumberOfRequest();
                     }
                 }
             });
